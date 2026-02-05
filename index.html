@@ -1091,25 +1091,52 @@ const galleryItems = document.querySelectorAll('.gallery-item');
                         <input type="text" id="name" name="name" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email">
                     </div>
-<div class="form-group">
+                
+                    <div class="form-group">
                         <label>Will you be attending?</label>
                         <div style="display: flex; gap: 1rem;">
                             <label style="display: flex; align-items: center;">
-                                <input type="radio" name="attending" value="yes" required style="margin-right: 0.5rem;"> Yes
+                                <input type="radio" name="attending" value="yes" required style="margin-right: 0.5rem;"> Yes, I'll be there!
                             </label>
                             <label style="display: flex; align-items: center;">
-                                <input type="radio" name="attending" value="no" required style="margin-right: 0.5rem;"> No
+                                <input type="radio" name="attending" value="no" required style="margin-right: 0.5rem;"> Regretfully, No
                             </label>
                         </div>
                     </div>
+                
+                    <div class="form-group" style="border-top: 1px solid #eee; pt-1rem; margin-top: 1.5rem; padding-top: 1rem;">
+                        <label>Bringing a Plus One?</label>
+                        <select id="plus-one-select" name="plus_one" onchange="togglePlusOneName()">
+                            <option value="no">No, just me</option>
+                            <option value="yes">Yes, I'm bringing someone</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="plus-one-name-group" style="display: none;">
+                        <label for="plus-one-name">Plus One's Full Name</label>
+                        <input type="text" id="plus-one-name" name="plus_one_name" placeholder="Guest's name">
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="food-preference">Meal Preference</label>
+                        <select id="food-preference" name="food_preference" required>
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="halal">Halal</option>
+                            <option value="no-beef">No Beef</option>
+                            <option value="vegetarian">Vegetarian / Vegan</option>
+                            <option value="raw-fish-ok">Regular (I'm okay with Raw Fish/Sashimi)</option>
+                            <option value="raw-fish-no">Regular (no Raw Fish)</option>
+                        </select>
+                    </div>
+                
                     <div class="form-group">
                         <label for="message">Message for the Couple</label>
-                        <textarea id="message" name="message" placeholder="Leave a sweet message or well-wishes for Sarah & Michael"></textarea>
+                        <textarea id="message" name="message" placeholder="Leave a sweet message or well-wishes"></textarea>
                     </div>
-<button type="submit" class="btn">Submit RSVP</button>
+                
+                    <button type="submit" class="btn">Submit RSVP</button>
                 </form>
                 <p style="margin-top: 1rem; font-size: 0.875rem; text-align: center;">Or email us at <a href="mailto:rsvp@sarahandmichael.com?subject=Wedding RSVP&body=Name: %0AAttending: Yes/No %0ANumber of Guests: %0ADietary Restrictions:">rsvp@sarahandmichael.com</a></p>
             </div>
