@@ -977,22 +977,22 @@ content: '';
         <div class="container">
             <h2 class="section-title glitch-text" data-text="RSVP">RSVP</h2>
             <p style="text-align: center; margin-bottom: 1rem;">Please respond by May 15, 2026</p>
-<div class="rsvp-countdown-container" style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
-                <div class="rsvp-countdown-item" style="text-align: center; background-color: rgba(192, 132, 151, 0.1); padding: 0.5rem; border-radius: 4px; min-width: 60px;">
+<div class="countdown-container" style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
+                <div class="countdown-item" style="text-align: center; background-color: rgba(192, 132, 151, 0.1); padding: 0.5rem; border-radius: 4px; min-width: 60px;">
                     <span id="days-1" style="display: block; font-size: 1.5rem; font-weight: bold; color: var(--accent);">00</span>
-                    <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Days</div>
+                    <div class="countdown-label" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Days</div>
                 </div>
-                <div class="rsvp-countdown-item" style="text-align: center; background-color: rgba(192, 132, 151, 0.1); padding: 0.5rem; border-radius: 4px; min-width: 60px;">
+                <div class="countdown-item" style="text-align: center; background-color: rgba(192, 132, 151, 0.1); padding: 0.5rem; border-radius: 4px; min-width: 60px;">
                     <span id="hours-1" style="display: block; font-size: 1.5rem; font-weight: bold; color: var(--accent);">00</span>
-                    <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Hours</div>
+                    <div class="countdown-label" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Hours</div>
                 </div>
-                <div class="rsvp-countdown-item" style="text-align: center; background-color: rgba(192, 132, 151, 0.1); padding: 0.5rem; border-radius: 4px; min-width: 60px;">
+                <div class="countdown-item" style="text-align: center; background-color: rgba(192, 132, 151, 0.1); padding: 0.5rem; border-radius: 4px; min-width: 60px;">
                     <span id="minutes-1" style="display: block; font-size: 1.5rem; font-weight: bold; color: var(--accent);">00</span>
-                    <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Minutes</div>
+                    <div class="countdown-label" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Minutes</div>
                 </div>
-                <div class="rsvp-countdown-item" style="text-align: center; background-color: rgba(192, 132, 151, 0.1); padding: 0.5rem; border-radius: 4px; min-width: 60px;">
+                <div class="countdown-item" style="text-align: center; background-color: rgba(192, 132, 151, 0.1); padding: 0.5rem; border-radius: 4px; min-width: 60px;">
                     <span id="seconds-1" style="display: block; font-size: 1.5rem; font-weight: bold; color: var(--accent);">00</span>
-                    <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Seconds</div>
+                    <div class="countdown-label" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Seconds</div>
                 </div>
             </div>
 <div class="rsvp-form">
@@ -1320,16 +1320,20 @@ content: '';
     //Landing page, gatekeeper
             // Define the two different wedding dates here
             const dateGroup1 = new Date("2026-11-05T15:00:00").getTime();
+            const rsvpGroup1 = new Date("2026-05-15T23:59:59").getTime();
+            
             const dateGroup2 = new Date("2026-11-07T18:30:00").getTime();
+            const rsvpGroup2 = new Date("2026-05-15T23:59:59").getTime();
             
             function checkPasscode() {
                 const code = document.getElementById('passcode').value.toLowerCase();
                 const errorMsg = document.getElementById('gate-error');
                 
-                if (code === 'nbgceremony2026') { // Passcode for Group 1
-                    unlock('group-1-content', dateGroup1, "1");
-                } else if (code === 'nbgdinner2026') { // Passcode for Group 2
-                    unlock('group-2-content', dateGroup2, "2");
+                // Pass ALL 4 arguments: container, weddingDate, rsvpDate, suffix
+                if (code === 'nbgceremony2026') { 
+                    unlock('group-1-content', dateGroup1, rsvpGroup1, "1");
+                } else if (code === 'nbgdinner2026') { 
+                    unlock('group-2-content', dateGroup2, rsvpGroup2, "2");
                 } else {
                     errorMsg.style.display = 'block';
                 }
@@ -1340,75 +1344,70 @@ content: '';
                 document.getElementById('gatekeeper').style.display = 'none';
                 document.getElementById(containerId).style.display = 'block';
                 
-                // Start Wedding Countdown
+                // Start both timers
                 runTimer(weddingDate, suffix, "wedding");
-                
-                // Start RSVP Countdown
                 runTimer(rsvpDate, suffix, "rsvp");
                 
-                // Save state
                 sessionStorage.setItem('wedding_access', JSON.stringify({containerId, weddingDate, rsvpDate, suffix}));
             }
-    
             
-    // Countdown Timer
-            /**
-             * Generic countdown function
-             * @param {number} endTime - The target timestamp
-             * @param {string} suffix - "1" or "2" to target the right container
-             * @param {string} type - "wedding" or "rsvp" to target the right labels
-             */
             function runTimer(endTime, suffix, type) {
                 const timer = setInterval(function() {
                     const now = new Date().getTime();
                     const distance = endTime - now;
             
-                    // Calculate time
                     const d = Math.floor(distance / (1000 * 60 * 60 * 24));
                     const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                     const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                     const s = Math.floor((distance % (1000 * 60)) / 1000);
             
-                    // Identify IDs based on type and group (e.g., "days-1" or "rsvp-days-2")
-                    const prefix = (type === "rsvp") ? "rsvp-" : "";
-                    const dayEl = document.getElementById(`${prefix}days-${suffix}`);
+                    const prefix = (type === "rsvp") ? "rsvp-" : ""; // Only RSVP IDs have the "rsvp-" prefix
                     
+                    // Target IDs like 'days-1' or 'rsvp-days-1'
+                    const dayEl = document.getElementById(`${prefix}days-${suffix}`);
                     if (dayEl) {
-                        document.getElementById(`${prefix}days-${suffix}`).innerText = d;
-                        document.getElementById(`${prefix}hours-${suffix}`).innerText = h;
-                        document.getElementById(`${prefix}minutes-${suffix}`).innerText = m;
-                        document.getElementById(`${prefix}seconds-${suffix}`).innerText = s;
+                        dayEl.innerText = d.toString().padStart(2, '0');
+                        document.getElementById(`${prefix}hours-${suffix}`).innerText = h.toString().padStart(2, '0');
+                        document.getElementById(`${prefix}minutes-${suffix}`).innerText = m.toString().padStart(2, '0');
+                        document.getElementById(`${prefix}seconds-${suffix}`).innerText = s.toString().padStart(2, '0');
                     }
             
                     if (distance < 0) {
                         clearInterval(timer);
-                        const container = document.getElementById(`${prefix}countdown-${suffix}`);
-                        if (container) container.innerHTML = "EXPIRED";
                     }
                 }, 1000);
             }
+            
+            // Auto-unlock if they already logged in
+            document.addEventListener('DOMContentLoaded', () => {
+                const saved = sessionStorage.getItem('wedding_access');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    unlock(data.containerId, data.weddingDate, data.rsvpDate, data.suffix);
+                }
+            });
         </script>
     <!-- RSVP Section -->
         <section id="rsvp" class="section">
             <div class="container">
                 <h2 class="section-title glitch-text" data-text="RSVP">RSVP</h2>
                 <p style="text-align: center; margin-bottom: 1rem;">Please respond by May 15, 2026</p>
-    <div class="rsvp-countdown-container" style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
-                    <div class="rsvp-countdown-item" style="text-align: center; background-color: rgba(192, 132, 151, 0.1); padding: 0.5rem; border-radius: 4px; min-width: 60px;">
+    <div class="countdown-container" style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
+                    <div class="countdown-item" style="text-align: center; background-color: rgba(192, 132, 151, 0.1); padding: 0.5rem; border-radius: 4px; min-width: 60px;">
                         <span id="days-2" style="display: block; font-size: 1.5rem; font-weight: bold; color: var(--accent);">00</span>
-                        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Days</div>
+                        <div class="countdown-label" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Days</div>
                     </div>
-                    <div class="rsvp-countdown-item" style="text-align: center; background-color: rgba(192, 132, 151, 0.1); padding: 0.5rem; border-radius: 4px; min-width: 60px;">
+                    <div class="countdown-item" style="text-align: center; background-color: rgba(192, 132, 151, 0.1); padding: 0.5rem; border-radius: 4px; min-width: 60px;">
                         <span id="hours-2" style="display: block; font-size: 1.5rem; font-weight: bold; color: var(--accent);">00</span>
-                        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Hours</div>
+                        <div class="countdown-label" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Hours</div>
                     </div>
-                    <div class="rsvp-countdown-item" style="text-align: center; background-color: rgba(192, 132, 151, 0.1); padding: 0.5rem; border-radius: 4px; min-width: 60px;">
+                    <div class="countdown-item" style="text-align: center; background-color: rgba(192, 132, 151, 0.1); padding: 0.5rem; border-radius: 4px; min-width: 60px;">
                         <span id="minutes-2" style="display: block; font-size: 1.5rem; font-weight: bold; color: var(--accent);">00</span>
-                        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Minutes</div>
+                        <div class="countdown-label" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Minutes</div>
                     </div>
-                    <div class="rsvp-countdown-item" style="text-align: center; background-color: rgba(192, 132, 151, 0.1); padding: 0.5rem; border-radius: 4px; min-width: 60px;">
+                    <div class="countdown-item" style="text-align: center; background-color: rgba(192, 132, 151, 0.1); padding: 0.5rem; border-radius: 4px; min-width: 60px;">
                         <span id="seconds-2" style="display: block; font-size: 1.5rem; font-weight: bold; color: var(--accent);">00</span>
-                        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Seconds</div>
+                        <div class="countdown-label" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Seconds</div>
                     </div>
                 </div>
     <div class="rsvp-form">
