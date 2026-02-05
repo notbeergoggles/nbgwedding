@@ -719,9 +719,72 @@ content: '';
                 display: none;
             }
         }
+
+        /* landing page, gatekeeper */
+        #gatekeeper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-primary);
+            z-index: 9999; /* Ensures it is above everything */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        
+        .gate-content {
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        
+        .gate-content h2 {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .passcode-input-wrapper {
+            margin-top: 1.5rem;
+        }
+        
+        #passcode {
+            padding: 0.75rem;
+            border: 1px solid var(--bg-secondary);
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        
+        /* Hidden state when unlocked */
+        .unlocked #gatekeeper {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        
     </style>
 </head>
 <body>
+    <!-- Landing page, Gatekeeper -->
+    <div id="gatekeeper">
+        <div class="gate-content">
+            <h2 class="script-font">Welcome to our Wedding</h2>
+            <p>Please enter the guest passcode from your invitation</p>
+            <div class="passcode-input-wrapper">
+                <input type="password" id="passcode" placeholder="Enter Passcode">
+                <button onclick="checkPasscode()" class="btn">Enter</button>
+            </div>
+            <p id="gate-error" style="color: #C08497; display: none; margin-top: 1rem;">Incorrect passcode. Please try again.</p>
+        </div>
+    </div>
+
+    
     <!-- Header -->
     <header>
         <nav>
@@ -904,6 +967,29 @@ content: '';
         </div>
     </div>
     <script>
+//Landing page, gatekeeper
+        function checkPasscode() {
+            const code = document.getElementById('passcode').value;
+            const errorMsg = document.getElementById('gate-error');
+            
+            // Set your desired passcode here (e.g., 'Love2026')
+            if (code.toLowerCase() === 'nbgsayurikenny26') {
+                document.body.classList.add('unlocked');
+                // Optional: Save to session so they don't have to re-enter if they refresh
+                sessionStorage.setItem('wedding_auth', 'true');
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        }
+        
+        // Check session on load
+        document.addEventListener('DOMContentLoaded', function() {
+            if (sessionStorage.getItem('wedding_auth') === 'true') {
+                document.body.classList.add('unlocked');
+            }
+        });
+
+        
 // Countdown Timer
         function updateCountdown() {
             const weddingDate = new Date('June 15, 2026 15:00:00').getTime();
