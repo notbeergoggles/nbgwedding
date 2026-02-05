@@ -723,17 +723,21 @@ content: '';
         /* landing page, gatekeeper */
         #gatekeeper {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--bg-primary);
-            z-index: 9999; /* Ensures it is above everything */
+            inset: 0;
+            background: var(--bg-primary);
+            z-index: 10000;
             display: flex;
-            align-items: center;
             justify-content: center;
-            text-align: center;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+        
+        body.unlocked {
+            overflow-y: auto; /* Re-enable scrolling once unlocked */
+        }
+        
+        body:not(.unlocked) {
+            overflow: hidden; /* Prevent scrolling the hidden site */
         }
         
         .gate-content {
@@ -784,7 +788,8 @@ content: '';
         </div>
     </div>
 
-    
+    <!-- SOLEMNISATION DAY -->
+    <div id="group-1-content" class="wedding-content" style="display: none;">
     <!-- Header -->
     <header>
         <nav>
@@ -966,101 +971,7 @@ content: '';
             <div class="lightbox-caption" id="lightbox-caption"></div>
         </div>
     </div>
-    <script>
-//Landing page, gatekeeper
-        function checkPasscode() {
-            const code = document.getElementById('passcode').value;
-            const errorMsg = document.getElementById('gate-error');
-            
-            // Set your desired passcode here (e.g., 'Love2026')
-            if (code.toLowerCase() === 'nbgsayurikenny26') {
-                document.body.classList.add('unlocked');
-                // Optional: Save to session so they don't have to re-enter if they refresh
-                sessionStorage.setItem('wedding_auth', 'true');
-            } else {
-                errorMsg.style.display = 'block';
-            }
-        }
-        
-        // Check session on load
-        document.addEventListener('DOMContentLoaded', function() {
-            if (sessionStorage.getItem('wedding_auth') === 'true') {
-                document.body.classList.add('unlocked');
-            }
-        });
-
-        
-// Countdown Timer
-        function updateCountdown() {
-            const weddingDate = new Date('June 15, 2026 15:00:00').getTime();
-            const now = new Date().getTime();
-            const distance = weddingDate - now;
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById('days').innerText = days.toString().padStart(2, '0');
-            document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
-            document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
-            document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
-        }
-        document.addEventListener('DOMContentLoaded', function() {
-            updateCountdown();
-            setInterval(updateCountdown, 1000);
-            
-            function updateRSVPCountdown() {
-                const rsvpDate = new Date('May 15, 2026 23:59:59').getTime();
-const now = new Date().getTime();
-                const distance = rsvpDate - now;
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                document.getElementById('rsvp-days').innerText = days.toString().padStart(2, '0');
-                document.getElementById('rsvp-hours').innerText = hours.toString().padStart(2, '0');
-                document.getElementById('rsvp-minutes').innerText = minutes.toString().padStart(2, '0');
-                document.getElementById('rsvp-seconds').innerText = seconds.toString().padStart(2, '0');
-            }
-
-            updateRSVPCountdown();
-            setInterval(updateRSVPCountdown, 1000);
-const galleryItems = document.querySelectorAll('.gallery-item');
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            const lightboxCaption = document.getElementById('lightbox-caption');
-            const closeBtn = document.querySelector('.lightbox-close');
-
-            galleryItems.forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const imgSrc = this.querySelector('img').src.replace('640x360', '1200x630');
-                    const caption = this.querySelector('.gallery-caption').textContent;
-                    
-                    lightboxImg.src = imgSrc;
-                    lightboxImg.alt = caption;
-                    lightboxCaption.textContent = caption;
-                    lightbox.style.display = 'flex';
-                    document.body.style.overflow = 'hidden';
-                });
-            });
-
-            closeBtn.addEventListener('click', function() {
-                lightbox.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            });
-
-            lightbox.addEventListener('click', function(e) {
-                if (e.target === lightbox) {
-                    lightbox.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                }
-            });
-        });
-    </script>
+    
 <!-- RSVP Section -->
     <section id="rsvp" class="section">
         <div class="container">
@@ -1220,6 +1131,496 @@ const galleryItems = document.querySelectorAll('.gallery-item');
             <p class="copyright">&copy; 2024 Sarah & Michael's Wedding. All rights reserved.</p>
         </div>
     </footer>
+    </div>
+
+    <!-- IRODORI DAY -->
+        <div id="group-2-content" class="wedding-content" style="display: none;">
+        <!-- Header -->
+        <header>
+            <nav>
+                <a href="#" class="nav-logo">Sarah & Michael</a>
+                <ul class="nav-links">
+                    <li><a href="#our-story">Our Story</a></li>
+                    <li><a href="#schedule">Schedule</a></li>
+                    <li><a href="#venue">Venue</a></li>
+                    <li><a href="#dress-code">Dress Code</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#rsvp">RSVP</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </header>
+    
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>We're Getting Married</h1>
+                <div class="couple-names">Sarah & Michael</div>
+                <div class="wedding-date">June 15, 2026 • The Grand Ballroom</div>
+                <div class="countdown-container">
+                    <div class="countdown-item">
+                        <span id="days">00</span>
+                        <div class="countdown-label">Days</div>
+                    </div>
+                    <div class="countdown-item">
+                        <span id="hours">00</span>
+                        <div class="countdown-label">Hours</div>
+                    </div>
+                    <div class="countdown-item">
+                        <span id="minutes">00</span>
+                        <div class="countdown-label">Minutes</div>
+                    </div>
+                    <div class="countdown-item">
+                        <span id="seconds">00</span>
+                        <div class="countdown-label">Seconds</div>
+                    </div>
+                </div>
+    <a href="#rsvp" class="btn">RSVP Now</a>
+            </div>
+        </section>
+    
+        <!-- Our Story Section -->
+        <section id="our-story" class="section our-story">
+            <div class="container">
+                <h2 class="section-title">Our Story</h2>
+                <div class="story-content">
+                    <div class="story-text">
+                        <p>We first met in college during a study abroad program in Italy. Michael was studying architecture and Sarah was studying art history. Our love blossomed over shared walks through ancient ruins and late-night conversations in tiny cafes.</p>
+                        <p>After five wonderful years together, Michael proposed during a surprise picnic at the same spot where we had our first date. Of course, Sarah said yes!</p>
+                        <p>Now we're excited to celebrate our love with all of our closest family and friends. We can't wait to see you all on our special day!</p>
+                    </div>
+                    <div class="story-image"></div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Schedule Section -->
+        <section id="schedule" class="section schedule">
+            <div class="container">
+                <h2 class="section-title">Schedule of Events</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">3:00 PM</div>
+                            <h3>Ceremony</h3>
+                            <p>Join us as we exchange vows in the garden ceremony.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">4:30 PM</div>
+                            <h3>Cocktail Hour</h3>
+                            <p>Enjoy drinks and hors d'oeuvres while we take photos.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">5:30 PM</div>
+                            <h3>Reception</h3>
+                            <p>Dinner, dancing, and celebration in the Grand Ballroom.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">10:00 PM</div>
+                            <h3>Send Off</h3>
+                            <p>Wave us goodbye as we begin our new life together.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Venue Section -->
+        <section id="venue" class="section">
+            <div class="container">
+                <h2 class="section-title">Venue</h2>
+                <p style="text-align: center; margin-bottom: 1rem;">The Grand Ballroom at The Riverside Manor<br>1234 Garden Lane, Riverside, CA 92501</p>
+                <div class="venue-map">
+                    <!-- Replace with actual Google Maps iframe -->
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3312.715448351943!2d-117.3964926848561!3d33.8785112806536!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80dcb0f0a1d4a5d5%3A0x1dfd8e7a32f7f4b0!2sRiverside%20Convention%20Center!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Dress Code Section -->
+        <section id="dress-code" class="section dress-code">
+            <div class="container">
+                <h2 class="section-title">Dress Code</h2>
+                <div class="dress-code-content">
+                    <div class="dress-code-item">
+                        <div class="dress-code-icon">👔</div>
+                        <h3>Formal Attire</h3>
+                        <p>Black tie optional. Dark suits, cocktail dresses, or formal gowns.</p>
+                    </div>
+                    <div class="dress-code-item">
+                        <div class="dress-code-icon">🎨</div>
+                        <h3>Color Palette</h3>
+                        <p>Our wedding colors are blush, gold, and navy. Feel free to coordinate!</p>
+                    </div>
+                    <div class="dress-code-item">
+                        <div class="dress-code-icon">👠</div>
+                        <h3>Shoes</h3>
+                        <p>The ceremony is on grass, so please plan footwear accordingly.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Gallery Section -->
+        <section id="gallery" class="section gallery">
+            <div class="container">
+                <h2 class="section-title">Gallery</h2>
+                <p style="text-align: center; margin-bottom: 2rem;">Some of our favorite moments together</p>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="http://static.photos/people/640x360/1" alt="Couple at beach">
+                        <div class="gallery-caption">Our beach vacation</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="http://static.photos/people/640x360/2" alt="Engagement photo">
+                        <div class="gallery-caption">Engagement day</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="http://static.photos/people/640x360/3" alt="Holiday photo">
+                        <div class="gallery-caption">Christmas 2022</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="http://static.photos/people/640x360/4" alt="Hiking together">
+                        <div class="gallery-caption">Weekend hiking trip</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="http://static.photos/people/640x360/5" alt="Anniversary dinner">
+                        <div class="gallery-caption">3rd anniversary</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="http://static.photos/people/640x360/6" alt="Family gathering">
+                        <div class="gallery-caption">With our families</div>
+                    </div>
+    </div>
+            </div>
+        </section>
+        <!-- Lightbox Images -->
+        <div id="lightbox" class="lightbox">
+            <span class="lightbox-close">&times;</span>
+            <div class="lightbox-content">
+                <img src="" alt="" id="lightbox-img">
+                <div class="lightbox-caption" id="lightbox-caption"></div>
+            </div>
+        </div>
+        <script>
+    //Landing page, gatekeeper
+            // Configuration for the two different events
+            const weddingGroups = {
+                "group1": {
+                    passcode: "nbgceremony2026",
+                    names: "Sarah & Michael",
+                    date: "November 5, 2026",
+                    location: "The Grand Ballroom, New York",
+                    countdownDate: "2026-11-05T15:00:00",
+                    formId: "RSVP_Group_A" // To identify them in your records
+                },
+                "group2": {
+                    passcode: "nbgdinner2026",
+                    names: "Sarah & Michael",
+                    date: "November 7, 2026",
+                    location: "The Sunset Beach, California",
+                    countdownDate: "2026-11-07T18:30:00",
+                    formId: "RSVP_Group_B"
+                }
+            };
+            
+            function checkPasscode() {
+                const input = document.getElementById('passcode').value.toLowerCase();
+                const errorMsg = document.getElementById('gate-error');
+                
+                // Find if the passcode matches any group
+                let selectedGroup = null;
+                for (const key in weddingGroups) {
+                    if (weddingGroups[key].passcode === input) {
+                        selectedGroup = weddingGroups[key];
+                        break;
+                    }
+                }
+            
+                if (selectedGroup) {
+                    unlockWedding(selectedGroup);
+                } else {
+                    errorMsg.style.display = 'block';
+                }
+            }
+            
+            function unlockWedding(groupData) {
+                // 1. Update text elements to match the guest's specific event
+                document.querySelectorAll('.wedding-date-text').forEach(el => el.innerText = groupData.date);
+                document.querySelectorAll('.wedding-location-text').forEach(el => el.innerText = groupData.location);
+                
+                // 2. Update the Countdown Target
+                window.targetWeddingDate = new Date(groupData.countdownDate).getTime();
+            
+                // 3. Add a hidden field to the RSVP form so you know which group submitted
+                const rsvpForm = document.querySelector('form');
+                let groupInput = document.getElementById('guest-group-id');
+                if (!groupInput) {
+                    groupInput = document.createElement('input');
+                    groupInput.type = 'hidden';
+                    groupInput.id = 'guest-group-id';
+                    groupInput.name = 'guest_group';
+                    rsvpForm.appendChild(groupInput);
+                }
+                groupInput.value = groupData.formId;
+            
+                // 4. Reveal the content
+                document.body.classList.add('unlocked');
+                document.getElementById('gatekeeper').style.display = 'none';
+                document.getElementById('main-wedding-content').style.display = 'block';
+            
+                // 5. Persist session
+                sessionStorage.setItem('wedding_auth_group', JSON.stringify(groupData));
+            }
+    
+            
+    // Countdown Timer
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = (window.targetWeddingDate || new Date("2026-11-05T15:00:00").getTime()) - now;
+                
+    
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+                document.getElementById('days').innerText = days.toString().padStart(2, '0');
+                document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+            }
+            document.addEventListener('DOMContentLoaded', function() {
+                updateCountdown();
+                setInterval(updateCountdown, 1000);
+                
+                function updateRSVPCountdown() {
+                    const rsvpDate = new Date('May 15, 2026 23:59:59').getTime();
+    const now = new Date().getTime();
+                    const distance = rsvpDate - now;
+    
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+                    document.getElementById('rsvp-days').innerText = days.toString().padStart(2, '0');
+                    document.getElementById('rsvp-hours').innerText = hours.toString().padStart(2, '0');
+                    document.getElementById('rsvp-minutes').innerText = minutes.toString().padStart(2, '0');
+                    document.getElementById('rsvp-seconds').innerText = seconds.toString().padStart(2, '0');
+                }
+    
+                updateRSVPCountdown();
+                setInterval(updateRSVPCountdown, 1000);
+    const galleryItems = document.querySelectorAll('.gallery-item');
+                const lightbox = document.getElementById('lightbox');
+                const lightboxImg = document.getElementById('lightbox-img');
+                const lightboxCaption = document.getElementById('lightbox-caption');
+                const closeBtn = document.querySelector('.lightbox-close');
+    
+                galleryItems.forEach(item => {
+                    item.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const imgSrc = this.querySelector('img').src.replace('640x360', '1200x630');
+                        const caption = this.querySelector('.gallery-caption').textContent;
+                        
+                        lightboxImg.src = imgSrc;
+                        lightboxImg.alt = caption;
+                        lightboxCaption.textContent = caption;
+                        lightbox.style.display = 'flex';
+                        document.body.style.overflow = 'hidden';
+                    });
+                });
+    
+                closeBtn.addEventListener('click', function() {
+                    lightbox.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                });
+    
+                lightbox.addEventListener('click', function(e) {
+                    if (e.target === lightbox) {
+                        lightbox.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            });
+        </script>
+    <!-- RSVP Section -->
+        <section id="rsvp" class="section">
+            <div class="container">
+                <h2 class="section-title glitch-text" data-text="RSVP">RSVP</h2>
+                <p style="text-align: center; margin-bottom: 1rem;">Please respond by May 15, 2026</p>
+    <div class="rsvp-countdown-container" style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
+                    <div class="rsvp-countdown-item" style="text-align: center; background-color: rgba(192, 132, 151, 0.1); padding: 0.5rem; border-radius: 4px; min-width: 60px;">
+                        <span id="rsvp-days" style="display: block; font-size: 1.5rem; font-weight: bold; color: var(--accent);">00</span>
+                        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Days</div>
+                    </div>
+                    <div class="rsvp-countdown-item" style="text-align: center; background-color: rgba(192, 132, 151, 0.1); padding: 0.5rem; border-radius: 4px; min-width: 60px;">
+                        <span id="rsvp-hours" style="display: block; font-size: 1.5rem; font-weight: bold; color: var(--accent);">00</span>
+                        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Hours</div>
+                    </div>
+                    <div class="rsvp-countdown-item" style="text-align: center; background-color: rgba(192, 132, 151, 0.1); padding: 0.5rem; border-radius: 4px; min-width: 60px;">
+                        <span id="rsvp-minutes" style="display: block; font-size: 1.5rem; font-weight: bold; color: var(--accent);">00</span>
+                        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Minutes</div>
+                    </div>
+                    <div class="rsvp-countdown-item" style="text-align: center; background-color: rgba(192, 132, 151, 0.1); padding: 0.5rem; border-radius: 4px; min-width: 60px;">
+                        <span id="rsvp-seconds" style="display: block; font-size: 1.5rem; font-weight: bold; color: var(--accent);">00</span>
+                        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Seconds</div>
+                    </div>
+                </div>
+    <div class="rsvp-form">
+                    <form action="https://example.com/rsvp" method="POST">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email">
+                        </div>
+                    
+                        <div class="form-group">
+                            <label>Will you be attending?</label>
+                            <div style="display: flex; gap: 1rem;">
+                                <label style="display: flex; align-items: center;">
+                                    <input type="radio" name="attending" value="yes" required style="margin-right: 0.5rem;"> Yes, I'll be there!
+                                </label>
+                                <label style="display: flex; align-items: center;">
+                                    <input type="radio" name="attending" value="no" required style="margin-right: 0.5rem;"> Regretfully, No
+                                </label>
+                            </div>
+                        </div>
+                    
+                        <div class="form-group" style="border-top: 1px solid #eee; pt-1rem; margin-top: 1.5rem; padding-top: 1rem;">
+                            <label>Bringing a Plus One?</label>
+                            <select id="plus-one-select" name="plus_one" onchange="togglePlusOneName()">
+                                <option value="no">No, just me</option>
+                                <option value="yes">Yes, I'm bringing someone</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="plus-one-name-group" style="display: none;">
+                            <label for="plus-one-name">Plus One's Full Name</label>
+                            <input type="text" id="plus-one-name" name="plus_one_name" placeholder="Guest's name">
+                        </div>
+                    
+                        <div class="form-group">
+                            <label for="food-preference">Meal Preference</label>
+                            <select id="food-preference" name="food_preference" required>
+                                <option value="" disabled selected>Select an option</option>
+                                <option value="halal">Halal</option>
+                                <option value="no-beef">No Beef</option>
+                                <option value="vegetarian">Vegetarian / Vegan</option>
+                                <option value="raw-fish-ok">Regular (I'm okay with Raw Fish/Sashimi)</option>
+                                <option value="raw-fish-no">Regular (no Raw Fish)</option>
+                            </select>
+                        </div>
+                    
+                        <div class="form-group">
+                            <label for="message">Message for the Couple</label>
+                            <textarea id="message" name="message" placeholder="Leave a sweet message or well-wishes"></textarea>
+                        </div>
+                    
+                        <button type="submit" class="btn">Submit RSVP</button>
+                    </form>
+                    <p style="margin-top: 1rem; font-size: 0.875rem; text-align: center;">Or email us at <a href="mailto:rsvp@sarahandmichael.com?subject=Wedding RSVP&body=Name: %0AAttending: Yes/No %0ANumber of Guests: %0ADietary Restrictions:">rsvp@sarahandmichael.com</a></p>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Post Wedding Section -->
+        <section id="post-wedding" class="section post-wedding">
+            <div class="container">
+                <h2 class="section-title">After the Wedding</h2>
+                <div class="thank-you">
+                    <h3 class="pressure-text" data-value="Thank You!">Thank You!</h3>
+                    <p>We're so grateful to everyone who helped make our special day unforgettable. Check back here after the wedding for photos from our celebration!</p>
+                </div>
+    <style>
+                    .pressure-text {
+                        position: relative;
+                        display: inline-block;
+                        font-size: 3rem;
+                        color: var(--accent);
+                        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+                        transition: all 0.3s ease;
+                        cursor: default;
+                        user-select: none;
+                    }
+    
+                    .pressure-text:hover {
+                        transform: scale(1.05);
+                        text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+                    }
+                </style>
+    
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const pressureText = document.querySelector('.pressure-text');
+                        const originalText = pressureText.textContent;
+                        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                        
+                        pressureText.addEventListener('mouseover', () => {
+                            let iteration = 0;
+                            const interval = setInterval(() => {
+                                pressureText.textContent = pressureText.textContent
+                                    .split('')
+                                    .map((letter, index) => {
+                                        if(index < iteration) {
+                                            return originalText[index];
+                                        }
+                                        return letters[Math.floor(Math.random() * letters.length)];
+                                    })
+                                    .join('');
+                                
+                                if(iteration >= originalText.length) {
+                                    clearInterval(interval);
+                                    pressureText.textContent = originalText;
+                                }
+                                
+                                iteration += 1 / 3;
+                            }, 30);
+                        });
+                    });
+                </script>
+    <div class="photo-upload">
+                    <h3>Share Your Photos</h3>
+                    <p>We'd love to see your photos from our wedding day! You can upload them to our shared album:</p>
+                    <a href="https://dropbox.com" class="btn" style="margin-top: 1rem;">Upload Photos</a>
+                    <p style="margin-top: 1rem; font-size: 0.875rem;">Note: Actual photo upload functionality would require connecting to a service like Dropbox or Google Drive.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+    <footer>
+            <div class="container">
+                <div class="footer-logo">Sarah & Michael</div>
+                <p>June 15, 2024</p>
+                <ul class="social-links">
+                    <li><a href="#"><span>📱</span></a></li>
+                    <li><a href="#"><span>📷</span></a></li>
+                    <li><a href="#"><span>💌</span></a></li>
+                </ul>
+                <p class="copyright">&copy; 2024 Sarah & Michael's Wedding. All rights reserved.</p>
+            </div>
+        </footer>
+        </div>
+
+    
     <style>
         /* Existing styles remain unchanged */
     </style>
