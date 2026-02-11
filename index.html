@@ -718,7 +718,9 @@ content: '';
                     width: 30px;
                     height: 25px;
                     cursor: pointer;
-                    z-index: 2001; /* Above the nav */
+                    z-index: 9999 !important; /* Extremely high to beat any section */
+                    position: relative; /* Ensures z-index is respected */
+                    -webkit-tap-highlight-color: transparent; /* Removes the grey box on click */
                 }
             
                 /* Make sure the hamburger spans have dimensions */
@@ -744,6 +746,12 @@ content: '';
                     padding-top: 2rem;
                     transition: 0.3s ease;
                     z-index: 1000;
+                }
+                /* Ensure the checkbox is accessible to the label */
+                #nav-toggle-1, #nav-toggle-2 {
+                    position: absolute;
+                    opacity: 0;
+                    pointer-events: none;
                 }
             }
         
@@ -1419,16 +1427,6 @@ content: '';
             </style>
 
             <script>
-                // Force the menu to open on mobile touch
-                document.querySelectorAll('.hamburger').forEach(hamburger => {
-                    hamburger.addEventListener('click', function() {
-                        const targetId = this.getAttribute('for');
-                        const checkbox = document.getElementById(targetId);
-                        if (checkbox) {
-                            checkbox.checked = !checkbox.checked;
-                        }
-                    });
-                });
 
                 
                 document.addEventListener('DOMContentLoaded', function() {
