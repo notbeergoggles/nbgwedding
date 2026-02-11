@@ -771,7 +771,92 @@ content: '';
             pointer-events: none;
         }
 
+
+
+
+
+        /* Gallery Overlay - Dark Mode */
+        .gallery-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #121212; /* Deep Dark Background */
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+            display: none; /* Hidden by default */
+        }
         
+        .gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(201, 163, 104, 0.3); /* Metallic border fade */
+            margin-bottom: 30px;
+        }
+        
+        .back-btn {
+            background: transparent;
+            border: 1px solid var(--metallic);
+            color: var(--metallic);
+            padding: 8px 15px;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
+            transition: 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: var(--metallic);
+            color: white;
+        }
+        
+        /* The Photo Grid */
+        .photo-grid {
+            column-count: 3; /* Masonry style */
+            column-gap: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .photo-grid { column-count: 2; }
+        }
+        
+        .photo-item {
+            margin-bottom: 15px;
+            break-inside: avoid;
+            border: 1px solid rgba(201, 163, 104, 0.2);
+            background: #1a1a1a;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        
+        .photo-item img {
+            width: 100%;
+            display: block;
+            border-radius: 2px;
+        }
+        
+        /* Floating Action Button for Upload */
+        .upload-fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 2100;
+        }
+        
+        .btn-upload {
+            background: var(--metallic);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            cursor: pointer;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -1111,9 +1196,8 @@ content: '';
             </script>
 <div class="photo-upload">
                 <h3>Share Your Photos</h3>
-                <p>We'd love to see your photos from our wedding day! You can upload them to our shared album:</p>
-                <a href="https://dropbox.com" class="btn" style="margin-top: 1rem;">Upload Photos</a>
-                <p style="margin-top: 1rem; font-size: 0.875rem;">Note: Actual photo upload functionality would require connecting to a service like Dropbox or Google Drive.</p>
+                <p>We'd love to see your photos from our special day! You can upload them to our shared album:</p>
+                <button class="btn" onclick="toggleGallery('1', true)">Live Gallery</button>
             </div>
         </div>
     </section>
@@ -1131,6 +1215,20 @@ content: '';
             <p class="copyright">&copy; 2024 Sayuri & Kenny's Wedding. All rights reserved.</p>
         </div>
     </footer>
+        <div id="gallery-view-1" class="gallery-overlay">
+            <div class="gallery-header">
+                <button onclick="toggleGallery('1', false)" class="back-btn">← Back to Invite</button>
+                <h2 class="script-font" style="color: var(--metallic); margin: 0;">Solemnisation Gallery</h2>
+            </div>
+            
+            <div id="photo-grid-1" class="photo-grid">
+                </div>
+        
+            <div class="upload-fab">
+                <input type="file" id="file-1" accept="image/*" multiple style="display:none" onchange="uploadImage(this, '1')">
+                <button class="btn-upload" onclick="document.getElementById('file-1').click()">+ Share Photos</button>
+            </div>
+        </div>
     </div>
 
     <!-- IRODORI DAY -->
@@ -1546,6 +1644,20 @@ content: '';
                 <p class="copyright">&copy; 2024 Sayuri & Kenny's Wedding. All rights reserved.</p>
             </div>
         </footer>
+            <div id="gallery-view-2" class="gallery-overlay">
+                <div class="gallery-header">
+                    <button onclick="toggleGallery('1', false)" class="back-btn">← Back to Invite</button>
+                    <h2 class="script-font" style="color: var(--metallic); margin: 0;">Irodori Gallery</h2>
+                </div>
+                
+                <div id="photo-grid-2" class="photo-grid">
+                    </div>
+            
+                <div class="upload-fab">
+                    <input type="file" id="file-2" accept="image/*" multiple style="display:none" onchange="uploadImage(this, '1')">
+                    <button class="btn-upload" onclick="document.getElementById('file-2').click()">+ Share Photos</button>
+                </div>
+            </div>
         </div>
 
     
@@ -1660,5 +1772,81 @@ content: '';
         <span></span>
         <span></span>
     </label>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
+    
+    <script>
+      // 1. YOUR CONFIG (Paste your Blaze/Spark config here)
+      const firebaseConfig = {
+        apiKey: "AIzaSyBs1u7Un6w0QkfBYxM7iXZ14t8itY2Ozts",
+        authDomain: "nbg-wedding-2026.firebaseapp.com",
+        projectId: "nbg-wedding-2026",
+        storageBucket: "nbg-wedding-2026.firebasestorage.app",
+        messagingSenderId: "989514233352",
+        appId: "1:989514233352:web:961897a5b1fe66e0e883bd"
+      };
+    
+      // 2. Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+      const storage = firebase.storage();
+    
+      // 3. Toggle Gallery View
+      function toggleGallery(suffix, show) {
+        const gallery = document.getElementById(`gallery-view-${suffix}`);
+        if (show) {
+            gallery.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Stop scrolling background
+            loadGallery(suffix);
+        } else {
+            gallery.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+      }
+    
+      // 4. Load Gallery (Real-time)
+      function loadGallery(suffix) {
+        db.collection("gallery_photos")
+          .where("groupId", "==", suffix)
+          .orderBy("timestamp", "desc")
+          .onSnapshot((snapshot) => {
+            const grid = document.getElementById(`photo-grid-${suffix}`);
+            grid.innerHTML = ''; // Clear current grid
+            
+            snapshot.forEach((doc) => {
+              const data = doc.data();
+              const item = document.createElement('div');
+              item.className = 'photo-item';
+              item.innerHTML = `<img src="${data.url}" loading="lazy">`;
+              grid.appendChild(item);
+            });
+          });
+      }
+    
+      // 5. Upload Logic
+      async function uploadImage(input, suffix) {
+        const files = input.files;
+        for (let file of files) {
+            const storageRef = storage.ref(`gallery/group-${suffix}/${Date.now()}-${file.name}`);
+            const uploadTask = storageRef.put(file);
+    
+            uploadTask.on('state_changed', 
+                (snapshot) => { /* Could add progress bar logic here */ },
+                (error) => { alert("Upload failed!"); },
+                () => {
+                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                        db.collection("gallery_photos").add({
+                            url: downloadURL,
+                            groupId: suffix,
+                            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                    });
+                }
+            );
+        }
+      }
+    </script>
 </body>
 </html>
