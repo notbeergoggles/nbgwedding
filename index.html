@@ -734,7 +734,6 @@ content: '';
                     background-color: var(--accent) !important; /* Forces the color to show */
                     border-radius: 2px;
                     transition: 0.3s;
-                    z-index: 99999 !important;
                 }
 
                 /* Adjust the menu position to start exactly under the header */
@@ -749,7 +748,12 @@ content: '';
                     align-items: center;
                     padding-top: 2rem;
                     transition: 0.3s ease;
-                    z-index: 1000;
+                    z-index: 9999;
+                }
+
+                /* THE MAGIC CLASS: When this is added via JS, the menu appears */
+                .nav-links.open {
+                    left: 0 !important;
                 }
                 /* Ensure the checkbox is accessible to the label */
                 #nav-toggle-1, #nav-toggle-2 {
@@ -1431,6 +1435,32 @@ content: '';
             </style>
 
             <script>
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Select both hamburgers (for Group 1 and Group 2)
+                    const hamburgers = document.querySelectorAll('.hamburger');
+                    
+                    hamburgers.forEach(burger => {
+                        burger.addEventListener('click', function(e) {
+                            // Prevent the default checkbox behavior which is failing on mobile
+                            e.preventDefault(); 
+                            
+                            // Find the nav-links that is a sibling to this burger's parent
+                            const navLinks = this.closest('nav').querySelector('.nav-links');
+                            
+                            if (navLinks) {
+                                navLinks.classList.toggle('open');
+                            }
+                        });
+                    });
+                
+                    // Close the menu when a link is clicked (so it doesn't stay open after navigating)
+                    document.querySelectorAll('.nav-links a').forEach(link => {
+                        link.addEventListener('click', () => {
+                            document.querySelectorAll('.nav-links').forEach(nav => nav.classList.remove('open'));
+                        });
+                    });
+                });
 
                 
                 document.addEventListener('DOMContentLoaded', function() {
