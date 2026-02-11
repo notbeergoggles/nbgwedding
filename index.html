@@ -36,6 +36,8 @@
             }
         
             header {
+                z-index: 99998 !important; /* Just below the hamburger */
+                position: fixed;
                 width: 100% !important;
                 left: 0 !important;
                 right: 0 !important;
@@ -713,14 +715,15 @@ content: '';
                 .hamburger {
                     display: flex !important;
                     flex-direction: column;
-                    justify-content: center;
-                    gap: 5px;
-                    width: 30px;
-                    height: 25px;
+                    justify-content: space-around;
+                    width: 44px; /* Standard mobile touch target size */
+                    height: 44px; 
+                    padding: 10px; /* Expands the clickable area without moving the lines */
                     cursor: pointer;
-                    z-index: 9999 !important; /* Extremely high to beat any section */
-                    position: relative; /* Ensures z-index is respected */
-                    -webkit-tap-highlight-color: transparent; /* Removes the grey box on click */
+                    position: relative; /* Crucial for z-index */
+                    z-index: 99999 !important; /* The absolute highest value */
+                    background: transparent;
+                    -webkit-tap-highlight-color: rgba(0,0,0,0); /* Removes the tap flicker */
                 }
             
                 /* Make sure the hamburger spans have dimensions */
