@@ -787,7 +787,16 @@ content: '';
             overflow-y: auto;
             padding: 20px;
             box-sizing: border-box;
-            display: none; /* Hidden by default */
+
+            /* Animation Properties */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        /* This class will be added/removed by JS */
+        .gallery-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
         
         .gallery-header {
