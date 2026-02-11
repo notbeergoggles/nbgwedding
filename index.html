@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#FAF9F6">
     <meta name="description" content="Join us as we celebrate our love! Wedding of Sayuri & Kenny">
     <meta property="og:title" content="Sayuri & Kenny's Wedding">
@@ -1419,6 +1419,18 @@ content: '';
             </style>
 
             <script>
+                // Force the menu to open on mobile touch
+                document.querySelectorAll('.hamburger').forEach(hamburger => {
+                    hamburger.addEventListener('click', function() {
+                        const targetId = this.getAttribute('for');
+                        const checkbox = document.getElementById(targetId);
+                        if (checkbox) {
+                            checkbox.checked = !checkbox.checked;
+                        }
+                    });
+                });
+
+                
                 document.addEventListener('DOMContentLoaded', function() {
                     const pressureText = document.querySelector('.pressure-text');
                     const originalText = pressureText.textContent;
