@@ -12,6 +12,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Great+Vibes&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
+        html, body {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* This hides any horizontal scrollbar */
+        }
+        
+        * {
+            box-sizing: border-box; /* Ensures padding doesn't add to the width */
+        }
+        
         :root {
             --bg-primary: #FAF9F6;
             --bg-secondary: #E8DCCB;
@@ -657,50 +668,42 @@ content: '';
                     }
                 }
 
+                header {
+                    width: 100% !important;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    z-index: 2000;
+                    padding: 10px 0;
+                }
+            
                 nav {
                     display: flex !important;
-                    justify-content: space-between !important;
+                    justify-content: space-between !important; /* Pushes Logo left, Hamburger right */
                     align-items: center !important;
+                    padding: 0 20px !important;
                     width: 100%;
-                    padding: 10px 20px;
+                }
+            
+                /* Fix the Logo size so it doesn't take up too much space */
+                .nav-logo {
+                    font-size: 1.2rem !important;
+                    white-space: nowrap; /* Prevents name from wrapping to 2 lines */
                 }
             
                 .hamburger {
-                    display: block !important; /* Ensure it's visible on mobile */
-                    z-index: 1001;
-                    order: 2; /* Forces it to the right */
-                }
-            
-                .nav-logo {
-                    order: 1; /* Keeps logo on the left */
-                }
-            
-                /* Update your selector to handle the new IDs */
-                .nav-toggle:checked ~ .nav-links {
-                    left: 0 !important;
-                }
-            
-                /* 3. Style the 3 lines inside the hamburger */
-                .hamburger span {
-                    width: 100%;
-                    height: 3px;
-                    background-color: var(--accent); /* Uses your existing accent color */
-                    border-radius: 10px;
-                    transition: all 0.3s linear;
-                }
-                .nav-links {
-                    position: fixed;
-                    top: 60px; /* Adjust this to match your header height */
-                    left: -100%;
-                    width: 100%;
-                    height: calc(100vh - 60px);
-                    background-color: var(--bg-primary);
-                    display: flex; /* Ensure it uses flex to align items center */
+                    display: flex !important; /* Changed to flex for alignment */
                     flex-direction: column;
-                    align-items: center;
-                    padding-top: 5rem;
-                    transition: left 0.3s ease;
-                    z-index: 1000;
+                    gap: 4px;
+                    cursor: pointer;
+                }
+            
+                /* Make sure the hamburger spans have dimensions */
+                .hamburger span {
+                    width: 25px;
+                    height: 3px;
+                    background-color: var(--accent);
+                    display: block;
                 }
             }
         
