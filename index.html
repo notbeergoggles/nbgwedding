@@ -25,6 +25,12 @@
             box-sizing: border-box; /* Ensures padding doesn't add to the width */
         }
 
+        body.modal-open {
+            overflow: hidden;
+            width: 100%;
+            position: fixed; /* Hard-lock the background */
+        }
+
         /* 2. Force Containers to fill width */
         @media (max-width: 768px) {
             .container, .main-content, section {
@@ -2082,12 +2088,21 @@ content: '';
         return;
         }    
         if (show) {
-            gallery.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Stop scrolling background
+            gallery.style.display = 'block'; // Show it first
+            // Small timeout to allow display:block to register before fading in
+            setTimeout(() => {
+                gallery.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Lock main page scroll
+            }, 10);
             loadGallery(suffix);
         } else {
             gallery.classList.remove('active');
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = ''; // Unlock main page scroll
+        
+            // Wait for the fade-out animation to finish before killing the display
+            setTimeout(() => {
+                gallery.style.display = 'none';
+            }, 500);
         }
       }
     
