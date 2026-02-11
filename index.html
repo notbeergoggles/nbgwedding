@@ -957,10 +957,20 @@ content: '';
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.9);
-            display: none; /* Hidden by default */
+            display: flex; /* Always flex, but controlled by opacity */
             justify-content: center;
             align-items: center;
             cursor: zoom-out;
+
+            /* Animation */
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        #lightbox.active {
+            opacity: 1;
+            pointer-events: auto;
         }
         
         #lightbox img {
@@ -1940,11 +1950,11 @@ content: '';
       function toggleGallery(suffix, show) {
         const gallery = document.getElementById(`gallery-view-${suffix}`);
         if (show) {
-            gallery.style.display = 'block';
+            gallery.classList.add('active');
             document.body.style.overflow = 'hidden'; // Stop scrolling background
             loadGallery(suffix);
         } else {
-            gallery.style.display = 'none';
+            gallery.classList.remove('active');
             document.body.style.overflow = 'auto';
         }
       }
