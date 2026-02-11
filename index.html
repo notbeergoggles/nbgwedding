@@ -200,8 +200,19 @@ content: '';
         }
         
         .nav-links {
-            display: flex;
+            display: flex !important;
+            flex-direction: row !important; /* Forces horizontal */
+            align-items: center;
             list-style: none;
+            gap: 2rem; /* Consistent spacing between links */
+            margin: 0;
+            padding: 0;
+            position: static; /* Overrides any 'fixed' or 'absolute' from mobile */
+            background: none;
+            width: auto;
+            height: auto;
+            visibility: visible;
+            opacity: 1;
         }
         
         .nav-links li {
