@@ -956,26 +956,27 @@ content: '';
         /* Lightbox Overlay */
         #lightbox {
             position: fixed;
-            z-index: 4000; /* Higher than everything else */
+            /* Change this to be higher than the gallery's z-index */
+            z-index: 10000 !important; 
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex; /* Always flex, but controlled by opacity */
+            background: rgba(0, 0, 0, 0.95); /* Slightly darker for focus */
+            display: flex; 
             justify-content: center;
             align-items: center;
             cursor: zoom-out;
-
+            
             /* Animation */
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s ease;
         }
-
+        
         #lightbox.active {
-            opacity: 1;
-            pointer-events: auto;
+            opacity: 1 !important;
+            pointer-events: auto !important;
         }
         
         #lightbox img {
@@ -996,8 +997,8 @@ content: '';
     </style>
 </head>
 <body>
-    <div id="lightbox" onclick="this.style.display='none'">
-        <img id="lightbox-img" src="" alt="Enlarged view">
+    <div id="lightbox" onclick="this.classList.remove('active')" title="Click anywhere to close">
+        <img id="lightbox-img" src="">
         <div id="lightbox-caption"></div>
     </div>
     <!-- Landing page, Gatekeeper -->
