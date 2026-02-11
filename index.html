@@ -1821,9 +1821,6 @@ content: '';
                 </div>
 
     
-    <style>
-        /* Existing styles remain unchanged */
-    </style>
 <!-- CSS-only mobile menu toggle -->
 <style>
         #nav-toggle {
@@ -1955,6 +1952,7 @@ content: '';
     
       // 3. Toggle Gallery View
       function toggleGallery(suffix, show) {
+        alert("Button clicked for group: " + suffix); // Temporary debug
         const gallery = document.getElementById(`gallery-view-${suffix}`);
         if (show) {
             gallery.classList.add('active');
