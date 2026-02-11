@@ -1899,7 +1899,7 @@ content: '';
         <div id="gallery-view-1" class="gallery-overlay">
                 <div class="gallery-header">
                     <button onclick="toggleGallery('1', false)" class="back-btn">← Back to Invite</button>
-                    <h2 class="script-font" style="color: var(--metallic); margin: 0;">Solemnisation Gallery</h2>
+                    <h2 class="script-font" style="color: var(--metallic); margin: 0; padding: 15px;">Solemnisation Gallery</h2>
                 </div>
     
                 <div id="upload-status-1" class="upload-status-container">
@@ -1919,7 +1919,7 @@ content: '';
         <div id="gallery-view-2" class="gallery-overlay">
                     <div class="gallery-header">
                         <button onclick="toggleGallery('2', false)" class="back-btn">← Back to Invite</button>
-                        <h2 class="script-font" style="color: var(--metallic); margin: 0;">Irodori Gallery</h2>
+                        <h2 class="script-font" style="color: var(--metallic); margin: 0; padding: 15px;">Irodori Gallery</h2>
                     </div>
     
                     <div id="upload-status-2" class="upload-status-container">
@@ -1937,58 +1937,6 @@ content: '';
                 </div>
 
     
-<!-- CSS-only mobile menu toggle -->
-<style>
-        #nav-toggle {
-            display: none;
-        }
-        
-        #nav-toggle:checked ~ .nav-links {
-            left: 0;
-        }
-        
-        .hamburger {
-            width: 24px;
-            height: 24px;
-            position: relative;
-            cursor: pointer;
-        }
-        
-        .hamburger span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            margin: 5px 0;
-            background-color: var(--accent); /* Or var(--text) */
-            transition: 0.4s;
-        }
-        
-        .hamburger span:nth-child(1) {
-            top: 6px;
-        }
-        
-        .hamburger span:nth-child(2) {
-            top: 12px;
-        }
-        
-        .hamburger span:nth-child(3) {
-            top: 18px;
-        }
-        
-        #nav-toggle:checked + .hamburger span:nth-child(1) {
-            transform: rotate(45deg);
-            top: 12px;
-        }
-        
-        #nav-toggle:checked + .hamburger span:nth-child(2) {
-            opacity: 0;
-        }
-        
-        #nav-toggle:checked + .hamburger span:nth-child(3) {
-            transform: rotate(-45deg);
-            top: 12px;
-        }
-    </style>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const hamburger = document.querySelector('.hamburger');
