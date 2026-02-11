@@ -657,23 +657,27 @@ content: '';
                     }
                 }
 
-                /* 1. Ensure the nav keeps items at opposite ends */
                 nav {
-                    padding: 0.5rem 1.5rem;
+                    display: flex !important;
+                    justify-content: space-between !important;
+                    align-items: center !important;
                     width: 100%;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
+                    padding: 10px 20px;
                 }
             
-                /* 2. Style the Hamburger Icon itself */
                 .hamburger {
-                    display: flex; /* Changed from block to flex */
-                    flex-direction: column;
-                    justify-content: space-around;
-                    width: 30px;
-                    height: 25px;
-                    z-index: 1100; /* Ensure it stays above the nav menu */
+                    display: block !important; /* Ensure it's visible on mobile */
+                    z-index: 1001;
+                    order: 2; /* Forces it to the right */
+                }
+            
+                .nav-logo {
+                    order: 1; /* Keeps logo on the left */
+                }
+            
+                /* Update your selector to handle the new IDs */
+                .nav-toggle:checked ~ .nav-links {
+                    left: 0 !important;
                 }
             
                 /* 3. Style the 3 lines inside the hamburger */
@@ -1109,11 +1113,12 @@ content: '';
                 <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#rsvp-1">RSVP</a></li>
             </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <input type="checkbox" id="nav-toggle-1" class="nav-toggle" style="display: none;">
+                <label for="nav-toggle-1" class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </label>
         </nav>
     </header>
 
@@ -1454,11 +1459,12 @@ content: '';
                     <li><a href="#gallery">Gallery</a></li>
                     <li><a href="#rsvp-2">RSVP</a></li>
                 </ul>
-                <div class="hamburger">
+                <input type="checkbox" id="nav-toggle-1" class="nav-toggle" style="display: none;">
+                <label for="nav-toggle-1" class="hamburger">
                     <span></span>
                     <span></span>
                     <span></span>
-                </div>
+                </label>
             </nav>
         </header>
     
@@ -1924,12 +1930,11 @@ content: '';
         
         .hamburger span {
             display: block;
-            width: 100%;
-            height: 2px;
-            background-color: var(--text);
-            position: absolute;
-            left: 0;
-            transition: all 0.3s ease;
+            width: 25px;
+            height: 3px;
+            margin: 5px 0;
+            background-color: var(--accent); /* Or var(--text) */
+            transition: 0.4s;
         }
         
         .hamburger span:nth-child(1) {
@@ -2025,13 +2030,7 @@ content: '';
             }
         });
     </script>
-<!-- Hidden checkbox for mobile menu toggle -->
-<input type="checkbox" id="nav-toggle" style="display: none;">
-    <label for="nav-toggle" class="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-    </label>
+
 
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
