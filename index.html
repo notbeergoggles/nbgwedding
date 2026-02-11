@@ -857,6 +857,86 @@ content: '';
             cursor: pointer;
             font-weight: bold;
         }
+
+
+        /* Gallery Overlay */
+        .gallery-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #121212;
+            z-index: 3000; /* High z-index to cover everything */
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+            display: none;
+        }
+        
+        .gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(201, 163, 104, 0.3);
+            margin-bottom: 30px;
+            position: sticky;
+            top: 0;
+            background: #121212;
+        }
+        
+        /* Photo Grid */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            padding-bottom: 100px;
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid rgba(201, 163, 104, 0.2);
+        }
+        
+        /* Progress Container */
+        .upload-status-container {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 400px;
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--metallic);
+            display: none;
+            z-index: 3100;
+        }
+        
+        progress {
+            width: 100%;
+            height: 10px;
+            accent-color: var(--metallic);
+        }
+        
+        .btn-upload-fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--metallic);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 3100;
+        }
     </style>
 </head>
 <body>
@@ -1219,6 +1299,11 @@ content: '';
             <div class="gallery-header">
                 <button onclick="toggleGallery('1', false)" class="back-btn">← Back to Invite</button>
                 <h2 class="script-font" style="color: var(--metallic); margin: 0;">Solemnisation Gallery</h2>
+            </div>
+
+            <div id="upload-status-1" class="upload-status-container">
+                <p id="status-text-1" style="color: white; font-size: 0.8rem; margin-bottom: 5px;">Uploading...</p>
+                <progress id="progress-bar-1" value="0" max="100"></progress>
             </div>
             
             <div id="photo-grid-1" class="photo-grid">
@@ -1649,6 +1734,11 @@ content: '';
                     <button onclick="toggleGallery('1', false)" class="back-btn">← Back to Invite</button>
                     <h2 class="script-font" style="color: var(--metallic); margin: 0;">Irodori Gallery</h2>
                 </div>
+
+                <div id="upload-status-2" class="upload-status-container">
+                    <p id="status-text-2" style="color: white; font-size: 0.8rem; margin-bottom: 5px;">Uploading...</p>
+                    <progress id="progress-bar-2" value="0" max="100"></progress>
+                </div>
                 
                 <div id="photo-grid-2" class="photo-grid">
                     </div>
@@ -1828,20 +1918,45 @@ content: '';
       // 5. Upload Logic
       async function uploadImage(input, suffix) {
         const files = input.files;
+        if (files.length === 0) return;
+    
+        // Ask for guest name once for the batch
+        const name = prompt("Enter your name so we know who shared these! 😊") || "Anonymous";
+        
+        const statusContainer = document.getElementById(`upload-status-${suffix}`);
+        const progressBar = document.getElementById(`progress-bar-${suffix}`);
+        const statusText = document.getElementById(`status-text-${suffix}`);
+    
         for (let file of files) {
+            statusContainer.style.display = 'block';
+            statusText.innerText = `Uploading: ${file.name}`;
+    
             const storageRef = storage.ref(`gallery/group-${suffix}/${Date.now()}-${file.name}`);
             const uploadTask = storageRef.put(file);
     
             uploadTask.on('state_changed', 
-                (snapshot) => { /* Could add progress bar logic here */ },
-                (error) => { alert("Upload failed!"); },
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    progressBar.value = progress;
+                },
+                (error) => { 
+                    alert("Upload failed!"); 
+                    statusContainer.style.display = 'none';
+                },
                 () => {
                     uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
                         db.collection("gallery_photos").add({
                             url: downloadURL,
                             groupId: suffix,
+                            guestName: name, // Saves the guest name
                             timestamp: firebase.firestore.FieldValue.serverTimestamp()
                         });
+                        
+                        // Hide progress bar once the loop finishes (or after a slight delay)
+                        setTimeout(() => {
+                            statusContainer.style.display = 'none';
+                            progressBar.value = 0;
+                        }, 1000);
                     });
                 }
             );
