@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#FAF9F6">
     <meta name="description" content="Join us as we celebrate our love! Wedding of Sayuri & Kenny">
     <meta property="og:title" content="Sayuri & Kenny's Wedding">
     <meta property="og:description" content="Celebrating our love in 2026">
@@ -715,7 +716,7 @@ content: '';
                     justify-content: center;
                     gap: 5px;
                     width: 30px;
-                    height: 30px;
+                    height: 25px;
                     cursor: pointer;
                     z-index: 2001; /* Above the nav */
                 }
@@ -729,20 +730,24 @@ content: '';
                     border-radius: 2px;
                     transition: 0.3s;
                 }
+
+                /* Adjust the menu position to start exactly under the header */
+                .nav-links {
+                    position: fixed;
+                    top: 70px; /* Match header height */
+                    left: -100%;
+                    width: 100%;
+                    height: calc(100vh - 70px);
+                    background-color: var(--bg-primary);
+                    flex-direction: column;
+                    align-items: center;
+                    padding-top: 2rem;
+                    transition: 0.3s ease;
+                    z-index: 1000;
+                }
             }
         
-.nav-links {
-                position: fixed;
-                top: 60px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 60px);
-                background-color: var(--bg-primary);
-                flex-direction: column;
-                align-items: center;
-                padding: 2rem 0;
-                transition: left 0.3s ease;
-            }
+
             
             .nav-links.active {
                 left: 0;
@@ -750,10 +755,6 @@ content: '';
             
             .nav-links li {
                 margin: 1rem 0;
-            }
-            
-            .hamburger {
-                display: block;
             }
             
             .hero h1 {
