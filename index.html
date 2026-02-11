@@ -776,30 +776,32 @@ content: '';
 
 
         /* Gallery Overlay - Dark Mode */
+        /* Gallery Overlay Base */
         .gallery-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #121212; /* Deep Dark Background */
-            z-index: 2000;
+            background-color: #121212 !important; /* Ensure black background */
+            z-index: 9999 !important; /* Move it above EVERYTHING */
             overflow-y: auto;
             padding: 20px;
             box-sizing: border-box;
-
-            /* Animation Properties */
-            display: block; 
+            
+            /* Animation - Start Hidden */
             opacity: 0;
             visibility: hidden;
-            pointer-events: none; /* This prevents it from blocking clicks while hidden */
+            pointer-events: none;
+            display: block !important; /* Must be block for opacity to work */
             transition: opacity 0.5s ease, visibility 0.5s ease;
         }
-        /* This class will be added/removed by JS */
+        
+        /* When Active */
         .gallery-overlay.active {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto; /* This turns clicks back on when visible */
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
         }
         
         .gallery-header {
@@ -1954,6 +1956,11 @@ content: '';
       function toggleGallery(suffix, show) {
         alert("Button clicked for group: " + suffix); // Temporary debug
         const gallery = document.getElementById(`gallery-view-${suffix}`);
+
+        if (!gallery) {
+        console.error("Could not find element with ID: " + galleryId);
+        return;
+        }    
         if (show) {
             gallery.classList.add('active');
             document.body.style.overflow = 'hidden'; // Stop scrolling background
