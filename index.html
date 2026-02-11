@@ -994,6 +994,43 @@ content: '';
             font-family: 'Lato', sans-serif;
             text-align: center;
         }
+
+
+        /* Mobile Styles (Phones and Tablets) */
+        @media screen and (max-width: 768px) {
+            
+            /* 1. Make containers flexible */
+            .container, .main-content, #group-1-content, #group-2-content {
+                width: 95% !important;
+                max-width: none !important;
+                margin: 10px auto !important;
+                padding: 15px !important;
+            }
+        
+            /* 2. Adjust font sizes so they don't wrap weirdly */
+            h1, .script-font {
+                font-size: 2.5rem !important;
+            }
+        
+            /* 3. Stack the Photo Grid into 2 columns instead of 3 or 4 */
+            .photo-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 10px !important;
+            }
+        
+            /* 4. Ensure images don't overflow */
+            img {
+                max-width: 100%;
+                height: auto;
+            }
+        
+            /* 5. Adjust Buttons for thumbs */
+            .btn, .btn-upload-fab {
+                width: 100%; /* Full width buttons are easier to tap on mobile */
+                font-size: 1.1rem;
+                padding: 15px;
+            }
+        }
     </style>
 </head>
 <body>
