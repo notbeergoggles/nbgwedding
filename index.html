@@ -937,9 +937,45 @@ content: '';
             font-weight: bold;
             z-index: 3100;
         }
+
+
+        /* Lightbox Overlay */
+        #lightbox {
+            position: fixed;
+            z-index: 4000; /* Higher than everything else */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+        }
+        
+        #lightbox img {
+            max-width: 90%;
+            max-height: 80%;
+            border: 2px solid var(--metallic);
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            border-radius: 4px;
+        }
+        
+        #lightbox-caption {
+            position: absolute;
+            bottom: 10%;
+            color: var(--metallic);
+            font-family: 'Lato', sans-serif;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
+    <div id="lightbox" onclick="this.style.display='none'">
+        <img id="lightbox-img" src="" alt="Enlarged view">
+        <div id="lightbox-caption"></div>
+    </div>
     <!-- Landing page, Gatekeeper -->
     <div id="gatekeeper">
         <div class="gate-content">
@@ -1679,6 +1715,15 @@ content: '';
                 </style>
     
                 <script>
+                    function openLightbox(url, name) {
+                        const lightbox = document.getElementById('lightbox');
+                        const lbImg = document.getElementById('lightbox-img');
+                        const lbCap = document.getElementById('lightbox-caption');
+                    
+                        lbImg.src = url;
+                        lbCap.innerText = "Shared by " + name;
+                        lightbox.style.display = 'flex';
+                    }
                     document.addEventListener('DOMContentLoaded', function() {
                         const pressureText = document.querySelector('.pressure-text');
                         const originalText = pressureText.textContent;
@@ -1899,7 +1944,7 @@ content: '';
       // 4. Load Gallery (Real-time)
       function loadGallery(suffix) {
         db.collection("gallery_photos")
-          .where("groupId", "==", suffix)
+          .where("groupId", "==", String(suffix))
           .orderBy("timestamp", "desc")
           .onSnapshot((snapshot) => {
             const grid = document.getElementById(`photo-grid-${suffix}`);
@@ -1909,7 +1954,14 @@ content: '';
               const data = doc.data();
               const item = document.createElement('div');
               item.className = 'photo-item';
-              item.innerHTML = `<img src="${data.url}" loading="lazy">`;
+              item.innerHTML = `
+                    <img src="${data.url}" loading="lazy" 
+                         onclick="openLightbox('${data.url}', '${data.guestName || 'Anonymous'}')" 
+                         style="cursor: zoom-in;">
+                    <div style="color: var(--metallic); font-size: 0.7rem; margin-top: 5px; text-align: center;">
+                        Shared by ${data.guestName || 'Anonymous'}
+                    </div>
+                `;
               grid.appendChild(item);
             });
           });
