@@ -878,12 +878,14 @@ content: '';
             background-color: #121212 !important; /* Ensure black background */
             z-index: 9999 !important; /* Move it above EVERYTHING */
             overflow-y: auto;
+            overflow-x: hidden; /* Prevent the gallery itself from scrolling right */
             padding: 20px;
             box-sizing: border-box;
             
             /* Animation - Start Hidden */
             opacity: 0;
             visibility: hidden;
+            display: none; /* Add this */
             pointer-events: none;
             display: block !important; /* Must be block for opacity to work */
             transition: opacity 0.5s ease, visibility 0.5s ease;
@@ -891,6 +893,7 @@ content: '';
         
         /* When Active */
         .gallery-overlay.active {
+            display: block; /* Bring it back to life */
             opacity: 1 !important;
             visibility: visible !important;
             pointer-events: auto !important;
