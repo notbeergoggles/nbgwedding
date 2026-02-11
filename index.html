@@ -1741,7 +1741,7 @@ content: '';
                     
                         lbImg.src = url;
                         lbCap.innerText = "Shared by " + name;
-                        lightbox.style.display = 'flex';
+                        lightbox.classList.add('active'); // Use class instead of display
                     }
                     document.addEventListener('DOMContentLoaded', function() {
                         const pressureText = document.querySelector('.pressure-text');
