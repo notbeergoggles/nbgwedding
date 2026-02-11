@@ -789,14 +789,17 @@ content: '';
             box-sizing: border-box;
 
             /* Animation Properties */
+            display: block; 
             opacity: 0;
             visibility: hidden;
+            pointer-events: none; /* This prevents it from blocking clicks while hidden */
             transition: opacity 0.5s ease, visibility 0.5s ease;
         }
         /* This class will be added/removed by JS */
         .gallery-overlay.active {
             opacity: 1;
             visibility: visible;
+            pointer-events: auto; /* This turns clicks back on when visible */
         }
         
         .gallery-header {
