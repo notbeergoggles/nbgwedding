@@ -1412,7 +1412,7 @@ content: '';
                 </div>
             </div>
 <div class="rsvp-form-container" id="rsvp-1">
-                <form action="https://script.google.com/macros/s/AKfycbx6HAw22ttkaO6kXzGaW55z393qJv97By2oLRM9L_XTEUmzk293Pw7_eKcMybicQuxj/exec" method="POST">
+                <form action="https://script.google.com/macros/s/AKfycbx6HAw22ttkaO6kXzGaW55z393qJv97By2oLRM9L_XTEUmzk293Pw7_eKcMybicQuxj/exec" method="POST" onsubmit="handleFormSubmit(event, 1)">
                     <input type="hidden" name="Event_Type" value="Solemnisation">
                     <div class="form-group">
                         <label for="name-1">Full Name</label>
@@ -1857,7 +1857,7 @@ content: '';
                     </div>
                 </div>
     <div class="rsvp-form-container" id="rsvp-2">
-                    <form action="https://script.google.com/macros/s/AKfycbx6HAw22ttkaO6kXzGaW55z393qJv97By2oLRM9L_XTEUmzk293Pw7_eKcMybicQuxj/exec" method="POST">
+                    <form action="https://script.google.com/macros/s/AKfycbx6HAw22ttkaO6kXzGaW55z393qJv97By2oLRM9L_XTEUmzk293Pw7_eKcMybicQuxj/exec" method="POST" onsubmit="handleFormSubmit(event, 2)">
                         <input type="hidden" name="Event_Type" value="Dinner">
                         <div class="form-group">
                             <label for="name-2">Full Name</label>
@@ -2248,6 +2248,51 @@ content: '';
             );
         }
       }
+
+    function handleFormSubmit(event, suffix) {
+        event.preventDefault(); // Prevents the blank "Success" page
+        
+        const form = event.target;
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerText;
+        
+        // Show loading state
+        submitBtn.innerText = "Sending...";
+        submitBtn.disabled = true;
+    
+        const formData = new FormData(form);
+        
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            mode: 'no-cors' // Required for Google Apps Script
+        })
+        .then(() => {
+            // Show the Thank You popup
+            document.getElementById('thank-you-modal').style.display = 'flex';
+            
+            // Reset the form and the button
+            form.reset();
+            submitBtn.innerText = originalText;
+            submitBtn.disabled = false;
+            
+            // Hide the plus-one field if it was open
+            togglePlusOneName(suffix);
+        })
+        .catch(error => {
+            alert("Oops! Something went wrong. Please try again.");
+            submitBtn.innerText = originalText;
+            submitBtn.disabled = false;
+        });
+    }
     </script>
+    <div id="thank-you-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:20000; justify-content:center; align-items:center;">
+        <div style="background:white; padding:40px; border-radius:15px; text-align:center; max-width:400px; position:relative; border: 2px solid var(--metallic);">
+            <i class="bi bi-balloon-heart" style="font-size: 3rem; color: var(--accent);"></i>
+            <h2 class="script-font" style="font-size: 3rem; margin: 15px 0;">Thank You!</h2>
+            <p style="font-family: 'Lato', sans-serif;">Your RSVP has been received. We can't wait to celebrate with you!</p>
+            <button onclick="document.getElementById('thank-you-modal').style.display='none'" class="btn" style="margin-top:20px;">Close</button>
+        </div>
+    </div>
 </body>
 </html>
