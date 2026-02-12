@@ -1165,6 +1165,16 @@ content: '';
                 padding: 15px;
             }
         }
+
+        .rsvp-form-container label {
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        .rsvp-form-container input[type="text"] {
+            width: 100%;
+            padding: 10px;
+        }
     </style>
 </head>
 <body>
@@ -1393,7 +1403,7 @@ content: '';
                     <div class="countdown-label" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Seconds</div>
                 </div>
             </div>
-<div class="rsvp-form-1">
+<div class="rsvp-form-container" id="rsvp-1">
                 <form action="https://example.com/rsvp" method="POST">
                     <input type="hidden" name="Event_Type" value="Solemnisation">
                     <div class="form-group">
@@ -1419,7 +1429,7 @@ content: '';
                 
                     <div class="form-group" style="border-top: 1px solid #eee; pt-1rem; margin-top: 1.5rem; padding-top: 1rem;">
                         <label>Bringing a Plus One?</label>
-                        <select id="plus-one-select-1" name="plus_one" onchange="togglePlusOneName()">
+                        <select id="plus-one-select-1" name="plus_one" onchange="togglePlusOneName(1)">
                             <option value="no">No, just me</option>
                             <option value="yes">Yes, I'm bringing someone</option>
                         </select>
@@ -1838,7 +1848,7 @@ content: '';
                         <div class="countdown-label" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Seconds</div>
                     </div>
                 </div>
-    <div class="rsvp-form-2">
+    <div class="rsvp-form-container" id="rsvp-2">
                     <form action="https://example.com/rsvp" method="POST">
                         <input type="hidden" name="Event_Type" value="Dinner">
                         <div class="form-group">
@@ -2028,19 +2038,13 @@ content: '';
 
     
     <script>
-        function togglePlusOneName(groupNumber) {
-            // If no groupNumber is provided (like in Group 1), it defaults to Group 1
-            const suffix = groupNumber ? `-${groupNumber}` : '';
-            
-            const selectElement = document.getElementById(`plus-one-select${suffix}`);
-            const nameGroup = document.getElementById(`plus-one-name-group${suffix}`);
+        function togglePlusOneName(suffix) {
+            // This now works perfectly for (1) or (2)
+            const selectElement = document.getElementById(`plus-one-select-${suffix}`);
+            const nameGroup = document.getElementById(`plus-one-name-group-${suffix}`);
             
             if (selectElement && nameGroup) {
-                if (selectElement.value === 'yes') {
-                    nameGroup.style.display = 'block';
-                } else {
-                    nameGroup.style.display = 'none';
-                }
+                nameGroup.style.display = selectElement.value === 'yes' ? 'block' : 'none';
             }
         }
         
