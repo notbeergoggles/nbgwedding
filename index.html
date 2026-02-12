@@ -516,7 +516,6 @@ content: '';
         }
 /* RSVP Section */
         .rsvp-form {
-            white-space: nowrap;
             max-width: 600px;
             margin: 0 auto;
             background-color: white;
@@ -1183,6 +1182,25 @@ content: '';
             padding-top: 1rem;
             border-top: 1px solid #eee;
         }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-top: 5px;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap; /* This keeps 'Yes' next to its button */
+        }
+        
+        .radio-option input {
+            width: auto !important; /* Prevents the radio button from stretching */
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -1425,13 +1443,15 @@ content: '';
                 
                     <div class="form-group">
                         <label>Will you be attending?</label>
-                        <div style="display: flex; gap: 1rem;">
-                            <label style="display: flex; align-items: center; font-weight:400; color:black;">
-                                <input type="radio" name="attending" value="yes" required style="margin-right: 0.5rem;"> Yes, I'll be there!
-                            </label>
-                            <label style="display: flex; align-items: center; font-weight:400; color:black;">
-                                <input type="radio" name="attending" value="no" required style="margin-right: 0.5rem;"> Regretfully, No
-                            </label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="attending-yes-1" name="attending" value="yes" required>
+                                <label for="attending-yes-1" style="margin:0;">Yes, I'll be there!</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="attending-no-1" name="attending" value="no" required>
+                                <label for="attending-no-1" style="margin:0;">Regretfully, no</label>
+                            </div>
                         </div>
                     </div>
                 
@@ -1870,13 +1890,15 @@ content: '';
                     
                         <div class="form-group">
                             <label>Will you be attending?</label>
-                            <div style="display: flex; gap: 1rem;">
-                                <label style="display: flex; align-items: center; font-weight:400; color:black;">
-                                    <input type="radio" name="attending" value="yes" required style="margin-right: 0.5rem;"> Yes, I'll be there!
-                                </label>
-                                <label style="display: flex; align-items: center; font-weight:400; color:black;">
-                                    <input type="radio" name="attending" value="no" required style="margin-right: 0.5rem;"> Regretfully, No
-                                </label>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" id="attending-yes-2" name="attending" value="yes" required>
+                                    <label for="attending-yes-2" style="margin:0;">Yes, I'll be there!</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="attending-no-2" name="attending" value="no" required>
+                                    <label for="attending-no-2" style="margin:0;">Regretfully, no</label>
+                                </div>
                             </div>
                         </div>
                     
