@@ -2047,7 +2047,8 @@ content: '';
     
     <script>
         function togglePlusOneName(suffix) {
-            // This looks for 'plus-one-select-1' or 'plus-one-select-2' based on the suffix
+            // If you pass '1', it looks for 'plus-one-select-1'
+            // If you pass '2', it looks for 'plus-one-select-2'
             const selectId = suffix ? `plus-one-select-${suffix}` : 'plus-one-select';
             const groupId = suffix ? `plus-one-name-group-${suffix}` : 'plus-one-name-group';
             
@@ -2055,11 +2056,8 @@ content: '';
             const nameGroup = document.getElementById(groupId);
             
             if (selectElement && nameGroup) {
-                if (selectElement.value === 'yes') {
-                    nameGroup.style.display = 'block';
-                } else {
-                    nameGroup.style.display = 'none';
-                }
+                // Toggle visibility based on value
+                nameGroup.style.display = (selectElement.value === 'yes') ? 'block' : 'none';
             }
         }
         
