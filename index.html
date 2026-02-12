@@ -1175,6 +1175,14 @@ content: '';
             width: 100%;
             padding: 10px;
         }
+
+        /* This styles BOTH groups at once */
+        .plus-one-name-group {
+            display: none; /* Keep it hidden until the JS shows it */
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
     </style>
 </head>
 <body>
@@ -2039,12 +2047,19 @@ content: '';
     
     <script>
         function togglePlusOneName(suffix) {
-            // This now works perfectly for (1) or (2)
-            const selectElement = document.getElementById(`plus-one-select-${suffix}`);
-            const nameGroup = document.getElementById(`plus-one-name-group-${suffix}`);
+            // This looks for 'plus-one-select-1' or 'plus-one-select-2' based on the suffix
+            const selectId = suffix ? `plus-one-select-${suffix}` : 'plus-one-select';
+            const groupId = suffix ? `plus-one-name-group-${suffix}` : 'plus-one-name-group';
+            
+            const selectElement = document.getElementById(selectId);
+            const nameGroup = document.getElementById(groupId);
             
             if (selectElement && nameGroup) {
-                nameGroup.style.display = selectElement.value === 'yes' ? 'block' : 'none';
+                if (selectElement.value === 'yes') {
+                    nameGroup.style.display = 'block';
+                } else {
+                    nameGroup.style.display = 'none';
+                }
             }
         }
         
