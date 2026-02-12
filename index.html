@@ -201,19 +201,10 @@ content: '';
         }
         
         .nav-links {
-            display: flex !important;
-            flex-direction: row !important; /* Forces horizontal */
-            align-items: center;
+            display: flex;
             list-style: none;
-            gap: 2rem; /* Consistent spacing between links */
-            margin: 0;
-            padding: 0;
-            position: static; /* Overrides any 'fixed' or 'absolute' from mobile */
-            background: none;
-            width: auto;
-            height: auto;
-            visibility: visible;
-            opacity: 1;
+            gap: 2rem;
+            align-items: center;
         }
         
         .nav-links li {
@@ -243,7 +234,7 @@ content: '';
             width: 100%;
         }
         
-        .hamburger {
+        .hamburger, .nav-toggle {
             display: none;
             cursor: pointer;
         }
@@ -718,6 +709,7 @@ content: '';
             
                 nav {
                     display: flex !important;
+                    flex-direction: row !important;
                     justify-content: space-between !important; /* Pushes Logo left, Hamburger right */
                     align-items: center !important;
                     padding: 0 20px !important;
