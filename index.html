@@ -49,6 +49,21 @@
                 left: 0 !important;
                 right: 0 !important;
             }
+            
+            .hero {
+                min-height: 60vh !important; /* Reduce height on mobile so it doesn't take the whole screen */
+                background-attachment: scroll !important; /* "Fixed" backgrounds often glitch on mobile browsers */
+                background-position: center center !important;
+                width: 100% !important;
+                padding: 0 !important;
+            }
+            
+            .hero-content {
+                width: 90% !important; /* Give it some breathing room from the edges */
+                max-width: none !important;
+                padding: 20px !important;
+                margin: 0 auto !important;
+            }
         }
         
         :root {
