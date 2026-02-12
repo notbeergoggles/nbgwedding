@@ -1228,6 +1228,41 @@ content: '';
             width: auto !important; /* Prevents the radio button from stretching */
             margin: 0;
         }
+
+        .bling-text {
+            /* Create a metallic gradient background */
+            background: linear-gradient(
+                to right, 
+                #bf953f 20%, 
+                #fcf6ba 40%, 
+                #b38728 50%, 
+                #fcf6ba 60%, 
+                #bf953f 80%
+            );
+            background-size: 200% auto;
+            color: #000; /* Fallback color */
+            
+            /* Clip the background to the text */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            
+            /* The Shine Animation */
+            animation: shine 4s linear infinite;
+            display: inline-block;
+            text-shadow: 0 0 10px rgba(252, 246, 186, 0);
+            animation: shine 4s linear infinite, sparkle 2s ease-in-out infinite;
+        }
+        
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+        @keyframes sparkle {
+            0%, 100% { text-shadow: 0 0 10px rgba(252, 246, 186, 0); }
+            50% { text-shadow: 0 0 20px rgba(252, 246, 186, 0.8), 0 0 30px rgba(252, 246, 186, 0.4); }
+        }
+        
     </style>
 </head>
 <body>
@@ -1302,7 +1337,7 @@ content: '';
     <!-- Our Story Section -->
     <section id="our-story" class="section our-story">
         <div class="container">
-            <h2 class="section-title">Our Story</h2>
+            <h2 class="section-title bling-text">Our Story</h2>
             <div class="story-content">
                 <div class="story-text">
                     <p>We first met in college during a study abroad program in Italy. Michael was studying architecture and Sarah was studying art history. Our love blossomed over shared walks through ancient ruins and late-night conversations in tiny cafes.</p>
