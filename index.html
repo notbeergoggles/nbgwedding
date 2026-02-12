@@ -2028,18 +2028,19 @@ content: '';
 
     
     <script>
-        function togglePlusOneName(suffix) {
-            // If no suffix is passed (Group 1), it defaults to empty strings
-            const selectId = suffix ? `plus-one-select-${suffix}` : 'plus-one-select';
-            const groupId = suffix ? `plus-one-name-group-${suffix}` : 'plus-one-name-group';
+        function togglePlusOneName(groupNumber) {
+            // If no groupNumber is provided (like in Group 1), it defaults to Group 1
+            const suffix = groupNumber ? `-${groupNumber}` : '';
             
-            const selectElement = document.getElementById(selectId);
-            const nameGroup = document.getElementById(groupId);
+            const selectElement = document.getElementById(`plus-one-select${suffix}`);
+            const nameGroup = document.getElementById(`plus-one-name-group${suffix}`);
             
-            if (selectElement.value === 'yes') {
-                nameGroup.style.display = 'block';
-            } else {
-                nameGroup.style.display = 'none';
+            if (selectElement && nameGroup) {
+                if (selectElement.value === 'yes') {
+                    nameGroup.style.display = 'block';
+                } else {
+                    nameGroup.style.display = 'none';
+                }
             }
         }
         
