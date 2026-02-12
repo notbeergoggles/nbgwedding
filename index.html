@@ -1393,14 +1393,15 @@ content: '';
                     <div class="countdown-label" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Seconds</div>
                 </div>
             </div>
-<div class="rsvp-form">
+<div class="rsvp-form-1">
                 <form action="https://example.com/rsvp" method="POST">
+                    <input type="hidden" name="Event_Type" value="Solemnisation">
                     <div class="form-group">
-                        <label for="name">Full Name</label>
+                        <label for="name-1">Full Name</label>
                         <input type="text" id="name" name="name" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email Address</label>
+                        <label for="email-1">Email Address</label>
                         <input type="email" id="email" name="email">
                     </div>
                 
@@ -1418,14 +1419,14 @@ content: '';
                 
                     <div class="form-group" style="border-top: 1px solid #eee; pt-1rem; margin-top: 1.5rem; padding-top: 1rem;">
                         <label>Bringing a Plus One?</label>
-                        <select id="plus-one-select" name="plus_one" onchange="togglePlusOneName()">
+                        <select id="plus-one-select-1" name="plus_one" onchange="togglePlusOneName()">
                             <option value="no">No, just me</option>
                             <option value="yes">Yes, I'm bringing someone</option>
                         </select>
                     </div>
                     <div class="form-group" id="plus-one-name-group" style="display: none;">
-                        <label for="plus-one-name">Plus One's Full Name</label>
-                        <input type="text" id="plus-one-name" name="plus_one_name" placeholder="Guest's name">
+                        <label for="plus-one-name-1">Plus One's Full Name</label>
+                        <input type="text" id="plus-one-name-1" name="plus_one_name" placeholder="Guest's name">
                     </div>
                 
                     <div class="form-group">
@@ -1837,14 +1838,15 @@ content: '';
                         <div class="countdown-label" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Seconds</div>
                     </div>
                 </div>
-    <div class="rsvp-form">
+    <div class="rsvp-form-2">
                     <form action="https://example.com/rsvp" method="POST">
+                        <input type="hidden" name="Event_Type" value="Dinner">
                         <div class="form-group">
-                            <label for="name">Full Name</label>
+                            <label for="name-2">Full Name</label>
                             <input type="text" id="name" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">Email Address</label>
+                            <label for="email-2">Email Address</label>
                             <input type="email" id="email" name="email">
                         </div>
                     
@@ -1862,14 +1864,14 @@ content: '';
                     
                         <div class="form-group" style="border-top: 1px solid #eee; pt-1rem; margin-top: 1.5rem; padding-top: 1rem;">
                             <label>Bringing a Plus One?</label>
-                            <select id="plus-one-select" name="plus_one" onchange="togglePlusOneName()">
+                            <select id="plus-one-select-2" name="plus_one" onchange="togglePlusOneName(2)">
                                 <option value="no">No, just me</option>
                                 <option value="yes">Yes, I'm bringing someone</option>
                             </select>
                         </div>
                         <div class="form-group" id="plus-one-name-group" style="display: none;">
-                            <label for="plus-one-name">Plus One's Full Name</label>
-                            <input type="text" id="plus-one-name" name="plus_one_name" placeholder="Guest's name">
+                            <label for="plus-one-name-2">Plus One's Full Name</label>
+                            <input type="text" id="plus-one-name-2" name="plus_one_name" placeholder="Guest's name">
                         </div>
                     
                         <div class="form-group">
@@ -2026,6 +2028,21 @@ content: '';
 
     
     <script>
+        function togglePlusOneName(suffix) {
+            // If no suffix is passed (Group 1), it defaults to empty strings
+            const selectId = suffix ? `plus-one-select-${suffix}` : 'plus-one-select';
+            const groupId = suffix ? `plus-one-name-group-${suffix}` : 'plus-one-name-group';
+            
+            const selectElement = document.getElementById(selectId);
+            const nameGroup = document.getElementById(groupId);
+            
+            if (selectElement.value === 'yes') {
+                nameGroup.style.display = 'block';
+            } else {
+                nameGroup.style.display = 'none';
+            }
+        }
+        
         document.addEventListener('DOMContentLoaded', () => {
             const hamburger = document.querySelector('.hamburger');
             const navLinks = document.querySelector('.nav-links');
