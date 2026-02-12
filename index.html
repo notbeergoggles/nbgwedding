@@ -1240,11 +1240,11 @@ content: '';
                 #bf953f 80%
             );
             background-size: 200% auto;
-            color: #000; /* Fallback color */
-            
-            /* Clip the background to the text */
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            /* Force these to stay active on mobile */
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            color: transparent !important;
             
             /* The Shine Animation */
             animation: shine 4s linear infinite;
