@@ -53,7 +53,7 @@
             .hero {
                 min-height: 60vh !important; /* Reduce height on mobile so it doesn't take the whole screen */
                 background-attachment: scroll !important; /* "Fixed" backgrounds often glitch on mobile browsers */
-                background-position: center center !important;
+                background-position: 30% center;
                 width: 100% !important;
                 padding: 0 !important;
             }
@@ -278,10 +278,36 @@ content: '';
             justify-content: center;
             text-align: center;
             margin-top: 0px; /* For fixed header */
+            animation: heroReveal 2.5s ease-out forwards;
+            overflow: hidden; /* Keeps the zoom contained */
+        }
+
+        /* The Animation Logic */
+        @keyframes heroReveal {
+            0% {
+                opacity: 0;
+                transform: scale(1.1); /* Starts slightly zoomed in */
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);   /* Settles to normal size */
+            }
         }
         
         .hero-content {
+            animation: fadeInUp 1.5s ease-out 0.8s both; /* 0.8s delay so the photo starts first */
             padding: 0 1.5rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .hero h1 {
