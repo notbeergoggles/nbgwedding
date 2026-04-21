@@ -1470,6 +1470,214 @@ content: '';
             <div class="lightbox-caption" id="lightbox-caption"></div>
         </div>
     </div>
+
+
+    <!-- Trivia Section -->
+    <!-- Trivia Quiz Section — Insert after Gallery section closing tag, inside group-1-content -->
+<section id="trivia" class="section" style="background-color: var(--bg-primary);">
+    <div class="container">
+        <h2 class="section-title">How Well Do You Know Us?</h2>
+        <p style="text-align: center; margin-bottom: 2.5rem; color: var(--text); font-family: 'Lato', sans-serif;">Put your knowledge of Sayuri & Kenny to the test!</p>
+
+        <div id="trivia-quiz-box" style="max-width: 680px; margin: 0 auto; background-color: white; padding: 2rem; border-radius: 4px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+
+            <!-- Progress Bar -->
+            <div style="height: 4px; background-color: #eee; border-radius: 99px; margin-bottom: 1.5rem;">
+                <div id="tq-progress" style="height: 4px; background-color: var(--metallic); border-radius: 99px; width: 0%; transition: width 0.4s ease;"></div>
+            </div>
+
+            <!-- Quiz Area -->
+            <div id="tq-area">
+                <p id="tq-label" style="font-family: 'Lato', sans-serif; font-size: 0.85rem; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">Question 1 of 8</p>
+                <h3 id="tq-question" style="font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; color: var(--text); margin-bottom: 1.5rem; line-height: 1.4;"></h3>
+                <div id="tq-options" style="display: flex; flex-direction: column; gap: 0.75rem;"></div>
+                <p id="tq-feedback" style="font-family: 'Lato', sans-serif; font-size: 0.9rem; color: #888; margin-top: 1rem; min-height: 1.4em; font-style: italic; line-height: 1.5;"></p>
+                <button id="tq-next" onclick="tqNext()" class="btn" style="margin-top: 1.5rem; display: none;">Next Question</button>
+            </div>
+
+            <!-- Result Area -->
+            <div id="tq-result" style="display: none; text-align: center;">
+                <div style="font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--accent); margin-bottom: 0.5rem;" id="tq-score-display"></div>
+                <p style="font-family: 'Lato', sans-serif; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: #aaa; margin-bottom: 1rem;">questions correct</p>
+                <p id="tq-result-msg" style="font-family: 'Lato', sans-serif; font-size: 1rem; color: var(--text); line-height: 1.7; margin-bottom: 2rem;"></p>
+                <div id="tq-breakdown" style="text-align: left; border-top: 1px solid #eee; padding-top: 1rem; margin-bottom: 1.5rem;"></div>
+                <button onclick="tqRestart()" class="btn">Try Again</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .tq-option {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.95rem;
+            background-color: var(--bg-primary);
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 0.75rem 1rem;
+            color: var(--text);
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .tq-option:hover:not(:disabled) {
+            border-color: var(--accent);
+            background-color: #fdf5f7;
+        }
+        .tq-option:disabled { cursor: default; }
+        .tq-option.correct {
+            background-color: #f0faf4;
+            border-color: #6abf87;
+            color: #2d7a4f;
+        }
+        .tq-option.wrong {
+            background-color: #fff5f5;
+            border-color: #e08080;
+            color: #a04040;
+        }
+        .tq-breakdown-item {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.875rem;
+        }
+        .tq-breakdown-item .tq-icon { flex-shrink: 0; font-weight: bold; }
+        .tq-breakdown-item .tq-q { color: #888; }
+        .tq-breakdown-item .tq-a { color: var(--text); font-weight: 600; margin-top: 2px; }
+    </style>
+
+    <script>
+    const tqQuestions = [
+        {
+            q: "How did Sayuri and Kenny first know each other?",
+            options: ["They matched on a dating app", "Primary school classmates", "Through mutual friends", "College coursemates"],
+            answer: 1,
+            fun: "They shared a classroom but never once spoke to each other!"
+        },
+        {
+            q: "What video game brought them back into each other's lives?",
+            options: ["Genshin Impact", "Minecraft", "Muse Dash", "Valorant"],
+            answer: 2,
+            fun: "Kenny had just gotten into Muse Dash and was browsing Twitch streams when fate intervened."
+        },
+        {
+            q: "How did Kenny stumble upon Sayuri after all those years?",
+            options: ["She slid into his DMs", "A friend tagged them both in a post", "He recognised her face on a Twitch stream", "They bumped into each other at a cafe"],
+            answer: 2,
+            fun: "He spotted a familiar face mid-stream, clicked in, and typed the first 'hi' that started it all."
+        },
+        {
+            q: "How far apart did they live from each other during the pandemic?",
+            options: ["5 minutes", "30 minutes", "1 hour", "Different countries"],
+            answer: 0,
+            fun: "Five whole minutes apart — all that time, practically neighbours!"
+        },
+        {
+            q: "Who made the first move to meet up in person?",
+            options: ["Kenny", "Sayuri", "A mutual friend suggested it", "It happened by accident"],
+            answer: 1,
+            fun: "Sayuri was the bold one — she suggested supper at a nearby kopitiam after one of her streams."
+        },
+        {
+            q: "Where did they go for their very first outing together?",
+            options: ["A Japanese restaurant", "The movies", "A kopitiam for supper", "A rooftop bar"],
+            answer: 2,
+            fun: "Nothing says Singapore romance quite like a late-night kopitiam supper."
+        },
+        {
+            q: "Where did Kenny propose to Sayuri?",
+            options: ["Bali", "Tokyo", "Kyoto", "Singapore Botanic Gardens"],
+            answer: 2,
+            fun: "Kyoto — their favourite destination, making it all the more unforgettable."
+        },
+        {
+            q: "Which of these do Sayuri and Kenny both love deeply?",
+            options: ["Bubble tea", "Milkmochabear", "K-pop concerts", "Cycling"],
+            answer: 1,
+            fun: "Milkmochabear all the way — the adorable characters have stolen both their hearts."
+        }
+    ];
+
+    const tqResults = [
+        { min: 0, max: 2, msg: "Hmm, are you sure you were invited? Maybe spend a little more time getting to know the couple before the big day!" },
+        { min: 3, max: 5, msg: "Not bad! You know the basics. They'd probably still save you a seat at the table." },
+        { min: 6, max: 7, msg: "Very impressive! You clearly pay attention — Sayuri and Kenny are lucky to have someone like you around." },
+        { min: 8, max: 8, msg: "A perfect score! Are you sure you're not the one who set them up? You basically know their whole love story." }
+    ];
+
+    let tqCurrent = 0, tqScore = 0, tqAnswers = [];
+
+    function tqRender() {
+        const q = tqQuestions[tqCurrent];
+        document.getElementById('tq-progress').style.width = (tqCurrent / 8 * 100) + '%';
+        document.getElementById('tq-label').textContent = 'Question ' + (tqCurrent + 1) + ' of 8';
+        document.getElementById('tq-question').textContent = q.q;
+        document.getElementById('tq-feedback').textContent = '';
+        document.getElementById('tq-next').style.display = 'none';
+
+        const opts = document.getElementById('tq-options');
+        opts.innerHTML = '';
+        q.options.forEach((opt, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'tq-option';
+            btn.textContent = opt;
+            btn.onclick = () => tqSelect(i);
+            opts.appendChild(btn);
+        });
+    }
+
+    function tqSelect(i) {
+        const q = tqQuestions[tqCurrent];
+        document.querySelectorAll('.tq-option').forEach(b => b.disabled = true);
+        const isCorrect = i === q.answer;
+        if (isCorrect) tqScore++;
+        tqAnswers.push({ correct: isCorrect });
+        document.querySelectorAll('.tq-option')[i].classList.add(isCorrect ? 'correct' : 'wrong');
+        if (!isCorrect) document.querySelectorAll('.tq-option')[q.answer].classList.add('correct');
+        document.getElementById('tq-feedback').textContent = q.fun;
+        const next = document.getElementById('tq-next');
+        next.style.display = 'inline-block';
+        next.textContent = tqCurrent < 7 ? 'Next Question' : 'See My Results';
+    }
+
+    function tqNext() {
+        tqCurrent++;
+        if (tqCurrent < 8) { tqRender(); } else { tqShowResult(); }
+    }
+
+    function tqShowResult() {
+        document.getElementById('tq-area').style.display = 'none';
+        document.getElementById('tq-progress').style.width = '100%';
+        const result = document.getElementById('tq-result');
+        result.style.display = 'block';
+        document.getElementById('tq-score-display').textContent = tqScore + ' / 8';
+        const msg = tqResults.find(r => tqScore >= r.min && tqScore <= r.max);
+        document.getElementById('tq-result-msg').textContent = msg.msg;
+
+        const breakdown = document.getElementById('tq-breakdown');
+        breakdown.innerHTML = tqQuestions.map((q, i) => {
+            const correct = tqAnswers[i].correct;
+            return '<div class="tq-breakdown-item">'
+                + '<span class="tq-icon" style="color:' + (correct ? '#6abf87' : '#e08080') + '">' + (correct ? '✓' : '✗') + '</span>'
+                + '<div><div class="tq-q">' + q.q + '</div><div class="tq-a">Answer: ' + q.options[q.answer] + '</div></div>'
+                + '</div>';
+        }).join('');
+    }
+
+    function tqRestart() {
+        tqCurrent = 0; tqScore = 0; tqAnswers = [];
+        document.getElementById('tq-result').style.display = 'none';
+        document.getElementById('tq-area').style.display = 'block';
+        tqRender();
+    }
+
+    tqRender();
+    </script>
+</section>
     
 <!-- RSVP Section -->
     <section id="rsvp-1" class="section">
