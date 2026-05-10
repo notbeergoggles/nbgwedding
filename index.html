@@ -1202,14 +1202,6 @@ content: '';
             padding: 10px;
         }
 
-        /* This styles BOTH groups at once */
-        .plus-one-name-group {
-            display: none; /* Keep it hidden until the JS shows it */
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #eee;
-        }
-
         .radio-group {
             display: flex;
             gap: 20px;
@@ -1975,16 +1967,9 @@ content: '';
                         </div>
                     </div>
                 
-                    <div class="form-group" style="border-top: 1px solid #eee; pt-1rem; margin-top: 1.5rem; padding-top: 1rem;">
+                    <div class="form-group" style="border-top: 1px solid #eee; margin-top: 1.5rem; padding-top: 1rem;">
                         <label>Bringing a Plus One?</label>
-                        <select id="plus-one-select-1" name="plus_one" onchange="togglePlusOneName(1)">
-                            <option value="no">No, just me</option>
-                            <option value="yes">Yes, I'm bringing someone</option>
-                        </select>
-                    </div>
-                    <div class="form-group plus-one-name-group" id="plus-one-name-group-1" style="display: none;">
-                        <label for="plus-one-name-1">Plus One's Full Name</label>
-                        <input type="text" id="plus-one-name-1" name="plus_one_name" placeholder="Guest's name">
+                        <p style="font-size: 0.8rem; color: #aaa; font-style: italic; margin-top: 0.4rem; line-height: 1.6;">Your invitation has already been extended to your plus one — we're expecting you both and have you covered!</p>
                     </div>
                 
                     <div class="form-group">
@@ -2498,16 +2483,9 @@ content: '';
                             </div>
                         </div>
                     
-                        <div class="form-group" style="border-top: 1px solid #eee; pt-1rem; margin-top: 1.5rem; padding-top: 1rem;">
+                        <div class="form-group" style="border-top: 1px solid #eee; margin-top: 1.5rem; padding-top: 1rem;">
                             <label>Bringing a Plus One?</label>
-                            <select id="plus-one-select-2" name="plus_one" onchange="togglePlusOneName(2)">
-                                <option value="no">No, just me</option>
-                                <option value="yes">Yes, I'm bringing someone</option>
-                            </select>
-                        </div>
-                        <div class="form-group plus-one-name-group" id="plus-one-name-group-2" style="display: none;">
-                            <label for="plus-one-name-2">Plus One's Full Name</label>
-                            <input type="text" id="plus-one-name-2" name="plus_one_name" placeholder="Guest's name">
+                            <p style="font-size: 0.8rem; color: #aaa; font-style: italic; margin-top: 0.4rem; line-height: 1.6;">Your invitation has already been extended to your plus one — we're expecting you both and have you covered!</p>
                         </div>
                     
                         <div class="form-group">
@@ -2663,19 +2641,6 @@ content: '';
 
     
     <script>
-        function togglePlusOneName(suffix) {
-            // This explicitly builds the ID strings based on the suffix provided (1 or 2)
-            const selectElement = document.getElementById(`plus-one-select-${suffix}`);
-            const nameGroup = document.getElementById(`plus-one-name-group-${suffix}`);
-            
-            if (selectElement && nameGroup) {
-                if (selectElement.value === 'yes') {
-                    nameGroup.style.display = 'block';
-                } else {
-                    nameGroup.style.display = 'none';
-                }
-            }
-        }
         
         document.addEventListener('DOMContentLoaded', () => {
             const hamburger = document.querySelector('.hamburger');
@@ -2892,9 +2857,6 @@ content: '';
             form.reset();
             submitBtn.innerText = originalText;
             submitBtn.disabled = false;
-            
-            // Hide the plus-one field if it was open
-            togglePlusOneName(suffix);
         })
         .catch(error => {
             alert("Oops! Something went wrong. Please try again.");
