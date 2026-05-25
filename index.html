@@ -1440,10 +1440,21 @@ content: '';
             max-width: 520px;
             margin: 0 auto;
             background: white;
-            border-radius: 4px;
+            border-radius: 6px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             padding: 2.5rem 2rem;
             text-align: center;
+            position: relative;
+        }
+
+        /* Gradient border using a pseudo-element backdrop */
+        .instagram-card::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 8px;
+            background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+            z-index: -1;
         }
 
         .instagram-icon {
@@ -1452,15 +1463,39 @@ content: '';
             margin-bottom: 0.75rem;
             display: block;
             line-height: 1;
+            animation: igHeartbeat 1.6s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        @keyframes igHeartbeat {
+            0%, 100%    { transform: scale(1); }
+            15%, 35%    { transform: scale(1.18); }
+            25%         { transform: scale(1.05); }
+            50%         { transform: scale(1); }
         }
 
         .instagram-handle {
             font-family: 'Cormorant Garamond', serif;
             font-size: 2rem;
             font-weight: 600;
-            color: var(--text);
             margin-bottom: 0.75rem;
             line-height: 1.2;
+            /* Shimmer effect — same family as .bling-text */
+            background: linear-gradient(
+                to right,
+                #bf953f 20%,
+                #fcf6ba 40%,
+                #b38728 50%,
+                #fcf6ba 60%,
+                #bf953f 80%
+            );
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            display: inline-block;
+            animation: shine 4s linear infinite;
         }
 
         .instagram-tagline {
