@@ -274,15 +274,17 @@ content: '';
         /* Hero Section */
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)) no-repeat center center/cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            margin-top: 0px; /* For fixed header */
+            margin-top: 0px;
             animation: heroReveal 2.5s ease-out forwards;
-            overflow: hidden; /* Keeps the zoom contained */
+            overflow: hidden;
         }
 
         /* Per-group hero images */
