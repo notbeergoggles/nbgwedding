@@ -287,15 +287,6 @@ content: '';
             overflow: hidden;
         }
 
-        /* Per-group hero images */
-        #hero-1 {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('hero.jpg');
-        }
-
-        #hero-2 {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('hero-dinner.jpg');
-        }
-
         /* The Animation Logic */
         @keyframes heroReveal {
             0% {
@@ -1518,7 +1509,7 @@ content: '';
     </header>
 
     <!-- Hero Section -->
-    <section class="hero" id="hero-1">
+    <section class="hero" id="hero-1" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('hero.jpg');">
         <div class="hero-content">
             <h1>We're Getting Married</h1>
             <div class="couple-names">Sayuri & Kenny</div>
@@ -2136,7 +2127,7 @@ content: '';
         </header>
     
         <!-- Hero Section -->
-        <section class="hero" id="hero-2">
+        <section class="hero" id="hero-2" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('hero-dinner.jpg');">
             <div class="hero-content">
                 <h1>We're Getting Married</h1>
                 <div class="couple-names">Sayuri & Kenny</div>
@@ -2180,8 +2171,6 @@ content: '';
                     <div class="story-image"></div>
                 </div>
 
-                
-                <br><br>
                 <!-- Our Story Flipbook -->
                 <div class="flipbook" id="flipbook-2">
                     <div class="flipbook-stage">
