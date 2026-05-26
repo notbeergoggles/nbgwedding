@@ -3678,6 +3678,7 @@ content: '';
         const icon = document.getElementById('player-icon');
         const toggle = document.querySelector('.player-toggle');
 
+        audio.volume = 0.4;
         const playPromise = audio.play();
         if (playPromise !== undefined) {
             playPromise
