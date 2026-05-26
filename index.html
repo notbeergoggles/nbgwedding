@@ -1834,6 +1834,82 @@ content: '';
             }
         }
 
+        /* ── Welcome Splash Screen ────────────────────────── */
+        #welcome-splash {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-primary);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+            transition: opacity 0.6s ease;
+        }
+
+        #welcome-splash.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .splash-content {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            max-width: 90%;
+            animation: splashFadeIn 1.2s ease-out;
+        }
+
+        @keyframes splashFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .splash-ornament {
+            color: var(--metallic);
+            font-size: 0.75rem;
+            letter-spacing: 6px;
+            margin: 1.5rem 0;
+            opacity: 0.7;
+        }
+
+        .splash-welcome {
+            font-size: 4.5rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .splash-names {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--text);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .splash-date {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.85rem;
+            color: var(--metallic);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+        }
+
+        .splash-btn {
+            margin-top: 1rem;
+        }
+
+        .splash-btn i {
+            margin-left: 0.4rem;
+        }
+
+        @media (max-width: 768px) {
+            .splash-welcome { font-size: 3.5rem; }
+            .splash-names { font-size: 1.4rem; }
+            .splash-date { font-size: 0.75rem; letter-spacing: 2px; }
+        }
+
     </style>
 </head>
 <body>
@@ -1851,6 +1927,20 @@ content: '';
                 <button onclick="checkPasscode()" class="btn">Enter</button>
             </div>
             <p id="gate-error" style="color: #C08497; display: none; margin-top: 1rem;">Incorrect passcode. Please try again.</p>
+        </div>
+    </div>
+
+    <!-- Welcome Splash Screen -->
+    <div id="welcome-splash" style="display: none;">
+        <div class="splash-content">
+            <div class="splash-ornament">✦ &nbsp;&nbsp; ✦ &nbsp;&nbsp; ✦</div>
+            <h1 class="script-font splash-welcome">Welcome</h1>
+            <div class="splash-names">Sayuri & Kenny</div>
+            <div class="splash-date">November 2026 • Singapore</div>
+            <div class="splash-ornament">✦ &nbsp;&nbsp; ✦ &nbsp;&nbsp; ✦</div>
+            <button onclick="enterSite()" class="btn splash-btn">
+                Enter Our Story <i class="bi bi-music-note-beamed"></i>
+            </button>
         </div>
     </div>
 
@@ -2875,18 +2965,33 @@ content: '';
                 }
             }
             
+            let pendingUnlock = null;
+
             function unlock(containerId, weddingDate, rsvpDate, suffix) {
-                document.body.classList.add('unlocked');
+                pendingUnlock = { containerId, weddingDate, rsvpDate, suffix };
                 document.getElementById('gatekeeper').style.display = 'none';
+                document.getElementById('welcome-splash').style.display = 'flex';
+            }
+
+            function enterSite() {
+                if (!pendingUnlock) return;
+                const { containerId, weddingDate, rsvpDate, suffix } = pendingUnlock;
+
+                document.body.classList.add('unlocked');
                 document.getElementById(containerId).style.display = 'block';
-                
+
                 // Start both timers
                 runTimer(weddingDate, suffix, "wedding");
                 runTimer(rsvpDate, suffix, "rsvp");
-                
+
                 sessionStorage.setItem('wedding_access', JSON.stringify({containerId, weddingDate, rsvpDate, suffix}));
 
                 startAudio();
+
+                // Fade out splash
+                const splash = document.getElementById('welcome-splash');
+                splash.classList.add('fade-out');
+                setTimeout(() => { splash.style.display = 'none'; }, 600);
             }
             
             function runTimer(endTime, suffix, type) {
