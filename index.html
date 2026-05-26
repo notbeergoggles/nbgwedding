@@ -1511,6 +1511,98 @@ content: '';
             margin-bottom: 1.75rem;
         }
 
+        /* ── FAQ Accordion Section ────────────────────────── */
+        .faq-section {
+            background-color: var(--bg-secondary);
+        }
+
+        .faq-container {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .faq-item.open {
+            box-shadow: 0 8px 22px rgba(0,0,0,0.09);
+        }
+
+        .faq-question {
+            padding: 1.1rem 1.5rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            user-select: none;
+            transition: background 0.2s ease;
+        }
+
+        .faq-question:hover {
+            background-color: #fdf5f7;
+        }
+
+        .faq-toggle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            color: var(--metallic);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.open .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+        }
+
+        .faq-answer-inner {
+            padding: 0 1.5rem 1.25rem;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.92rem;
+            line-height: 1.75;
+            color: #666;
+        }
+
+        /* Typewriter title effect */
+        .typewriter-title {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid var(--metallic);
+            animation: typewriter 2.2s steps(30, end) forwards, blink 0.7s step-end infinite;
+            max-width: 0;
+        }
+
+        @keyframes typewriter {
+            to { max-width: 100%; }
+        }
+
+        @keyframes blink {
+            from, to { border-color: transparent; }
+            50%      { border-color: var(--metallic); }
+        }
+
         /* ── Mika Marquee Strip ───────────────────────────── */
         .mika-strip {
             background-color: var(--bg-secondary);
@@ -1637,6 +1729,7 @@ content: '';
                 <li><a href="#venue">Venue</a></li>
                 <li><a href="#dress-code">Dress Code</a></li>
                 <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#faq-1">FAQ</a></li>
                 <li><a href="#rsvp-1">RSVP</a></li>
             </ul>
             <input type="checkbox" id="nav-toggle-1" class="nav-toggle" style="display: none;">
@@ -2110,6 +2203,43 @@ content: '';
     </script>
 </section>
     
+    <!-- FAQ Section -->
+    <section id="faq-1" class="section faq-section">
+        <div class="container">
+            <h2 class="section-title"><span class="typewriter-title">Frequently Asked Questions</span></h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">Is parking available at the venue?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div>
+                    <div class="faq-answer"><div class="faq-answer-inner">[Placeholder answer about parking at Artyzen — to be edited]</div></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">What time should I arrive?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div>
+                    <div class="faq-answer"><div class="faq-answer-inner">[Placeholder answer about arrival time — to be edited]</div></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Can I take photos during the ceremony?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div>
+                    <div class="faq-answer"><div class="faq-answer-inner">[Placeholder answer about ceremony photography — to be edited]</div></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">What if I can't make it after RSVPing yes?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div>
+                    <div class="faq-answer"><div class="faq-answer-inner">[Placeholder answer about last-minute cancellation — to be edited]</div></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">What time does the event end?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div>
+                    <div class="faq-answer"><div class="faq-answer-inner">[Placeholder answer about end time — to be edited]</div></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Can I post photos on social media?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div>
+                    <div class="faq-answer"><div class="faq-answer-inner">[Placeholder answer about social media policy — to be edited]</div></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Is there a wedding hashtag?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div>
+                    <div class="faq-answer"><div class="faq-answer-inner">[Placeholder answer about wedding hashtag — to be edited]</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 <!-- RSVP Section -->
     <section id="rsvp-1" class="section">
         <div class="container">
@@ -2292,6 +2422,7 @@ content: '';
                     <li><a href="#venue-2">Venue</a></li>
                     <li><a href="#dress-code-2">Dress Code</a></li>
                     <li><a href="#gallery-2">Gallery</a></li>
+                    <li><a href="#faq-2">FAQ</a></li>
                     <li><a href="#rsvp-2">RSVP</a></li>
                 </ul>
                 <input type="checkbox" id="nav-toggle-1" class="nav-toggle" style="display: none;">
@@ -2655,6 +2786,47 @@ content: '';
                 }
             });
         </script>
+        <!-- FAQ Section -->
+        <section id="faq-2" class="section faq-section">
+            <div class="container">
+                <h2 class="section-title"><span class="typewriter-title">Frequently Asked Questions</span></h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">Is parking available at the venue?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div>
+                        <div class="faq-answer"><div class="faq-answer-inner">[Placeholder answer about parking at Irodori / Four Points by Sheraton — to be edited]</div></div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">What time should I arrive?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div>
+                        <div class="faq-answer"><div class="faq-answer-inner">[Placeholder answer about arrival time — to be edited]</div></div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Can I take photos during the ceremony?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div>
+                        <div class="faq-answer"><div class="faq-answer-inner">[Placeholder answer about ceremony photography — to be edited]</div></div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">What if I can't make it after RSVPing yes?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div>
+                        <div class="faq-answer"><div class="faq-answer-inner">[Placeholder answer about last-minute cancellation — to be edited]</div></div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">What time does the event end?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div>
+                        <div class="faq-answer"><div class="faq-answer-inner">[Placeholder answer about end time — to be edited]</div></div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Will there be a photobooth?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div>
+                        <div class="faq-answer"><div class="faq-answer-inner">[Placeholder answer about photobooth — to be edited]</div></div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Can I post photos on social media?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div>
+                        <div class="faq-answer"><div class="faq-answer-inner">[Placeholder answer about social media policy — to be edited]</div></div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Is there a wedding hashtag?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div>
+                        <div class="faq-answer"><div class="faq-answer-inner">[Placeholder answer about wedding hashtag — to be edited]</div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     <!-- RSVP Section -->
         <section id="rsvp-2" class="section">
             <div class="container">
@@ -3200,6 +3372,27 @@ content: '';
             }
         }, { passive: true });
     })();
+    </script>
+    <script>
+    /* ── FAQ Accordion ────────────────────────────────────── */
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.faq-item').forEach(item => {
+            const question = item.querySelector('.faq-question');
+            const answer   = item.querySelector('.faq-answer');
+
+            question.addEventListener('click', () => {
+                const isOpen = item.classList.contains('open');
+
+                if (isOpen) {
+                    answer.style.maxHeight = '0';
+                    item.classList.remove('open');
+                } else {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    item.classList.add('open');
+                }
+            });
+        });
+    });
     </script>
 </body>
 </html>
