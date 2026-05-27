@@ -1519,6 +1519,13 @@ content: '';
             border-top: 1px solid rgba(201, 163, 104, 0.2);
         }
 
+        .hashtag-pills {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.6rem;
+        }
+
         .hashtag-label {
             font-family: 'Lato', sans-serif;
             font-size: 0.7rem;
@@ -2423,9 +2430,15 @@ content: '';
                 <a href="https://www.instagram.com/notbeergoggles/" target="_blank" rel="noopener noreferrer" class="btn">Follow Us</a>
                 <div class="hashtag-block">
                     <div class="hashtag-label">Tag your posts with</div>
-                    <div class="hashtag-pill" onclick="copyHashtag(this)">
-                        <span>#ItsNotBeerGoggles</span>
-                        <i class="bi bi-copy"></i>
+                    <div class="hashtag-pills">
+                        <div class="hashtag-pill" onclick="copyHashtag(this)">
+                            <span>#ItsNotBeerGoggles</span>
+                            <i class="bi bi-copy"></i>
+                        </div>
+                        <div class="hashtag-pill" onclick="copyHashtag(this)">
+                            <span>#YuKenGetMarried</span>
+                            <i class="bi bi-copy"></i>
+                        </div>
                     </div>
                     <span class="hashtag-copied-msg">Copied ♡</span>
                 </div>
@@ -3170,9 +3183,15 @@ content: '';
                     <a href="https://www.instagram.com/notbeergoggles/" target="_blank" rel="noopener noreferrer" class="btn">Follow Us</a>
                     <div class="hashtag-block">
                         <div class="hashtag-label">Tag your posts with</div>
-                        <div class="hashtag-pill" onclick="copyHashtag(this)">
-                            <span>#ItsNotBeerGoggles</span>
-                            <i class="bi bi-copy"></i>
+                        <div class="hashtag-pills">
+                            <div class="hashtag-pill" onclick="copyHashtag(this)">
+                                <span>#ItsNotBeerGoggles</span>
+                                <i class="bi bi-copy"></i>
+                            </div>
+                            <div class="hashtag-pill" onclick="copyHashtag(this)">
+                                <span>#YuKenGetMarried</span>
+                                <i class="bi bi-copy"></i>
+                            </div>
                         </div>
                         <span class="hashtag-copied-msg">Copied ♡</span>
                     </div>
@@ -3206,10 +3225,10 @@ content: '';
     //Landing page, gatekeeper
             // Define the two different wedding dates here
             const dateGroup1 = new Date("2026-11-05T15:00:00").getTime();
-            const rsvpGroup1 = new Date("2026-05-15T23:59:59").getTime();
+            const rsvpGroup1 = new Date("2026-07-31T23:59:59").getTime();
             
             const dateGroup2 = new Date("2026-11-07T18:30:00").getTime();
-            const rsvpGroup2 = new Date("2026-05-15T23:59:59").getTime();
+            const rsvpGroup2 = new Date("2026-07-31T23:59:59").getTime();
             
             function checkPasscode() {
                 const code = document.getElementById('passcode').value.toLowerCase();
@@ -4140,8 +4159,10 @@ content: '';
 
     /* ── Wedding Hashtag Copy ──────────────────────────── */
     function copyHashtag(pill) {
-        const text = '#ItsNotBeerGoggles';
-        const msg = pill.parentElement.querySelector('.hashtag-copied-msg');
+        const text = pill.querySelector('span').textContent;
+        // Find the copied-msg in the parent hashtag-block (works for single or grouped pills)
+        const block = pill.closest('.hashtag-block');
+        const msg = block ? block.querySelector('.hashtag-copied-msg') : null;
 
         const showCopied = () => {
             pill.classList.add('copied');
