@@ -1903,6 +1903,158 @@ content: '';
             }
         }
 
+        /* ── Guestbook ────────────────────────────────────── */
+        .guestbook {
+            background-color: var(--bg-primary);
+        }
+
+        .guestbook-form {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            background: rgba(192, 132, 151, 0.05);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid rgba(201, 163, 104, 0.15);
+        }
+
+        .guestbook-form textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #e8dccb;
+            border-radius: 4px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text);
+            background: white;
+            resize: vertical;
+            min-height: 100px;
+            transition: border-color 0.2s ease;
+        }
+
+        .guestbook-form textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .guestbook-form input[type="text"] {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e8dccb;
+            border-radius: 4px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text);
+            background: white;
+            margin-top: 0.75rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .guestbook-form input[type="text"]:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .guestbook-submit {
+            display: block;
+            margin: 1rem auto 0;
+        }
+
+        .guestbook-status {
+            text-align: center;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.85rem;
+            color: var(--metallic);
+            margin-top: 0.75rem;
+            min-height: 1.2em;
+            font-style: italic;
+        }
+
+        .guestbook-messages {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1rem;
+        }
+
+        .guestbook-card {
+            background: white;
+            border-radius: 6px;
+            padding: 1.25rem 1.4rem;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            position: relative;
+            border-top: 2px solid var(--metallic);
+            animation: gbFadeIn 0.5s ease-out;
+        }
+
+        @keyframes gbFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .guestbook-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .guestbook-card-message {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.92rem;
+            line-height: 1.65;
+            color: var(--text);
+            margin-bottom: 0.85rem;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        .guestbook-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 0.5rem;
+            padding-top: 0.6rem;
+            border-top: 1px solid #f4ede2;
+        }
+
+        .guestbook-card-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .guestbook-card-time {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.7rem;
+            color: #b0b0b0;
+            letter-spacing: 0.5px;
+        }
+
+        .guestbook-empty {
+            text-align: center;
+            color: #b0b0b0;
+            font-style: italic;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            padding: 2rem;
+            grid-column: 1 / -1;
+        }
+
+        .guestbook-intro {
+            text-align: center;
+            color: #888;
+            margin-bottom: 2rem;
+            font-style: italic;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .guestbook-form { padding: 1.5rem; }
+            .guestbook-messages { grid-template-columns: 1fr; }
+        }
+
         /* ── Welcome Splash Screen ────────────────────────── */
         #welcome-splash {
             position: fixed;
@@ -2026,6 +2178,7 @@ content: '';
                 <li><a href="#dress-code">Dress Code</a></li>
                 <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#faq-1">FAQ</a></li>
+                <li><a href="#guestbook-1">Love Notes</a></li>
                 <li><a href="#rsvp-1">RSVP</a></li>
             </ul>
             <input type="checkbox" id="nav-toggle-1" class="nav-toggle" style="display: none;">
@@ -2607,6 +2760,26 @@ content: '';
         </div>
     </section>
 
+    <!-- Guestbook Section -->
+    <section id="guestbook-1" class="section guestbook">
+        <div class="container">
+            <div class="tea-ornament">✦ &nbsp;&nbsp; ✦ &nbsp;&nbsp; ✦</div>
+            <h2 class="section-title">Love Notes</h2>
+            <p class="guestbook-intro">Leave a wish, memory, or inside joke — we'll cherish every word ♡</p>
+
+            <div class="guestbook-form">
+                <textarea id="gb-message-1" placeholder="Share a memory, well-wish, or inside joke..." maxlength="500"></textarea>
+                <input type="text" id="gb-name-1" placeholder="Your name (or leave blank to stay anonymous)" maxlength="60">
+                <button class="btn guestbook-submit" onclick="submitGuestbook('1')">Leave a message ♡</button>
+                <div class="guestbook-status" id="gb-status-1"></div>
+            </div>
+
+            <div class="guestbook-messages" id="gb-messages-1">
+                <div class="guestbook-empty">Be the first to share a wish...</div>
+            </div>
+        </div>
+    </section>
+
     <!-- Post Wedding Section -->
     <section id="post-wedding" class="section post-wedding">
         <div class="container">
@@ -2727,6 +2900,7 @@ content: '';
                     <li><a href="#dress-code-2">Dress Code</a></li>
                     <li><a href="#gallery-2">Gallery</a></li>
                     <li><a href="#faq-2">FAQ</a></li>
+                    <li><a href="#guestbook-2">Love Notes</a></li>
                     <li><a href="#rsvp-2">RSVP</a></li>
                 </ul>
                 <input type="checkbox" id="nav-toggle-1" class="nav-toggle" style="display: none;">
@@ -3235,6 +3409,26 @@ content: '';
             </div>
         </section>
     
+        <!-- Guestbook Section -->
+        <section id="guestbook-2" class="section guestbook">
+            <div class="container">
+                <div class="tea-ornament">✦ &nbsp;&nbsp; ✦ &nbsp;&nbsp; ✦</div>
+                <h2 class="section-title">Love Notes</h2>
+                <p class="guestbook-intro">Leave a wish, memory, or inside joke — we'll cherish every word ♡</p>
+
+                <div class="guestbook-form">
+                    <textarea id="gb-message-2" placeholder="Share a memory, well-wish, or inside joke..." maxlength="500"></textarea>
+                    <input type="text" id="gb-name-2" placeholder="Your name (or leave blank to stay anonymous)" maxlength="60">
+                    <button class="btn guestbook-submit" onclick="submitGuestbook('2')">Leave a message ♡</button>
+                    <div class="guestbook-status" id="gb-status-2"></div>
+                </div>
+
+                <div class="guestbook-messages" id="gb-messages-2">
+                    <div class="guestbook-empty">Be the first to share a wish...</div>
+                </div>
+            </div>
+        </section>
+    
         <!-- Post Wedding Section -->
         <section id="post-wedding" class="section post-wedding">
             <div class="container">
@@ -3587,6 +3781,161 @@ content: '';
             submitBtn.disabled = false;
         });
     }
+
+    /* ── Guestbook Logic ──────────────────────────────── */
+    const GB_BAD_WORDS = ['fuck','shit','bitch','cunt','asshole','dick','pussy','nigger','faggot','retard','whore','slut'];
+    const GB_COOLDOWN_MS = 30 * 60 * 1000; // 30 minutes between submissions per device
+
+    function gbContainsProfanity(text) {
+        const lower = text.toLowerCase();
+        return GB_BAD_WORDS.some(w => lower.includes(w));
+    }
+
+    function gbContainsLinks(text) {
+        return /https?:\/\/|www\.|\.com|\.net|\.org|\.io|\.co/i.test(text);
+    }
+
+    function gbTimeAgo(date) {
+        if (!date) return 'just now';
+        const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
+        if (seconds < 60) return 'just now';
+        const minutes = Math.floor(seconds / 60);
+        if (minutes < 60) return minutes + 'm ago';
+        const hours = Math.floor(minutes / 60);
+        if (hours < 24) return hours + 'h ago';
+        const days = Math.floor(hours / 24);
+        if (days < 7) return days + 'd ago';
+        const weeks = Math.floor(days / 7);
+        if (weeks < 4) return weeks + 'w ago';
+        const months = Math.floor(days / 30);
+        return months + 'mo ago';
+    }
+
+    function gbEscapeHTML(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    function submitGuestbook(suffix) {
+        const msgEl = document.getElementById(`gb-message-${suffix}`);
+        const nameEl = document.getElementById(`gb-name-${suffix}`);
+        const statusEl = document.getElementById(`gb-status-${suffix}`);
+        const message = msgEl.value.trim();
+        const name = nameEl.value.trim() || 'Anonymous';
+
+        statusEl.style.color = '';
+        statusEl.textContent = '';
+
+        if (!message) {
+            statusEl.style.color = '#C08497';
+            statusEl.textContent = 'Please write something before submitting.';
+            return;
+        }
+
+        if (message.length < 3) {
+            statusEl.style.color = '#C08497';
+            statusEl.textContent = 'Your message is a little too short.';
+            return;
+        }
+
+        if (gbContainsProfanity(message) || gbContainsProfanity(name)) {
+            statusEl.style.color = '#C08497';
+            statusEl.textContent = 'Please keep your message family-friendly ♡';
+            return;
+        }
+
+        if (gbContainsLinks(message)) {
+            statusEl.style.color = '#C08497';
+            statusEl.textContent = 'Links aren\'t allowed in messages.';
+            return;
+        }
+
+        // Rate limit per device
+        const lastSubmit = parseInt(localStorage.getItem('gb_last_submit') || '0', 10);
+        if (Date.now() - lastSubmit < GB_COOLDOWN_MS) {
+            const minsLeft = Math.ceil((GB_COOLDOWN_MS - (Date.now() - lastSubmit)) / 60000);
+            statusEl.style.color = '#C08497';
+            statusEl.textContent = `You've just left a message — please wait ${minsLeft} more minute${minsLeft === 1 ? '' : 's'} before another.`;
+            return;
+        }
+
+        const btn = statusEl.previousElementSibling;
+        btn.disabled = true;
+        const originalText = btn.innerText;
+        btn.innerText = 'Sending...';
+
+        db.collection('guestbook_messages').add({
+            name: name.substring(0, 60),
+            message: message.substring(0, 500),
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        }).then(() => {
+            localStorage.setItem('gb_last_submit', Date.now().toString());
+            msgEl.value = '';
+            nameEl.value = '';
+            statusEl.style.color = 'var(--metallic)';
+            statusEl.textContent = 'Thank you for your kind words ♡';
+            btn.disabled = false;
+            btn.innerText = originalText;
+            setTimeout(() => { statusEl.textContent = ''; }, 5000);
+        }).catch((err) => {
+            console.error(err);
+            statusEl.style.color = '#C08497';
+            statusEl.textContent = 'Something went wrong. Please try again.';
+            btn.disabled = false;
+            btn.innerText = originalText;
+        });
+    }
+
+    function loadGuestbook(suffix) {
+        const container = document.getElementById(`gb-messages-${suffix}`);
+        if (!container) return;
+
+        db.collection('guestbook_messages')
+            .orderBy('timestamp', 'desc')
+            .onSnapshot((snapshot) => {
+                if (snapshot.empty) {
+                    container.innerHTML = '<div class="guestbook-empty">Be the first to share a wish...</div>';
+                    return;
+                }
+                container.innerHTML = '';
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const date = data.timestamp ? data.timestamp.toDate() : null;
+                    const card = document.createElement('div');
+                    card.className = 'guestbook-card';
+                    card.innerHTML = `
+                        <div class="guestbook-card-message">${gbEscapeHTML(data.message || '')}</div>
+                        <div class="guestbook-card-footer">
+                            <span class="guestbook-card-name">${gbEscapeHTML(data.name || 'Anonymous')}</span>
+                            <span class="guestbook-card-time">${gbTimeAgo(date)}</span>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            }, (err) => {
+                console.error('Guestbook load failed:', err);
+                container.innerHTML = '<div class="guestbook-empty">Couldn\'t load messages right now.</div>';
+            });
+    }
+
+    // Load guestbook for whichever group is visible
+    document.addEventListener('DOMContentLoaded', () => {
+        const checkAndLoad = () => {
+            const g1 = document.getElementById('group-1-content');
+            const g2 = document.getElementById('group-2-content');
+            if (g1 && g1.style.display === 'block') loadGuestbook('1');
+            if (g2 && g2.style.display === 'block') loadGuestbook('2');
+        };
+        // Wait a moment for unlock to run
+        setTimeout(checkAndLoad, 500);
+        // Also re-check after splash button is pressed
+        const observer = new MutationObserver(checkAndLoad);
+        ['group-1-content', 'group-2-content'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) observer.observe(el, { attributes: true, attributeFilter: ['style'] });
+        });
+    });
     </script>
     <div id="thank-you-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:20000; justify-content:center; align-items:center;">
         <div style="background:white; padding:40px; border-radius:15px; text-align:center; max-width:400px; position:relative; border: 2px solid var(--metallic);">
