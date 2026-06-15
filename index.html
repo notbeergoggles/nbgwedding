@@ -180,6 +180,8 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 /* Group 1 scene backgrounds (mirror Group 2 equivalents) */
 #story-1{position:relative;background:var(--noir);color:var(--bg-veil);}
 #schedule-1{background:var(--bg-veil);color:var(--ink);overflow:hidden;}
+#tea-1{background:var(--noir);color:var(--bg-veil);overflow:hidden;position:relative;}
+#venues-1{background:var(--bg);color:var(--ink);}
 #hero-1{position:relative;height:100vh;overflow:hidden;background:var(--noir);}
 .story-intro{min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 4rem;}
 /* converging split header (pinned) */
@@ -247,6 +249,7 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 /* ═══════════ VENUE ═══════════ */
 #venues{background:var(--bg);}
 .venue-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;max-width:1000px;margin:3rem auto 0;}
+.venue-grid-single{grid-template-columns:1fr;max-width:560px;}
 .venue-card{background:var(--bg-veil);border-radius:4px;overflow:hidden;box-shadow:0 16px 44px var(--shadow);will-change:transform;}
 .venue-label{font-family:var(--sans);font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold-deep);padding:1.5rem 1.75rem 0;}
 .venue-name{font-family:var(--serif);font-weight:400;font-size:1.6rem;color:var(--ink);padding:0.5rem 1.75rem 0.25rem;}
@@ -473,6 +476,8 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
         <ul class="film-nav-links">
             <li><a href="#story-1">Story</a></li>
             <li><a href="#schedule-1">Schedule</a></li>
+            <li><a href="#tea-1">Tea Ceremony</a></li>
+            <li><a href="#venues-1">Venue</a></li>
         </ul>
         <button class="film-burger" aria-label="Menu"><span></span><span></span><span></span></button>
     </nav>
@@ -596,6 +601,37 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
         </div>
     </section>
 
+    <!-- SCENE: TEA CEREMONY -->
+    <section id="tea-1" class="scene scene-pad">
+        <div class="tea-wrap">
+            <div class="divider-mark reveal-fade"></div>
+            <div class="eyebrow reveal-fade">A cherished tradition</div>
+            <h2 class="big-title" data-title><span class="title-word"><span>The Tea</span></span> <span class="title-word"><span><em>Ceremony</em></span></span></h2>
+            <p class="tea-lede reveal-fade" style="margin-top:2rem;">Of all the wedding traditions we chose to forgo, this is one we decided to keep.</p>
+            <div class="tea-orn reveal-fade">✦ &nbsp; ✦ &nbsp; ✦</div>
+            <div class="tea-body">
+                <p class="reveal-rise">The tea ceremony is our way of thanking our parents and elders who raised us, shaped us, and sacrificed so that we can be who we are today. It carries our gratitude, love, and respect.</p>
+                <p class="reveal-rise">It is also the moment we welcome each other's families as our own, and express our deepest gratitude to our loved ones, including those who are no longer with us. Having all of you here means everything to us.</p>
+            </div>
+            <blockquote class="tea-quote reveal-rise">Two families, one cup of tea, and a lifetime of gratitude.</blockquote>
+        </div>
+    </section>
+
+    <!-- SCENE: VENUE (Artyzen only) -->
+    <section id="venues-1" class="scene scene-pad">
+        <div class="divider-mark reveal-fade"></div>
+        <div class="eyebrow reveal-fade">Where to find us</div>
+        <h2 class="big-title" data-title><span class="title-word"><span>The</span></span> <span class="title-word"><span><em>Venue</em></span></span></h2>
+        <div class="venue-grid venue-grid-single">
+            <div class="venue-card reveal-rise">
+                <div class="venue-label">Solemnisation · Tea Ceremony</div>
+                <div class="venue-name">Artyzen Singapore</div>
+                <div class="venue-addr">9 Cuscaden Rd, Singapore 249719</div>
+                <div class="venue-map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.7822519037186!2d103.827012!3d1.305764!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da190807ddeedd%3A0xfcdccef2592b1974!2sArtyzen%20Singapore!5e0!3m2!1sen!2ssg!4v1776748141051!5m2!1sen!2ssg" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+            </div>
+        </div>
+    </section>
+
     <!-- REST OF GROUP 1 — to be built later -->
     <section class="scene scene-pad" style="text-align:center;background:var(--bg);color:var(--ink);">
         <p style="font-family:var(--serif-alt);font-style:italic;font-size:1.2rem;color:var(--ink-soft);">More details coming soon ♡</p>
@@ -638,7 +674,6 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
         <ul class="film-nav-links">
             <li><a href="#story">Story</a></li>
             <li><a href="#schedule">Schedule</a></li>
-            <li><a href="#tea">Tea Ceremony</a></li>
             <li><a href="#venues">Venue</a></li>
             <li><a href="#gallery">Gallery</a></li>
             <li><a href="#faq">FAQ</a></li>
@@ -673,11 +708,11 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
                     <div class="chapter-body"><div class="chapter-num">03</div><div class="chapter-era">The First "Hi"</div><h3 class="chapter-title">Night After Night</h3><p class="chapter-desc">He became her most loyal viewer. They soon realised they'd been living just five minutes apart all along.</p></div>
                 </div>
                 <div class="chapter-card">
-                    <div class="chapter-photo" style="background-image:url('story4.jpg');"></div><div class="chapter-grade"></div>
+                    <div class="chapter-photo" style="background-image:url('hero-dinner.jpg');"></div><div class="chapter-grade"></div>
                     <div class="chapter-body"><div class="chapter-num">04</div><div class="chapter-era">The First Move</div><h3 class="chapter-title">Late-Night Supper</h3><p class="chapter-desc">She made the bold move — supper at a nearby kopitiam after one of her streams. The rest is history.</p></div>
                 </div>
                 <div class="chapter-card">
-                    <div class="chapter-photo" style="background-image:url('story5.jpg');"></div><div class="chapter-grade"></div>
+                    <div class="chapter-photo" style="background-image:url('story1.jpg');"></div><div class="chapter-grade"></div>
                     <div class="chapter-body"><div class="chapter-num">05</div><div class="chapter-era">Kyoto, 2024</div><h3 class="chapter-title">She Said Yes</h3><p class="chapter-desc">Five years and countless meals later, he got down on one knee in Kyoto. And now, here we are.</p></div>
                 </div>
             </div>
@@ -693,18 +728,6 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
         <div class="journey" id="journey">
             <svg class="journey-wave" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path class="journey-path" d=""></path></svg>
             <div class="checkpoints">
-                <div class="checkpoint align-left">
-                    <div class="cp-icon"><i class="bi bi-cup-hot"></i></div>
-                    <div class="cp-time">8:30 AM</div>
-                    <div class="cp-title">Tea Ceremony</div>
-                    <div class="cp-desc">Tea ceremony with family and relatives. A special moment we're real proud to share!</div>
-                </div>
-                <div class="checkpoint align-right">
-                    <div class="cp-icon"><i class="bi bi-box-arrow-right"></i></div>
-                    <div class="cp-time">1:00 PM</div>
-                    <div class="cp-title">Check-Out</div>
-                    <div class="cp-desc">Safe travels and thank you for celebrating with us! See everyone at dinner!</div>
-                </div>
                 <div class="checkpoint align-left">
                     <div class="cp-icon"><i class="bi bi-cup-straw"></i></div>
                     <div class="cp-time">6:00 PM</div>
@@ -722,33 +745,12 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
     </section>
 
     <!-- SCENE: TEA -->
-    <section id="tea" class="scene scene-pad">
-        <div class="tea-wrap">
-            <div class="divider-mark reveal-fade"></div>
-            <div class="eyebrow reveal-fade">A cherished tradition</div>
-            <h2 class="big-title" data-title><span class="title-word"><span>The Tea</span></span> <span class="title-word"><span><em>Ceremony</em></span></span></h2>
-            <p class="tea-lede reveal-fade" style="margin-top:2rem;">Of all the wedding traditions we chose to forgo, this is one we decided to keep.</p>
-            <div class="tea-orn reveal-fade">✦ &nbsp; ✦ &nbsp; ✦</div>
-            <div class="tea-body">
-                <p class="reveal-rise">The tea ceremony is our way of thanking our parents and elders who raised us, shaped us, and sacrificed so that we can be who we are today. It carries our gratitude, love, and respect.</p>
-                <p class="reveal-rise">It is also the moment we welcome each other's families as our own, and express our deepest gratitude to our loved ones, including those who are no longer with us. Having all of you here means everything to us.</p>
-            </div>
-            <blockquote class="tea-quote reveal-rise">Two families, one cup of tea, and a lifetime of gratitude.</blockquote>
-        </div>
-    </section>
-
-    <!-- SCENE: VENUES -->
+    <!-- SCENE: VENUE (Irodori only) -->
     <section id="venues" class="scene scene-pad">
         <div class="divider-mark reveal-fade"></div>
         <div class="eyebrow reveal-fade">Where to find us</div>
         <h2 class="big-title" data-title><span class="title-word"><span>The</span></span> <span class="title-word"><span><em>Venue</em></span></span></h2>
-        <div class="venue-grid">
-            <div class="venue-card reveal-rise">
-                <div class="venue-label">Tea Ceremony · Relatives</div>
-                <div class="venue-name">Artyzen Singapore</div>
-                <div class="venue-addr">9 Cuscaden Rd, Singapore 249719</div>
-                <div class="venue-map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.7822519037186!2d103.827012!3d1.305764!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da190807ddeedd%3A0xfcdccef2592b1974!2sArtyzen%20Singapore!5e0!3m2!1sen!2ssg!4v1776748141051!5m2!1sen!2ssg" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
-            </div>
+        <div class="venue-grid venue-grid-single">
             <div class="venue-card reveal-rise">
                 <div class="venue-label">Dinner Reception</div>
                 <div class="venue-name">Irodori Restaurant</div>
