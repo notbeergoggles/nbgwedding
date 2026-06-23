@@ -1217,23 +1217,37 @@ function initFilmScenes(suffix){
         gsap.to(spans,{y:0,duration:1.1,ease:'power4.out',stagger:0.1,scrollTrigger:{trigger:title,start:'top 85%'}});
     });
 
-    // CONVERGING SPLIT HEADER — "Our" ← → "Story" meet center, pinned + scrubbed
+    // CONVERGING SPLIT HEADER
     const cScene=root.querySelector('.converge-scene');
     if(cScene){
         const left=cScene.querySelector('.converge-left');
         const right=cScene.querySelector('.converge-right');
         const eyebrow=cScene.querySelector('.converge-eyebrow');
         const cLede=cScene.querySelector('.converge-lede');
-        const offset=()=>window.innerWidth*0.6;
-        gsap.set(left,{x:()=>-offset(),opacity:0});
-        gsap.set(right,{x:()=>offset(),opacity:0});
-        const tl=gsap.timeline({scrollTrigger:{
-            trigger:cScene,start:'top top',end:'+=60%',scrub:1,pin:true,invalidateOnRefresh:true,anticipatePin:1,refreshPriority:10
-        }});
-        tl.to(eyebrow,{opacity:1,duration:0.15},0)
-          .to(left,{x:0,opacity:1,ease:'none',duration:1},0)
-          .to(right,{x:0,opacity:1,ease:'none',duration:1},0)
-          .to(cLede,{opacity:1,duration:0.3},0.8);
+        if(isTouch){
+            // MOBILE: unpinned — "Our" slides up from bottom, "Story" slides down from top, as section enters view
+            gsap.set(eyebrow,{opacity:0});
+            gsap.set(left,{y:120,opacity:0});
+            gsap.set(right,{y:-120,opacity:0});
+            gsap.set(cLede,{opacity:0});
+            const tl=gsap.timeline({scrollTrigger:{trigger:cScene,start:'top 70%'}});
+            tl.to(eyebrow,{opacity:1,duration:0.5,ease:'power2.out'})
+              .to(left,{y:0,opacity:1,duration:0.9,ease:'power3.out'},'-=0.3')
+              .to(right,{y:0,opacity:1,duration:0.9,ease:'power3.out'},'<')
+              .to(cLede,{opacity:1,duration:0.6,ease:'power2.out'},'-=0.3');
+        } else {
+            // DESKTOP: pinned + scrubbed — "Our" ← → "Story" meet center
+            const offset=()=>window.innerWidth*0.6;
+            gsap.set(left,{x:()=>-offset(),opacity:0});
+            gsap.set(right,{x:()=>offset(),opacity:0});
+            const tl=gsap.timeline({scrollTrigger:{
+                trigger:cScene,start:'top top',end:'+=60%',scrub:1,pin:true,invalidateOnRefresh:true,anticipatePin:1,refreshPriority:10
+            }});
+            tl.to(eyebrow,{opacity:1,duration:0.15},0)
+              .to(left,{x:0,opacity:1,ease:'none',duration:1},0)
+              .to(right,{x:0,opacity:1,ease:'none',duration:1},0)
+              .to(cLede,{opacity:1,duration:0.3},0.8);
+        }
     }
 
     root.querySelectorAll('.reveal-fade').forEach(el=>gsap.fromTo(el,{opacity:0,y:24},{opacity:1,y:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}}));
