@@ -126,6 +126,9 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 .hero-col:nth-child(even) .hero-col-track{animation:heroDriftDown 34s linear infinite;}
 @keyframes heroDriftUp{from{transform:translateY(0);}to{transform:translateY(-50%);}}
 @keyframes heroDriftDown{from{transform:translateY(-50%);}to{transform:translateY(0);}}
+/* Once hero is scrolled past, stop its continuous animation and free GPU layers */
+.scene-hero.hero-offscreen .hero-col-track{animation-play-state:paused;will-change:auto;}
+.scene-hero.hero-offscreen .hero-cols{will-change:auto;}
 .hero-cols-grade{position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(26,22,20,0.55),rgba(26,22,20,0.2) 35%,rgba(26,22,20,0.45) 65%,rgba(26,22,20,0.92) 100%);}
 @media(max-width:600px){
     .hero-col:nth-child(3){display:none;}  /* 2 columns on small phones */
@@ -1202,6 +1205,10 @@ function initFilmScenes(suffix){
             gsap.to(heroCols,{yPercent:-44,scale:1.06,ease:'none',scrollTrigger:{trigger:heroSec,start:'top top',end:'bottom top',scrub:1}});
         }
         gsap.to(root.querySelector('.hero-stage'),{yPercent:-25,opacity:0,ease:'none',scrollTrigger:{trigger:heroSec,start:'top top',end:'bottom top',scrub:1}});
+        // Pause the continuous column drift once the hero leaves the viewport (frees GPU for the converge scene)
+        ScrollTrigger.create({trigger:heroSec,start:'bottom top',
+            onEnter:()=>heroSec.classList.add('hero-offscreen'),
+            onLeaveBack:()=>heroSec.classList.remove('hero-offscreen')});
     }
 
     root.querySelectorAll('[data-title]').forEach(title=>{
