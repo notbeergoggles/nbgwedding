@@ -120,6 +120,11 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 /* center column slightly taller emphasis on wide screens */
 @media(min-width:900px){
     .hero-col:nth-child(2){flex:1.25;}
+    /* wider screens expose the rotated corners — oversize more horizontally to always cover */
+    .hero-cols{width:160%;}
+}
+@media(min-width:1600px){
+    .hero-cols{width:185%;}
 }
 /* drift animations — alternating directions */
 .hero-col:nth-child(odd) .hero-col-track{animation:heroDriftUp 34s linear infinite;}
