@@ -321,6 +321,32 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 
 /* ═══════════ FAQ ═══════════ */
 #faq{background:var(--bg-deep);}
+/* ── Claude chat FAQ ── */
+.faq-chat-intro{max-width:620px;margin:1.5rem auto 0;text-align:center;color:var(--ink-soft);font-family:var(--serif-alt);font-style:italic;font-size:1.1rem;}
+.faq-chat{max-width:640px;margin:2.5rem auto 0;background:var(--bg-veil);border-radius:16px;box-shadow:0 8px 30px var(--shadow);overflow:hidden;display:flex;flex-direction:column;}
+.faq-chat-window{padding:1.5rem;display:flex;flex-direction:column;gap:1rem;max-height:420px;overflow-y:auto;min-height:160px;}
+.faq-msg{display:flex;max-width:85%;}
+.faq-msg-bot{align-self:flex-start;}
+.faq-msg-user{align-self:flex-end;}
+.faq-bubble{padding:0.8rem 1.1rem;border-radius:16px;font-family:var(--sans);font-size:0.95rem;line-height:1.55;}
+.faq-msg-bot .faq-bubble{background:var(--bg-deep);color:var(--ink);border-bottom-left-radius:4px;}
+.faq-msg-user .faq-bubble{background:var(--rose);color:#fff;border-bottom-right-radius:4px;}
+.faq-bubble a{color:var(--rose-deep);font-weight:600;text-decoration:underline;}
+.faq-msg-user .faq-bubble a{color:#fff;}
+.faq-typing{display:flex;gap:4px;padding:0.9rem 1.1rem;}
+.faq-typing span{width:7px;height:7px;border-radius:50%;background:var(--ink-soft);opacity:0.5;animation:faqBlink 1.2s infinite;}
+.faq-typing span:nth-child(2){animation-delay:0.2s;}
+.faq-typing span:nth-child(3){animation-delay:0.4s;}
+@keyframes faqBlink{0%,60%,100%{opacity:0.25;transform:translateY(0);}30%{opacity:0.9;transform:translateY(-3px);}}
+.faq-suggestions{display:flex;flex-wrap:wrap;gap:0.5rem;padding:0 1.5rem 0.5rem;}
+.faq-chip{background:transparent;border:1px solid var(--blush);color:var(--rose-deep);font-family:var(--sans);font-size:0.82rem;padding:0.45rem 0.9rem;border-radius:99px;cursor:pointer;transition:background .2s,color .2s;}
+.faq-chip:hover{background:var(--rose);color:#fff;border-color:var(--rose);}
+.faq-input-row{display:flex;gap:0.6rem;padding:1rem 1.5rem 1.5rem;border-top:1px solid var(--bg-deep);}
+.faq-input{flex:1;border:1px solid var(--bg-deep);background:#fff;border-radius:99px;padding:0.75rem 1.2rem;font-family:var(--sans);font-size:0.95rem;color:var(--ink);outline:none;}
+.faq-input:focus{border-color:var(--rose);}
+.faq-send{flex-shrink:0;width:44px;height:44px;border-radius:50%;border:none;background:var(--rose);color:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.faq-send:hover{background:var(--rose-deep);}
+.faq-send:disabled{opacity:0.5;cursor:default;}
 .faq-list{max-width:720px;margin:3rem auto 0;}
 .faq-item{background:var(--bg-veil);border-radius:4px;margin-bottom:0.75rem;overflow:hidden;box-shadow:0 4px 16px var(--shadow);transition:box-shadow .4s;}
 .faq-item.open{box-shadow:0 12px 30px var(--shadow);}
@@ -843,17 +869,24 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
     <section id="faq" class="scene scene-pad">
         <div class="divider-mark reveal-fade"></div>
         <div class="eyebrow reveal-fade">Good to know</div>
-        <h2 class="big-title" data-title><span class="title-word"><span>Frequently Asked</span></span> <span class="title-word"><span><em>Questions</em></span></span></h2>
-        <div class="faq-list">
-            <div class="faq-item reveal-fade"><div class="faq-q">Do I come for both locations?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div><div class="faq-a"><div class="faq-a-inner">Morning session at Artyzen is only applicable for relatives of the bride and groom! Please come for the dinner in the evening at Irodori ♡</div></div></div>
-            <div class="faq-item reveal-fade"><div class="faq-q">Is parking available at the venue?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div><div class="faq-a"><div class="faq-a-inner">For those attending Artyzen — contact Kenny @ 98247043. For Irodori — unfortunately, no :(</div></div></div>
-            <div class="faq-item reveal-fade"><div class="faq-q">Where can I park?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div><div class="faq-a"><div class="faq-a-inner">On-site parking is available at Four Points by Sheraton, charged at a flat per-entry rate in the evenings — do note that we won't be providing parking coupons. If you'd prefer other options, I have created a list of locations below. We'd recommend giving yourself a little buffer time to find a spot!<div style="position:relative;width:100%;padding-bottom:75%;height:0;overflow:hidden;border-radius:6px;margin-top:1rem;"><iframe src="https://www.google.com/maps/d/u/0/embed?mid=1d4QcIncrD-H1vQulNon0IDO3Nkcd9hs&ehbc=2E312F&noprof=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen></iframe></div></div></div></div>
-            <div class="faq-item reveal-fade"><div class="faq-q">What time should I arrive?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div><div class="faq-a"><div class="faq-a-inner">Please target to reach Irodori at 6pm.</div></div></div>
-            <div class="faq-item reveal-fade"><div class="faq-q">Can I take photos during the ceremony?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div><div class="faq-a"><div class="faq-a-inner">Absolutely! Remember to use our hashtags if you're posting on IG! You can also upload them to the Live Gallery found below!</div></div></div>
-            <div class="faq-item reveal-fade"><div class="faq-q">What if I can't make it after RSVPing yes?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div><div class="faq-a"><div class="faq-a-inner">Simply inform either the bride or groom!</div></div></div>
-            <div class="faq-item reveal-fade"><div class="faq-q">What time does the event end?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div><div class="faq-a"><div class="faq-a-inner">Dinner officially ends at 10pm!</div></div></div>
-            <div class="faq-item reveal-fade"><div class="faq-q">Can I post photos on social media?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div><div class="faq-a"><div class="faq-a-inner">Definitely! Don't forget our wedding hashtags! #ItsNotBeerGoggles #YuKenGetMarried</div></div></div>
-            <div class="faq-item reveal-fade"><div class="faq-q">Is there a wedding hashtag?<span class="faq-toggle"><i class="bi bi-plus-lg"></i></span></div><div class="faq-a"><div class="faq-a-inner">Yes! #ItsNotBeerGoggles #YuKenGetMarried</div></div></div>
+        <h2 class="big-title" data-title><span class="title-word"><span>Ask Us</span></span> <span class="title-word"><span><em>Anything</em></span></span></h2>
+        <p class="faq-chat-intro reveal-fade">Got a question about the day? Just ask below and we'll do our best to help ♡</p>
+        <div class="faq-chat reveal-fade">
+            <div class="faq-chat-window" id="faq-chat-window">
+                <div class="faq-msg faq-msg-bot">
+                    <div class="faq-bubble">Hi there! 👋 Ask me anything about the wedding — timings, parking, dress code, photos, you name it.</div>
+                </div>
+            </div>
+            <div class="faq-suggestions" id="faq-suggestions">
+                <button class="faq-chip" type="button">What time should I arrive?</button>
+                <button class="faq-chip" type="button">Where can I park?</button>
+                <button class="faq-chip" type="button">Is there a wedding hashtag?</button>
+                <button class="faq-chip" type="button">What time does it end?</button>
+            </div>
+            <div class="faq-input-row">
+                <input type="text" id="faq-input" class="faq-input" placeholder="Type your question…" autocomplete="off">
+                <button id="faq-send" class="faq-send" type="button" aria-label="Send"><i class="bi bi-arrow-up"></i></button>
+            </div>
         </div>
     </section>
 
@@ -1380,10 +1413,87 @@ function wrapWords(el){
 }
 function bindFaq(suffix){
     const root=document.getElementById('group-'+suffix+'-content');
+    // Legacy accordion (Nov 5 / any remaining .faq-item)
     root.querySelectorAll('.faq-item').forEach(item=>{
         const q=item.querySelector('.faq-q'),a=item.querySelector('.faq-a');
         q.addEventListener('click',()=>{const open=item.classList.contains('open');if(open){a.style.maxHeight='0';item.classList.remove('open');}else{a.style.maxHeight=a.scrollHeight+'px';item.classList.add('open');}if(window.ScrollTrigger)ScrollTrigger.refresh();});
     });
+    // Claude chat FAQ (Nov 7)
+    bindFaqChat(root);
+}
+
+/* ── Claude-powered FAQ chat ── */
+const FAQ_WORKER_URL = "YOUR_WORKER_URL_HERE"; // ← paste your Cloudflare Worker URL here
+const FAQ_WHATSAPP = "https://wa.me/6598247043";
+
+function bindFaqChat(root){
+    const chat=root.querySelector('.faq-chat');
+    if(!chat) return;
+    const win=chat.querySelector('.faq-chat-window');
+    const input=chat.querySelector('.faq-input');
+    const sendBtn=chat.querySelector('.faq-send');
+    const chips=chat.querySelectorAll('.faq-chip');
+    const history=[];
+    let busy=false;
+
+    function addMsg(text,who){
+        const wrap=document.createElement('div');
+        wrap.className='faq-msg faq-msg-'+who;
+        const bubble=document.createElement('div');
+        bubble.className='faq-bubble';
+        bubble.innerHTML=text;
+        wrap.appendChild(bubble);
+        win.appendChild(wrap);
+        win.scrollTop=win.scrollHeight;
+        return wrap;
+    }
+    function showTyping(){
+        const wrap=document.createElement('div');
+        wrap.className='faq-msg faq-msg-bot';
+        wrap.innerHTML='<div class="faq-typing"><span></span><span></span><span></span></div>';
+        win.appendChild(wrap); win.scrollTop=win.scrollHeight;
+        return wrap;
+    }
+    function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+    async function ask(question){
+        if(busy||!question.trim()) return;
+        busy=true; sendBtn.disabled=true;
+        addMsg(escapeHtml(question),'user');
+        input.value='';
+        const typing=showTyping();
+        try{
+            const res=await fetch(FAQ_WORKER_URL,{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({question, history})
+            });
+            if(!res.ok) throw new Error('bad response');
+            const data=await res.json();
+            let answer=(data.answer||'').trim();
+            typing.remove();
+            if(!answer){ answer=fallbackMsg(); }
+            // linkify a [WHATSAPP] token if the model emits one
+            answer=answer.replace(/\[WHATSAPP\]/g,'<a href="'+FAQ_WHATSAPP+'" target="_blank" rel="noopener">message them on WhatsApp</a>');
+            addMsg(answer,'bot');
+            history.push({role:'user',content:question});
+            history.push({role:'assistant',content:answer});
+            if(history.length>12) history.splice(0,history.length-12);
+        }catch(e){
+            typing.remove();
+            addMsg(fallbackMsg(),'bot');
+        }finally{
+            busy=false; sendBtn.disabled=false; input.focus();
+        }
+    }
+    function fallbackMsg(){
+        return "Hmm, I'm not sure about that one — but Kenny & Sayuri can definitely help! "+
+               '<a href="'+FAQ_WHATSAPP+'" target="_blank" rel="noopener">Message them on WhatsApp</a> 💬';
+    }
+
+    sendBtn.addEventListener('click',()=>ask(input.value));
+    input.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();ask(input.value);}});
+    chips.forEach(c=>c.addEventListener('click',()=>ask(c.textContent)));
 }
 </script>
 
