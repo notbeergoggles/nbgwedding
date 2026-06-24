@@ -167,7 +167,7 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 .film-burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
 .film-burger.open span:nth-child(2){opacity:0;}
 .film-burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
-@media(max-width:900px){.film-burger{display:flex;}.film-nav-links{position:fixed;inset:0;background:var(--bg);flex-direction:column;justify-content:center;gap:2rem;transform:translateX(100%);transition:transform .6s var(--silk);}.film-nav-links.open{transform:translateX(0);}.film-nav-links a{font-size:1rem;}}
+@media(max-width:900px){.film-burger{display:flex;}.film-nav-links{position:fixed;top:0;left:0;right:0;bottom:0;width:100vw;height:100vh;height:100dvh;background:var(--bg);flex-direction:column;justify-content:center;gap:2rem;transform:translateX(100%);transition:transform .6s var(--silk);margin:0;padding:0;}.film-nav-links.open{transform:translateX(0);}.film-nav-links a{font-size:1rem;}}
 
 /* shared scene chrome */
 .scene-light{background:var(--bg);color:var(--ink);}
