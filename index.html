@@ -308,6 +308,47 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 .hashtag-copied-msg{display:block;font-family:var(--serif-alt);font-style:italic;font-size:0.85rem;color:var(--sage);margin-top:0.9rem;opacity:0;transition:opacity .3s;}
 .hashtag-copied-msg.show{opacity:1;}
 
+/* ═══════════ QUIZ ═══════════ */
+#quiz-1{background:var(--noir);color:var(--bg-veil);position:relative;overflow:hidden;}
+#quiz-1 .eyebrow{color:var(--gold);}
+#quiz-1 .big-title{color:var(--bg-veil);}
+#quiz-1 .big-title em{color:var(--rose);}
+.quiz-sub{text-align:center;font-family:var(--serif-alt);font-style:italic;font-size:1.1rem;color:rgba(251,248,244,0.6);margin:1rem auto 0;}
+.quiz-stage{max-width:620px;margin:3rem auto 0;position:relative;}
+.quiz-progress{display:flex;justify-content:center;gap:0.6rem;margin-bottom:2.5rem;}
+.quiz-pip{width:9px;height:9px;border-radius:50%;background:rgba(251,248,244,0.18);transition:transform .45s var(--silk),background .45s;}
+.quiz-pip.done{background:var(--gold);}
+.quiz-pip.current{background:var(--rose);transform:scale(1.5);box-shadow:0 0 14px rgba(197,139,155,0.7);}
+.quiz-card{background:rgba(251,248,244,0.04);border:1px solid rgba(201,163,104,0.22);border-radius:14px;padding:2.5rem 2rem;backdrop-filter:blur(4px);box-shadow:0 24px 60px rgba(0,0,0,0.4);}
+.quiz-qnum{font-family:var(--sans);font-size:0.68rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:1rem;}
+.quiz-question{font-family:var(--serif);font-weight:300;font-size:clamp(1.6rem,4vw,2.2rem);line-height:1.25;text-align:center;color:var(--bg-veil);margin-bottom:2rem;min-height:2.4em;display:flex;align-items:center;justify-content:center;}
+.quiz-options{display:flex;flex-direction:column;gap:0.85rem;}
+.quiz-opt{position:relative;font-family:var(--sans);font-size:0.98rem;text-align:left;color:var(--bg-veil);background:rgba(251,248,244,0.05);border:1px solid rgba(251,248,244,0.16);border-radius:10px;padding:1rem 1.25rem;cursor:pointer;overflow:hidden;transition:border-color .3s,background .3s,transform .15s;}
+.quiz-opt:hover:not(:disabled){border-color:var(--gold);background:rgba(201,163,104,0.1);transform:translateY(-1px);}
+.quiz-opt:disabled{cursor:default;}
+.quiz-opt .quiz-letter{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;border:1px solid rgba(251,248,244,0.3);font-size:0.78rem;margin-right:0.85rem;transition:all .3s;}
+.quiz-opt.correct{border-color:var(--sage);background:rgba(168,177,154,0.18);}
+.quiz-opt.correct .quiz-letter{background:var(--sage);border-color:var(--sage);color:var(--noir);}
+.quiz-opt.wrong{border-color:var(--rose-deep);background:rgba(166,101,119,0.16);animation:shake 0.5s;}
+.quiz-opt.wrong .quiz-letter{background:var(--rose-deep);border-color:var(--rose-deep);color:#fff;}
+.quiz-opt.dim{opacity:0.4;}
+.quiz-feedback{font-family:var(--serif-alt);font-style:italic;font-size:1rem;line-height:1.6;color:var(--gold);text-align:center;margin-top:1.5rem;min-height:1.5em;opacity:0;transform:translateY(8px);transition:opacity .5s,transform .5s;}
+.quiz-feedback.show{opacity:1;transform:translateY(0);}
+.quiz-next-wrap{text-align:center;margin-top:1.75rem;min-height:3rem;}
+.quiz-next{opacity:0;pointer-events:none;transition:opacity .4s;}
+.quiz-next.show{opacity:1;pointer-events:auto;}
+/* sparkle burst */
+.quiz-spark{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--gold);pointer-events:none;opacity:0;z-index:5;}
+/* result */
+.quiz-result{text-align:center;opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s;}
+.quiz-result.show{opacity:1;transform:translateY(0);}
+.quiz-score-big{font-family:var(--script);font-size:clamp(4rem,14vw,7rem);line-height:1;background:linear-gradient(90deg,var(--gold-deep),var(--gold),var(--rose),var(--gold));background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 4s linear infinite;margin-bottom:0.5rem;}
+.quiz-score-label{font-family:var(--sans);font-size:0.7rem;letter-spacing:0.4em;text-transform:uppercase;color:rgba(251,248,244,0.5);margin-bottom:1.75rem;}
+.quiz-verdict{font-family:var(--serif);font-weight:300;font-size:clamp(1.5rem,4vw,2rem);color:var(--bg-veil);line-height:1.3;margin-bottom:1rem;}
+.quiz-verdict-sub{font-family:var(--serif-alt);font-style:italic;font-size:1.05rem;color:var(--rose);line-height:1.6;margin-bottom:2.25rem;max-width:440px;margin-left:auto;margin-right:auto;}
+.quiz-confetti{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:4;}
+.quiz-confetti i{position:absolute;top:-12px;width:9px;height:14px;opacity:0;will-change:transform;}
+
 /* ═══════════ MIKA ═══════════ */
 #mika{background:var(--bg);padding:clamp(5rem,10vh,8rem) 0;overflow:hidden;}
 .mika-intro{text-align:center;font-family:var(--serif-alt);font-style:italic;font-size:1.1rem;color:var(--ink-soft);margin:1rem auto 2.5rem;}
@@ -656,6 +697,39 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
                     <div class="hashtag-pill" onclick="copyHashtag(this)"><span>#YuKenGetMarried</span><i class="bi bi-copy"></i></div>
                 </div>
                 <span class="hashtag-copied-msg">Copied ♡</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCENE: QUIZ -->
+    <section id="quiz-1" class="scene scene-pad">
+        <div class="divider-mark reveal-fade"></div>
+        <div class="eyebrow reveal-fade">A little game</div>
+        <h2 class="big-title" data-title><span class="title-word"><span>How Well Do</span></span> <span class="title-word"><span><em>You Know Us?</em></span></span></h2>
+        <p class="quiz-sub reveal-fade">You made the guest list. But how closely have you been paying attention? ♡</p>
+
+        <div class="quiz-stage reveal-rise">
+            <div class="quiz-confetti" id="quiz-confetti-1" aria-hidden="true"></div>
+
+            <div id="quiz-play-1">
+                <div class="quiz-progress" id="quiz-progress-1"></div>
+                <div class="quiz-card">
+                    <div class="quiz-qnum" id="quiz-qnum-1">Question 1 of 8</div>
+                    <div class="quiz-question" id="quiz-question-1"></div>
+                    <div class="quiz-options" id="quiz-options-1"></div>
+                    <div class="quiz-feedback" id="quiz-feedback-1"></div>
+                    <div class="quiz-next-wrap">
+                        <button class="btn-pill quiz-next" id="quiz-next-1" onclick="quizNext('1')">Next ♡</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-result" id="quiz-result-1">
+                <div class="quiz-score-big" id="quiz-score-1">0/8</div>
+                <div class="quiz-score-label">Correct</div>
+                <div class="quiz-verdict" id="quiz-verdict-1"></div>
+                <div class="quiz-verdict-sub" id="quiz-verdict-sub-1"></div>
+                <button class="btn-pill" onclick="quizRestart('1')">Play Again</button>
             </div>
         </div>
     </section>
@@ -1160,6 +1234,7 @@ function enterFilm(){
     runTimer(rsvpDate,suffix,"rsvp"); runTimer(weddingDate,suffix,"wedding");
     startAudio();
     if(suffix==='2'){ buildMika('2'); loadGuestbook('2'); }
+    if(suffix==='1'){ quizInit('1'); }
     initFilm(suffix);
     playHeroIntro(suffix);
 }
@@ -1597,6 +1672,134 @@ function loadGuestbook(suffix){const c=document.getElementById('gb-messages-'+su
 function bindHashtag(){}
 function copyHashtag(pill){const text=pill.querySelector('span').textContent,block=pill.closest('.hashtag-block'),msg=block?block.querySelector('.hashtag-copied-msg'):null;const done=()=>{pill.classList.add('copied');if(msg)msg.classList.add('show');setTimeout(()=>{pill.classList.remove('copied');if(msg)msg.classList.remove('show');},2000);};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done).catch(()=>fbCopy(text,done));}else fbCopy(text,done);}
 function fbCopy(text,cb){const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');cb();}catch(e){}document.body.removeChild(ta);}
+
+/* ═══════════ QUIZ ═══════════ */
+</script>
+<script>
+var QUIZ_DATA=[
+    {q:"Where did Sayuri & Kenny first cross paths?",opts:["On a Twitch stream","Primary school","A dating app","At a kopitiam"],a:1,fb:"Same classroom, zero conversations. Fate was clearly saving it for later."},
+    {q:"What rhythm game reunited them years later?",opts:["osu!","Genshin Impact","Muse Dash","Beat Saber"],a:2,fb:"Muse Dash — proof that good things really do come from grinding ranked."},
+    {q:"How did Kenny first slide into her world?",opts:["Became her most loyal Twitch viewer","Slid into her DMs","A mutual friend set them up","Matched on an app"],a:0,fb:"He showed up to every stream. Subtle? No. Effective? Clearly."},
+    {q:"How far apart were they actually living?",opts:["Different countries","5 minutes","An hour away","Right next door"],a:1,fb:"Five minutes apart this whole time. The universe loves a slow burn."},
+    {q:"Who made the first move to meet up?",opts:["Kenny","A mutual friend","Sayuri","Mika"],a:2,fb:"Sayuri, the bold one — she suggested supper and the rest is history."},
+    {q:"Where was their legendary first date?",opts:["A fancy restaurant","Saizeriya","The cinema","Gardens by the Bay"],a:1,fb:"Saizeriya. Nothing says romance like a budget and a bottomless drink bar."},
+    {q:"Where did Kenny finally propose?",opts:["Tokyo","Bali","Kyoto","Singapore"],a:2,fb:"Kyoto. He really said 'let's make the most romantic city even worse for everyone else.'"},
+    {q:"What's the couple's Instagram handle?",opts:["@notbeergoggles","@sayurixkenny","@museanddash","@kopitiamkids"],a:0,fb:"@notbeergoggles — and yes, that was a hint. Go follow them. 😉"}
+];
+var QUIZ_VERDICTS=[
+    {min:8,t:"Soulmate-tier.",s:"Are you absolutely sure you're not Mika in a trench coat? This is borderline suspicious."},
+    {min:6,t:"Practically family.",s:"You've earned the aux cord and a permanent seat at supper. Beautifully done."},
+    {min:4,t:"Solid effort!",s:"You've clearly been paying attention at all those late-night meals. Respectable."},
+    {min:0,t:"...Here for the food?",s:"Look, the details are fuzzy but the love is real. We still saved you a seat ♡"}
+];
+var quizState={};
+function quizInit(suffix){
+    if(typeof quizState==='undefined'||!quizState)quizState={};
+    quizState[suffix]={i:0,score:0,answered:false};
+    const prog=document.getElementById('quiz-progress-'+suffix);
+    if(prog){prog.innerHTML='';QUIZ_DATA.forEach(()=>{const p=document.createElement('span');p.className='quiz-pip';prog.appendChild(p);});}
+    document.getElementById('quiz-play-'+suffix).style.display='';
+    const res=document.getElementById('quiz-result-'+suffix);res.classList.remove('show');res.style.display='none';
+    quizRender(suffix);
+}
+function quizRender(suffix){
+    const st=quizState[suffix],data=QUIZ_DATA[st.i];
+    st.answered=false;
+    document.getElementById('quiz-qnum-'+suffix).textContent='Question '+(st.i+1)+' of '+QUIZ_DATA.length;
+    document.getElementById('quiz-question-'+suffix).textContent=data.q;
+    const fb=document.getElementById('quiz-feedback-'+suffix);fb.classList.remove('show');fb.textContent='';
+    document.getElementById('quiz-next-'+suffix).classList.remove('show');
+    const pips=document.querySelectorAll('#quiz-progress-'+suffix+' .quiz-pip');
+    pips.forEach((p,idx)=>{p.classList.toggle('done',idx<st.i);p.classList.toggle('current',idx===st.i);});
+    const wrap=document.getElementById('quiz-options-'+suffix);wrap.innerHTML='';
+    const letters=['A','B','C','D'];
+    data.opts.forEach((opt,idx)=>{
+        const b=document.createElement('button');
+        b.className='quiz-opt';b.type='button';
+        b.innerHTML='<span class="quiz-letter">'+letters[idx]+'</span>'+opt;
+        b.onclick=()=>quizAnswer(suffix,idx,b);
+        wrap.appendChild(b);
+    });
+    if(window.gsap){gsap.fromTo(wrap.children,{opacity:0,y:14},{opacity:1,y:0,duration:0.5,stagger:0.07,ease:'power3.out'});}
+}
+function quizAnswer(suffix,idx,btn){
+    const st=quizState[suffix];if(st.answered)return;st.answered=true;
+    const data=QUIZ_DATA[st.i];
+    const opts=document.querySelectorAll('#quiz-options-'+suffix+' .quiz-opt');
+    opts.forEach(o=>o.disabled=true);
+    const correct=idx===data.a;
+    if(correct){
+        st.score++;
+        btn.classList.add('correct');
+        quizSparkle(suffix,btn);
+        opts.forEach((o,i)=>{if(i!==idx)o.classList.add('dim');});
+    }else{
+        btn.classList.add('wrong');
+        opts[data.a].classList.add('correct');
+        opts.forEach((o,i)=>{if(i!==idx&&i!==data.a)o.classList.add('dim');});
+    }
+    const fb=document.getElementById('quiz-feedback-'+suffix);
+    fb.textContent=data.fb;
+    setTimeout(()=>fb.classList.add('show'),250);
+    const next=document.getElementById('quiz-next-'+suffix);
+    next.textContent=st.i<QUIZ_DATA.length-1?'Next ♡':'See My Score ✦';
+    setTimeout(()=>next.classList.add('show'),400);
+}
+function quizNext(suffix){
+    const st=quizState[suffix];
+    if(st.i<QUIZ_DATA.length-1){st.i++;quizRender(suffix);}
+    else{quizShowResult(suffix);}
+}
+function quizShowResult(suffix){
+    const st=quizState[suffix];
+    const pips=document.querySelectorAll('#quiz-progress-'+suffix+' .quiz-pip');
+    pips.forEach(p=>{p.classList.add('done');p.classList.remove('current');});
+    document.getElementById('quiz-play-'+suffix).style.display='none';
+    const res=document.getElementById('quiz-result-'+suffix);res.style.display='';
+    const v=QUIZ_VERDICTS.find(x=>st.score>=x.min);
+    document.getElementById('quiz-verdict-'+suffix).textContent=v.t;
+    document.getElementById('quiz-verdict-sub-'+suffix).textContent=v.s;
+    // animated count-up
+    const scoreEl=document.getElementById('quiz-score-'+suffix);let n=0;
+    const tick=setInterval(()=>{n++;scoreEl.textContent=n+'/'+QUIZ_DATA.length;if(n>=st.score)clearInterval(tick);},140);
+    if(st.score===0)scoreEl.textContent='0/'+QUIZ_DATA.length;
+    setTimeout(()=>res.classList.add('show'),60);
+    if(st.score>=6)quizConfetti(suffix);
+}
+function quizRestart(suffix){quizInit(suffix);const stage=document.getElementById('quiz-'+suffix);if(stage&&stage.scrollIntoView)stage.scrollIntoView({behavior:'smooth',block:'start'});}
+function quizSparkle(suffix,btn){
+    if(reduce)return;
+    const stage=btn.closest('.quiz-stage'),sr=stage.getBoundingClientRect(),br=btn.getBoundingClientRect();
+    const cx=br.left-sr.left+br.width/2,cy=br.top-sr.top+br.height/2;
+    for(let k=0;k<10;k++){
+        const s=document.createElement('span');s.className='quiz-spark';
+        s.style.left=cx+'px';s.style.top=cy+'px';
+        s.style.background=k%2?'var(--rose)':'var(--gold)';
+        stage.appendChild(s);
+        const ang=(Math.PI*2*k)/10,dist=40+Math.random()*45;
+        if(window.gsap){gsap.set(s,{opacity:1,scale:0.6+Math.random()*0.6});gsap.to(s,{x:Math.cos(ang)*dist,y:Math.sin(ang)*dist,opacity:0,scale:0,duration:0.7+Math.random()*0.3,ease:'power2.out',onComplete:()=>s.remove()});}
+        else s.remove();
+    }
+}
+function quizConfetti(suffix){
+    if(reduce)return;
+    const box=document.getElementById('quiz-confetti-'+suffix);if(!box)return;box.innerHTML='';
+    const colors=['#C9A368','#C58B9B','#A8B19A','#E8C9CE','#A8823F'];
+    const N=70;
+    for(let k=0;k<N;k++){
+        const c=document.createElement('i');
+        c.style.background=colors[k%colors.length];
+        c.style.left=Math.random()*100+'%';
+        c.style.borderRadius=Math.random()>0.5?'50%':'1px';
+        box.appendChild(c);
+        if(window.gsap){
+            gsap.set(c,{opacity:1,y:0,rotation:Math.random()*360});
+            gsap.to(c,{y:box.offsetHeight+30,x:(Math.random()-0.5)*180,rotation:'+='+(360+Math.random()*540),duration:2.4+Math.random()*1.8,ease:'power1.in',delay:Math.random()*0.5,onComplete:()=>c.remove()});
+            gsap.to(c,{opacity:0,duration:0.5,delay:2+Math.random()*1.2});
+        }else c.remove();
+    }
+}
+
 </script>
 
 </body>
