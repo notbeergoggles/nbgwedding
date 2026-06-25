@@ -207,6 +207,21 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 .note-passage{font-family:var(--serif);font-weight:300;font-size:clamp(1.5rem,3.4vw,2.1rem);line-height:1.7;color:var(--ink);letter-spacing:-0.005em;}
 .note-passage em{font-style:italic;color:var(--rose-deep);}
 .note-sign{font-family:var(--script);font-size:clamp(1.8rem,4vw,2.4rem);color:var(--rose-deep);margin-top:2.25rem;line-height:1;}
+
+/* ═══════════ MEET THE CAST ═══════════ */
+#cast-1{background:var(--bg-deep);}
+.cast-sub{text-align:center;font-family:var(--serif-alt);font-style:italic;font-size:1.1rem;color:var(--ink-soft);margin:1rem auto 0;}
+.cast-units{margin-top:3.5rem;display:flex;flex-direction:column;gap:3.5rem;}
+.cast-unit-label{text-align:center;font-family:var(--sans);font-size:0.68rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:1.75rem;position:relative;}
+.cast-unit-label::before,.cast-unit-label::after{content:'';position:absolute;top:50%;width:clamp(30px,12vw,90px);height:1px;background:rgba(168,130,63,0.35);}
+.cast-unit-label::before{right:calc(50% + 90px);}
+.cast-unit-label::after{left:calc(50% + 90px);}
+.cast-row{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(1.25rem,3vw,2.5rem);}
+.cast-member{width:clamp(130px,20vw,170px);text-align:center;}
+.cast-photo{width:clamp(110px,16vw,140px);height:clamp(110px,16vw,140px);border-radius:50%;object-fit:cover;margin:0 auto 1rem;display:block;border:2px solid var(--bg-veil);box-shadow:0 8px 24px var(--shadow);background:var(--bg);transition:transform .4s var(--silk),box-shadow .4s;}
+.cast-member:hover .cast-photo{transform:translateY(-5px) scale(1.03);box-shadow:0 14px 34px rgba(0,0,0,0.16);}
+.cast-name{font-family:var(--serif);font-weight:400;font-size:1.25rem;color:var(--ink);line-height:1.2;margin-bottom:0.3rem;}
+.cast-title{font-family:var(--serif-alt);font-style:italic;font-size:0.92rem;color:var(--rose-deep);line-height:1.4;}
 .story-lede{font-family:var(--serif-alt);font-size:clamp(1.3rem,3vw,1.9rem);line-height:1.7;max-width:780px;margin:2rem auto 0;color:rgba(251,248,244,0.85);}
 .story-lede .word{display:inline-block;overflow:hidden;padding:0.12em 0;}
 .story-lede .word>span{display:inline-block;}
@@ -613,6 +628,91 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
             <div class="note-orn reveal-fade">✦ &nbsp; ✦ &nbsp; ✦</div>
             <p class="note-passage reveal-fade">There are two celebrations — and this is the quiet one. November 7th is the big party, but <em>today</em> is the day it actually becomes real. We wanted only our closest few here to witness it. If you're reading this, that's you — thank you for being part of the small circle that means the most to us.</p>
             <div class="note-sign reveal-fade">With love, Sayuri &amp; Kenny</div>
+        </div>
+    </section>
+
+    <!-- SCENE: MEET THE CAST -->
+    <section id="cast-1" class="scene scene-pad">
+        <div class="divider-mark reveal-fade"></div>
+        <div class="eyebrow reveal-fade">The supporting cast</div>
+        <h2 class="big-title" data-title><span class="title-word"><span>Meet the</span></span> <span class="title-word"><span><em>Cast</em></span></span></h2>
+        <p class="cast-sub reveal-fade">The people who've been with us through it all ♡</p>
+
+        <div class="cast-units">
+            <!-- UNIT 1 -->
+            <div class="cast-unit reveal-rise">
+                <div class="cast-unit-label">Unit One</div>
+                <div class="cast-row">
+                    <div class="cast-member">
+                        <img class="cast-photo" src="cast/yvette.jpg" alt="Yvette">
+                        <div class="cast-name">Yvette</div>
+                        <div class="cast-title">[Title here]</div>
+                    </div>
+                    <div class="cast-member">
+                        <img class="cast-photo" src="cast/janice.jpg" alt="Janice">
+                        <div class="cast-name">Janice</div>
+                        <div class="cast-title">[Title here]</div>
+                    </div>
+                    <div class="cast-member">
+                        <img class="cast-photo" src="cast/junliang.jpg" alt="Jun Liang">
+                        <div class="cast-name">Jun Liang</div>
+                        <div class="cast-title">[Title here]</div>
+                    </div>
+                </div>
+            </div>
+            <!-- UNIT 2 -->
+            <div class="cast-unit reveal-rise">
+                <div class="cast-unit-label">Unit Two</div>
+                <div class="cast-row">
+                    <div class="cast-member">
+                        <img class="cast-photo" src="cast/weihong.jpg" alt="Wei Hong">
+                        <div class="cast-name">Wei Hong</div>
+                        <div class="cast-title">[Title here]</div>
+                    </div>
+                    <div class="cast-member">
+                        <img class="cast-photo" src="cast/leo.jpg" alt="Leo">
+                        <div class="cast-name">Leo</div>
+                        <div class="cast-title">[Title here]</div>
+                    </div>
+                </div>
+            </div>
+            <!-- UNIT 3 -->
+            <div class="cast-unit reveal-rise">
+                <div class="cast-unit-label">Unit Three</div>
+                <div class="cast-row">
+                    <div class="cast-member">
+                        <img class="cast-photo" src="cast/waner.jpg" alt="Wan Er">
+                        <div class="cast-name">Wan Er</div>
+                        <div class="cast-title">[Title here]</div>
+                    </div>
+                    <div class="cast-member">
+                        <img class="cast-photo" src="cast/ariane.jpg" alt="Ariane">
+                        <div class="cast-name">Ariane</div>
+                        <div class="cast-title">[Title here]</div>
+                    </div>
+                    <div class="cast-member">
+                        <img class="cast-photo" src="cast/andrew.jpg" alt="Andrew">
+                        <div class="cast-name">Andrew</div>
+                        <div class="cast-title">[Title here]</div>
+                    </div>
+                </div>
+            </div>
+            <!-- UNIT 4 -->
+            <div class="cast-unit reveal-rise">
+                <div class="cast-unit-label">Unit Four</div>
+                <div class="cast-row">
+                    <div class="cast-member">
+                        <img class="cast-photo" src="cast/kj.jpg" alt="KJ">
+                        <div class="cast-name">KJ</div>
+                        <div class="cast-title">[Title here]</div>
+                    </div>
+                    <div class="cast-member">
+                        <img class="cast-photo" src="cast/matthew.jpg" alt="Matthew">
+                        <div class="cast-name">Matthew</div>
+                        <div class="cast-title">[Title here]</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
