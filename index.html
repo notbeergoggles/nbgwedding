@@ -639,9 +639,37 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
         </div>
     </section>
 
-    <!-- REST OF GROUP 1 — to be built later -->
-    <section class="scene scene-pad" style="text-align:center;background:var(--bg);color:var(--ink);">
-        <p style="font-family:var(--serif-alt);font-style:italic;font-size:1.2rem;color:var(--ink-soft);">More details coming soon ♡</p>
+    <!-- SCENE: INSTAGRAM -->
+    <section id="insta-1" class="scene scene-pad">
+        <div class="divider-mark reveal-fade"></div>
+        <div class="eyebrow reveal-fade">Stay connected</div>
+        <h2 class="big-title" data-title><span class="title-word"><span>Follow Our</span></span> <span class="title-word"><span><em>Journey</em></span></span></h2>
+        <div class="insta-card reveal-rise">
+            <i class="bi bi-instagram insta-icon"></i>
+            <div class="insta-handle">@notbeergoggles</div>
+            <p class="insta-tag">Follow along for behind-the-scenes moments, wedding-day snippets, and everything in between.</p>
+            <a href="https://www.instagram.com/notbeergoggles/" target="_blank" rel="noopener noreferrer" class="btn-pill">Follow Us</a>
+            <div class="hashtag-block">
+                <div class="hashtag-label">Tag your posts with</div>
+                <div class="hashtag-pills">
+                    <div class="hashtag-pill" onclick="copyHashtag(this)"><span>#ItsNotBeerGoggles</span><i class="bi bi-copy"></i></div>
+                    <div class="hashtag-pill" onclick="copyHashtag(this)"><span>#YuKenGetMarried</span><i class="bi bi-copy"></i></div>
+                </div>
+                <span class="hashtag-copied-msg">Copied ♡</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCENE: POST / LIVE GALLERY -->
+    <section id="post-1" class="scene scene-pad">
+        <div class="divider-mark reveal-fade"></div>
+        <div class="eyebrow reveal-fade">After the celebration</div>
+        <h2 class="big-title" data-title><span class="title-word"><span>Share Your</span></span> <span class="title-word"><span><em>Photos</em></span></span></h2>
+        <div class="post-card reveal-rise">
+            <h3>Live Gallery</h3>
+            <p>We'd love to see the day through your eyes! Upload your photos to our shared album (please keep each file under 10MB).</p>
+            <button class="btn-pill" onclick="toggleGallery('1',true)">Open Live Gallery</button>
+        </div>
     </section>
 
 </div>
