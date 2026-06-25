@@ -477,11 +477,19 @@ textarea.rsvp-input{resize:vertical;min-height:110px;text-align:left;}
 .gb-submit{display:block;margin:1rem auto 0;}
 .gb-status{text-align:center;font-family:var(--serif-alt);font-style:italic;font-size:0.9rem;color:var(--gold-deep);margin-top:0.85rem;min-height:1.2em;}
 .gb-messages{max-width:920px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem;}
-.gb-card{background:var(--bg-veil);border-radius:6px;padding:1.25rem 1.4rem;box-shadow:0 4px 14px var(--shadow);border-top:2px solid var(--gold);}
+.gb-card{background:var(--bg-veil);border-radius:6px;padding:1.25rem 1.4rem;box-shadow:0 4px 14px var(--shadow);border-top:2px solid var(--gold);position:relative;}
 .gb-card-msg{font-family:var(--sans);font-size:0.9rem;line-height:1.6;color:var(--ink);margin-bottom:0.85rem;white-space:pre-wrap;word-wrap:break-word;}
 .gb-card-foot{display:flex;justify-content:space-between;align-items:baseline;padding-top:0.6rem;border-top:1px solid rgba(168,130,63,0.15);}
 .gb-card-name{font-family:var(--serif);font-weight:400;font-size:1.05rem;color:var(--rose-deep);}
 .gb-card-time{font-family:var(--sans);font-size:0.68rem;color:var(--ink-soft);opacity:0.7;}
+.gb-like{display:inline-flex;align-items:center;gap:0.35rem;background:none;border:none;cursor:pointer;font-family:var(--sans);font-size:0.8rem;color:var(--ink-soft);padding:0.2rem 0;line-height:1;-webkit-tap-highlight-color:transparent;transition:color .25s;}
+.gb-like .bi{font-size:0.95rem;transition:transform .2s var(--silk);}
+.gb-like:hover{color:var(--rose-deep);}
+.gb-like.liked{color:var(--rose-deep);}
+.gb-like.liked .bi{animation:gbHeartPop 0.45s var(--silk);}
+.gb-like-count{min-width:0.6em;text-align:left;}
+@keyframes gbHeartPop{0%{transform:scale(1);}35%{transform:scale(1.5);}55%{transform:scale(0.9);}100%{transform:scale(1);}}
+.gb-burst{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--rose);pointer-events:none;opacity:0;z-index:3;}
 .gb-empty{grid-column:1/-1;text-align:center;font-family:var(--serif-alt);font-style:italic;color:var(--ink-soft);padding:2rem;}
 
 /* ═══════════ POST + FOOTER ═══════════ */
@@ -1787,7 +1795,43 @@ function gbLinks(t){return /https?:\/\/|www\.|\.com|\.net|\.org|\.io|\.co/i.test
 function gbAgo(d){if(!d)return'just now';const s=Math.floor((Date.now()-d.getTime())/1000);if(s<60)return'just now';const m=Math.floor(s/60);if(m<60)return m+'m ago';const h=Math.floor(m/60);if(h<24)return h+'h ago';const dd=Math.floor(h/24);if(dd<7)return dd+'d ago';const w=Math.floor(dd/7);if(w<4)return w+'w ago';return Math.floor(dd/30)+'mo ago';}
 function gbEsc(str){const d=document.createElement('div');d.textContent=str;return d.innerHTML;}
 function submitGuestbook(suffix){const msgEl=document.getElementById('gb-message-'+suffix),nameEl=document.getElementById('gb-name-'+suffix),st=document.getElementById('gb-status-'+suffix);const message=msgEl.value.trim(),name=nameEl.value.trim()||'Anonymous';st.style.color='';st.textContent='';if(!message){st.style.color='var(--rose-deep)';st.textContent='Please write something before submitting.';return;}if(message.length<3){st.style.color='var(--rose-deep)';st.textContent='Your message is a little too short.';return;}if(gbProf(message)||gbProf(name)){st.style.color='var(--rose-deep)';st.textContent='Please keep your message family-friendly ♡';return;}if(gbLinks(message)){st.style.color='var(--rose-deep)';st.textContent="Links aren't allowed in messages.";return;}const last=parseInt(localStorage.getItem('gb_last_submit')||'0',10);if(Date.now()-last<GB_COOLDOWN_MS){const m=Math.ceil((GB_COOLDOWN_MS-(Date.now()-last))/60000);st.style.color='var(--rose-deep)';st.textContent=`You've just left a message — please wait ${m} more minute${m===1?'':'s'}.`;return;}const btn=st.previousElementSibling;btn.disabled=true;const o=btn.innerText;btn.innerText='Sending...';db.collection('guestbook_messages').add({name:name.substring(0,60),message:message.substring(0,500),timestamp:firebase.firestore.FieldValue.serverTimestamp()}).then(()=>{localStorage.setItem('gb_last_submit',Date.now().toString());msgEl.value='';nameEl.value='';st.style.color='var(--gold-deep)';st.textContent='Thank you for your kind words ♡';btn.disabled=false;btn.innerText=o;setTimeout(()=>{st.textContent='';},5000);}).catch(e=>{console.error(e);st.style.color='var(--rose-deep)';st.textContent='Something went wrong. Please try again.';btn.disabled=false;btn.innerText=o;});}
-function loadGuestbook(suffix){const c=document.getElementById('gb-messages-'+suffix);if(!c)return;db.collection('guestbook_messages').orderBy('timestamp','desc').onSnapshot(snap=>{if(snap.empty){c.innerHTML='<div class="gb-empty">Be the first to share a wish...</div>';return;}c.innerHTML='';snap.forEach(doc=>{const d=doc.data(),date=d.timestamp?d.timestamp.toDate():null,card=document.createElement('div');card.className='gb-card';card.innerHTML=`<div class="gb-card-msg">${gbEsc(d.message||'')}</div><div class="gb-card-foot"><span class="gb-card-name">${gbEsc(d.name||'Anonymous')}</span><span class="gb-card-time">${gbAgo(date)}</span></div>`;c.appendChild(card);});},e=>{console.error(e);c.innerHTML='<div class="gb-empty">Could not load messages right now.</div>';});}
+function loadGuestbook(suffix){const c=document.getElementById('gb-messages-'+suffix);if(!c)return;db.collection('guestbook_messages').orderBy('timestamp','desc').onSnapshot(snap=>{if(snap.empty){c.innerHTML='<div class="gb-empty">Be the first to share a wish...</div>';return;}c.innerHTML='';snap.forEach(doc=>{const d=doc.data(),date=d.timestamp?d.timestamp.toDate():null,likes=d.likes||0,liked=gbHasLiked(doc.id),card=document.createElement('div');card.className='gb-card';card.innerHTML=`<div class="gb-card-msg">${gbEsc(d.message||'')}</div><div class="gb-card-foot"><span class="gb-card-name">${gbEsc(d.name||'Anonymous')}</span><div style="display:flex;align-items:center;gap:0.9rem;"><button class="gb-like${liked?' liked':''}" onclick="toggleGbLike('${doc.id}',this)" aria-label="Like this message"><i class="bi bi-heart${liked?'-fill':''}"></i><span class="gb-like-count">${likes>0?likes:''}</span></button><span class="gb-card-time">${gbAgo(date)}</span></div></div>`;c.appendChild(card);});},e=>{console.error(e);c.innerHTML='<div class="gb-empty">Could not load messages right now.</div>';});}
+function gbHasLiked(id){try{return (JSON.parse(localStorage.getItem('gb_likes')||'[]')).indexOf(id)>-1;}catch(e){return false;}}
+function toggleGbLike(id,btn){
+    let liked=[];try{liked=JSON.parse(localStorage.getItem('gb_likes')||'[]');}catch(e){liked=[];}
+    const already=liked.indexOf(id)>-1;
+    const countEl=btn.querySelector('.gb-like-count'),icon=btn.querySelector('.bi');
+    let n=parseInt(countEl.textContent||'0',10)||0;
+    // 1. Optimistic UI first (never blocked by DB availability)
+    if(already){
+        liked=liked.filter(x=>x!==id);n=Math.max(0,n-1);
+        btn.classList.remove('liked');icon.className='bi bi-heart';
+    }else{
+        liked.push(id);n=n+1;
+        btn.classList.add('liked');icon.className='bi bi-heart-fill';
+        gbHeartBurst(btn);
+    }
+    countEl.textContent=n>0?n:'';
+    localStorage.setItem('gb_likes',JSON.stringify(liked));
+    // 2. Persist to Firestore (guarded so a DB hiccup never breaks the UI)
+    try{
+        db.collection('guestbook_messages').doc(id).update({likes:firebase.firestore.FieldValue.increment(already?-1:1)}).catch(e=>console.error(e));
+    }catch(e){console.error('like write failed',e);}
+}
+function gbHeartBurst(btn){
+    if(reduce||!window.gsap)return;
+    const card=btn.closest('.gb-card'),cr=card.getBoundingClientRect(),br=btn.getBoundingClientRect();
+    const cx=br.left-cr.left+9,cy=br.top-cr.top+9;
+    for(let k=0;k<6;k++){
+        const s=document.createElement('span');s.className='gb-burst';
+        s.style.left=cx+'px';s.style.top=cy+'px';
+        s.style.background=k%2?'var(--rose)':'var(--gold)';
+        card.appendChild(s);
+        const ang=(Math.PI*2*k)/6,dist=18+Math.random()*14;
+        gsap.set(s,{opacity:1});
+        gsap.to(s,{x:Math.cos(ang)*dist,y:Math.sin(ang)*dist-6,opacity:0,scale:0,duration:0.6,ease:'power2.out',onComplete:()=>s.remove()});
+    }
+}
 
 /* ── Hashtag ── */
 function bindHashtag(){}
