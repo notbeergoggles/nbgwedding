@@ -1795,7 +1795,30 @@ function gbLinks(t){return /https?:\/\/|www\.|\.com|\.net|\.org|\.io|\.co/i.test
 function gbAgo(d){if(!d)return'just now';const s=Math.floor((Date.now()-d.getTime())/1000);if(s<60)return'just now';const m=Math.floor(s/60);if(m<60)return m+'m ago';const h=Math.floor(m/60);if(h<24)return h+'h ago';const dd=Math.floor(h/24);if(dd<7)return dd+'d ago';const w=Math.floor(dd/7);if(w<4)return w+'w ago';return Math.floor(dd/30)+'mo ago';}
 function gbEsc(str){const d=document.createElement('div');d.textContent=str;return d.innerHTML;}
 function submitGuestbook(suffix){const msgEl=document.getElementById('gb-message-'+suffix),nameEl=document.getElementById('gb-name-'+suffix),st=document.getElementById('gb-status-'+suffix);const message=msgEl.value.trim(),name=nameEl.value.trim()||'Anonymous';st.style.color='';st.textContent='';if(!message){st.style.color='var(--rose-deep)';st.textContent='Please write something before submitting.';return;}if(message.length<3){st.style.color='var(--rose-deep)';st.textContent='Your message is a little too short.';return;}if(gbProf(message)||gbProf(name)){st.style.color='var(--rose-deep)';st.textContent='Please keep your message family-friendly ♡';return;}if(gbLinks(message)){st.style.color='var(--rose-deep)';st.textContent="Links aren't allowed in messages.";return;}const last=parseInt(localStorage.getItem('gb_last_submit')||'0',10);if(Date.now()-last<GB_COOLDOWN_MS){const m=Math.ceil((GB_COOLDOWN_MS-(Date.now()-last))/60000);st.style.color='var(--rose-deep)';st.textContent=`You've just left a message — please wait ${m} more minute${m===1?'':'s'}.`;return;}const btn=st.previousElementSibling;btn.disabled=true;const o=btn.innerText;btn.innerText='Sending...';db.collection('guestbook_messages').add({name:name.substring(0,60),message:message.substring(0,500),timestamp:firebase.firestore.FieldValue.serverTimestamp()}).then(()=>{localStorage.setItem('gb_last_submit',Date.now().toString());msgEl.value='';nameEl.value='';st.style.color='var(--gold-deep)';st.textContent='Thank you for your kind words ♡';btn.disabled=false;btn.innerText=o;setTimeout(()=>{st.textContent='';},5000);}).catch(e=>{console.error(e);st.style.color='var(--rose-deep)';st.textContent='Something went wrong. Please try again.';btn.disabled=false;btn.innerText=o;});}
-function loadGuestbook(suffix){const c=document.getElementById('gb-messages-'+suffix);if(!c)return;db.collection('guestbook_messages').orderBy('timestamp','desc').onSnapshot(snap=>{if(snap.empty){c.innerHTML='<div class="gb-empty">Be the first to share a wish...</div>';return;}c.innerHTML='';snap.forEach(doc=>{const d=doc.data(),date=d.timestamp?d.timestamp.toDate():null,likes=d.likes||0,liked=gbHasLiked(doc.id),card=document.createElement('div');card.className='gb-card';card.innerHTML=`<div class="gb-card-msg">${gbEsc(d.message||'')}</div><div class="gb-card-foot"><span class="gb-card-name">${gbEsc(d.name||'Anonymous')}</span><div style="display:flex;align-items:center;gap:0.9rem;"><button class="gb-like${liked?' liked':''}" onclick="toggleGbLike('${doc.id}',this)" aria-label="Like this message"><i class="bi bi-heart${liked?'-fill':''}"></i><span class="gb-like-count">${likes>0?likes:''}</span></button><span class="gb-card-time">${gbAgo(date)}</span></div></div>`;c.appendChild(card);});},e=>{console.error(e);c.innerHTML='<div class="gb-empty">Could not load messages right now.</div>';});}
+function loadGuestbook(suffix){const c=document.getElementById('gb-messages-'+suffix);if(!c)return;db.collection('guestbook_messages').orderBy('timestamp','desc').onSnapshot(snap=>{if(snap.empty){c.innerHTML='<div class="gb-empty">Be the first to share a wish...</div>';return;}
+    // Build the set of ids in order
+    const ids=[];snap.forEach(doc=>ids.push(doc.id));
+    const existingWrap=c.querySelector('.gb-card');
+    // If structure matches (same ids, same order), update in place to avoid wiping like UI
+    const current=[...c.querySelectorAll('.gb-card')].map(el=>el.getAttribute('data-id'));
+    const sameSet=existingWrap&&current.length===ids.length&&current.every((id,i)=>id===ids[i]);
+    if(sameSet){
+        snap.forEach(doc=>{
+            const d=doc.data(),card=c.querySelector('.gb-card[data-id="'+doc.id+'"]');
+            if(!card)return;
+            const likes=d.likes||0,countEl=card.querySelector('.gb-like-count'),btn=card.querySelector('.gb-like'),icon=card.querySelector('.gb-like .bi');
+            const liked=gbHasLiked(doc.id);
+            // never show fewer than the like this device just added (guards against stale snapshot race)
+            const shown=Math.max(likes,liked?1:0);
+            if(countEl)countEl.textContent=shown>0?shown:'';
+            if(btn&&icon){btn.classList.toggle('liked',liked);icon.className='bi bi-heart'+(liked?'-fill':'');}
+        });
+        return;
+    }
+    // Otherwise full render
+    c.innerHTML='';
+    snap.forEach(doc=>{const d=doc.data(),date=d.timestamp?d.timestamp.toDate():null,likes=d.likes||0,liked=gbHasLiked(doc.id),shown=Math.max(likes,liked?1:0),card=document.createElement('div');card.className='gb-card';card.setAttribute('data-id',doc.id);card.innerHTML=`<div class="gb-card-msg">${gbEsc(d.message||'')}</div><div class="gb-card-foot"><span class="gb-card-name">${gbEsc(d.name||'Anonymous')}</span><div style="display:flex;align-items:center;gap:0.9rem;"><button class="gb-like${liked?' liked':''}" onclick="toggleGbLike('${doc.id}',this)" aria-label="Like this message"><i class="bi bi-heart${liked?'-fill':''}"></i><span class="gb-like-count">${shown>0?shown:''}</span></button><span class="gb-card-time">${gbAgo(date)}</span></div></div>`;c.appendChild(card);});
+},e=>{console.error(e);c.innerHTML='<div class="gb-empty">Could not load messages right now.</div>';});}
 function gbHasLiked(id){try{return (JSON.parse(localStorage.getItem('gb_likes')||'[]')).indexOf(id)>-1;}catch(e){return false;}}
 function toggleGbLike(id,btn){
     let liked=[];try{liked=JSON.parse(localStorage.getItem('gb_likes')||'[]');}catch(e){liked=[];}
