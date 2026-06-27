@@ -1878,8 +1878,9 @@ function frSubmit(){
         members:frState.members.map(m=>({name:m.name,attending:m.attending,meal:m.attending==='yes'?m.meal:'',mealLabel:m.attending==='yes'?mealLabel(m.meal):''})),
         timestamp:_ts};
     try{ var _hasDb=false;try{_hasDb=(typeof db!=='undefined'&&!!db);}catch(_e){_hasDb=false;} if(_hasDb)db.collection('rsvp_responses').add(payload).catch(e=>console.error('fs rsvp',e)); }catch(e){console.error(e);}
-    // 2. Apps Script — one row per person
-    const posts=frState.members.map(m=>{
+    // 2. Apps Script — one row per person, sent SEQUENTIALLY
+    // (Google Apps Script Sheets can't handle concurrent appendRow reliably — parallel posts drop rows)
+    const rows=frState.members.map(m=>{
         const fd=new FormData();
         fd.append('Event_Type','Dinner');
         fd.append('family',fam.familyName);
@@ -1888,15 +1889,24 @@ function frSubmit(){
         fd.append('food_preference',m.attending==='yes'?mealLabel(m.meal):'');
         fd.append('email',frState.email);
         fd.append('message',frState.message);
-        return fetch(FR_APPS_SCRIPT,{method:'POST',body:fd,mode:'no-cors'});
+        return fd;
     });
-    Promise.allSettled(posts).then(()=>{
-        document.getElementById('rsvp-steps-2').style.display='none';nextBtn.style.display='none';backBtn.style.display='none';
-        document.getElementById('rsvp-rail-2').style.display='none';err.style.display='none';
-        const anyComing=frState.members.some(m=>m.attending==='yes');
-        document.getElementById('rsvp-done-msg-2').textContent=anyComing?"Your family's RSVP has been received. We can't wait to celebrate with you ♡":"Thank you for letting us know — you'll be dearly missed ♡";
-        document.getElementById('rsvp-done-2').classList.add('show');launchConfetti(2);
-    }).catch(()=>{err.textContent='Oops! Something went wrong. Please try again.';nextBtn.disabled=false;nextBtn.textContent='Send RSVP ♡';});
+    const wait=ms=>new Promise(r=>setTimeout(r,ms));
+    (async()=>{
+        try{
+            for(let i=0;i<rows.length;i++){
+                await fetch(FR_APPS_SCRIPT,{method:'POST',body:rows[i],mode:'no-cors'});
+                if(i<rows.length-1)await wait(450); // let the Sheet settle between appends
+            }
+            document.getElementById('rsvp-steps-2').style.display='none';nextBtn.style.display='none';backBtn.style.display='none';
+            document.getElementById('rsvp-rail-2').style.display='none';err.style.display='none';
+            const anyComing=frState.members.some(m=>m.attending==='yes');
+            document.getElementById('rsvp-done-msg-2').textContent=anyComing?"Your family's RSVP has been received. We can't wait to celebrate with you ♡":"Thank you for letting us know — you'll be dearly missed ♡";
+            document.getElementById('rsvp-done-2').classList.add('show');launchConfetti(2);
+        }catch(e){
+            err.textContent='Oops! Something went wrong. Please try again.';nextBtn.disabled=false;nextBtn.textContent='Send RSVP ♡';
+        }
+    })();
 }
 function frEsc(s){return (s==null?'':''+s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
