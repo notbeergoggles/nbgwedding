@@ -458,6 +458,34 @@ textarea.rsvp-input{resize:vertical;min-height:110px;text-align:left;}
 .rsvp-back:disabled{opacity:0;pointer-events:none;}
 .rsvp-next{font-family:var(--sans);font-size:0.8rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--noir);background:var(--gold);border:1px solid var(--gold);border-radius:100px;padding:0.85rem 2rem;cursor:pointer;transition:all .4s var(--soft);}
 .rsvp-next:hover{background:var(--bg-veil);border-color:var(--bg-veil);letter-spacing:0.25em;}
+
+/* ── Family RSVP ── */
+.fr-search-wrap{position:relative;max-width:440px;margin:0 auto;width:100%;}
+.fr-results{margin-top:0.6rem;display:flex;flex-direction:column;gap:0.4rem;max-height:230px;overflow-y:auto;}
+.fr-result{font-family:var(--sans);font-size:0.95rem;color:var(--bg-veil);background:rgba(251,248,244,0.05);border:1px solid rgba(201,163,104,0.22);border-radius:6px;padding:0.85rem 1.1rem;cursor:pointer;text-align:left;transition:all .25s;}
+.fr-result:hover{border-color:var(--rose);background:rgba(251,248,244,0.1);}
+.fr-result .fr-result-sub{display:block;font-size:0.74rem;color:rgba(251,248,244,0.5);margin-top:0.2rem;}
+.fr-hint{font-family:var(--sans);font-size:0.8rem;color:rgba(251,248,244,0.45);text-align:center;margin-top:0.9rem;line-height:1.5;}
+.fr-hint a{color:var(--gold);text-decoration:underline;cursor:pointer;}
+.fr-members{display:flex;flex-direction:column;gap:0.85rem;margin-top:0.5rem;text-align:left;}
+.fr-member{background:rgba(251,248,244,0.05);border:1px solid rgba(201,163,104,0.2);border-radius:8px;padding:1rem 1.15rem;transition:border-color .3s;}
+.fr-member.coming{border-color:rgba(168,177,154,0.5);}
+.fr-member.declined{opacity:0.6;}
+.fr-member-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.fr-member-name{font-family:var(--serif);font-size:1.2rem;color:var(--bg-veil);}
+.fr-toggle{display:flex;gap:0.4rem;flex-shrink:0;}
+.fr-tg{font-family:var(--sans);font-size:0.72rem;letter-spacing:0.04em;text-transform:uppercase;color:rgba(251,248,244,0.6);background:rgba(251,248,244,0.06);border:1px solid rgba(201,163,104,0.25);border-radius:100px;padding:0.4rem 0.85rem;cursor:pointer;transition:all .25s;white-space:nowrap;}
+.fr-tg:hover{color:var(--bg-veil);}
+.fr-tg.yes.on{background:var(--sage);border-color:var(--sage);color:var(--noir);}
+.fr-tg.no.on{background:var(--rose-deep);border-color:var(--rose-deep);color:#fff;}
+.fr-meal{margin-top:0.85rem;max-height:0;overflow:hidden;transition:max-height .4s var(--silk);}
+.fr-member.coming .fr-meal{max-height:80px;}
+.fr-meal select{width:100%;background:rgba(26,22,20,0.6);border:1px solid rgba(201,163,104,0.3);border-radius:6px;padding:0.65rem 0.9rem;font-family:var(--sans);font-size:0.88rem;color:var(--bg-veil);outline:none;cursor:pointer;}
+.fr-meal select:focus{border-color:var(--gold);}
+.fr-meal-label{font-family:var(--sans);font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;display:block;}
+.fr-family-name{font-family:var(--serif);font-weight:300;font-size:clamp(1.5rem,4vw,2.1rem);color:var(--bg-veil);text-align:center;margin-bottom:0.4rem;}
+.fr-family-name em{font-style:italic;color:var(--rose);}
+.fr-loading{font-family:var(--sans);font-size:0.85rem;color:rgba(251,248,244,0.5);text-align:center;padding:1rem;}
 .rsvp-next:disabled{opacity:0.4;pointer-events:none;}
 .rsvp-err{font-family:var(--serif-alt);font-style:italic;font-size:0.9rem;color:var(--rose);text-align:center;margin-top:1rem;min-height:1.3em;}
 .rsvp-done{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;}
@@ -1039,7 +1067,7 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
         <div class="eyebrow reveal-fade">What to wear</div>
         <h2 class="big-title" data-title><span class="title-word"><span>Dress</span></span> <span class="title-word"><span><em>Code</em></span></span></h2>
         <div class="dress-grid">
-            <div class="dress-card reveal-rise"><div class="dress-icon">👔</div><h3>Formal Attire</h3><p>Smart formal is encouraged — wear what you'd want to show up in nice photos with. If it's something you'd wear to a wedding, you're on the right track!</p></div>
+            <div class="dress-card reveal-rise"><div class="dress-icon">👔</div><h3>Formal Attire</h3><p>Smart formal is encouraged — suits and ties for the gentlemen, cocktail dresses, midi dresses, or formal gowns for the ladies. When in doubt: if you'd wear it to a wedding, you're on the right track!</p></div>
             <div class="dress-card reveal-rise"><div class="dress-icon">👠</div><h3>Shoes</h3><p>The event is held indoors at a hotel restaurant, so wear whatever makes you look and feel great. Heels, dress shoes, or smart flats all work perfectly.</p></div>
         </div>
     </section>
@@ -1139,56 +1167,43 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
             </div>
             <div class="rsvp-stage" id="rsvp-stage">
                 <div class="rsvp-rail" id="rsvp-rail-2"></div>
-                <form id="rsvp-form-2" action="https://script.google.com/macros/s/AKfycbx6HAw22ttkaO6kXzGaW55z393qJv97By2oLRM9L_XTEUmzk293Pw7_eKcMybicQuxj/exec" method="POST" onsubmit="handleFormSubmit(event,2)">
-                    <input type="hidden" name="Event_Type" value="Dinner">
-                    <input type="hidden" name="name" id="f-name-2">
-                    <input type="hidden" name="email" id="f-email-2">
-                    <input type="hidden" name="attending" id="f-attending-2">
-                    <input type="hidden" name="food_preference" id="f-food-2">
-                    <input type="hidden" name="message" id="f-message-2">
+                <form id="rsvp-form-2" action="https://script.google.com/macros/s/AKfycbx6HAw22ttkaO6kXzGaW55z393qJv97By2oLRM9L_XTEUmzk293Pw7_eKcMybicQuxj/exec" method="POST" onsubmit="return false;">
                     <div class="rsvp-steps" id="rsvp-steps-2">
+                        <!-- STEP 0: find household -->
                         <div class="rsvp-step active" data-step="0">
-                            <div class="rsvp-qn">Question 1</div>
-                            <h3 class="rsvp-q">First, what's your <em>name?</em></h3>
-                            <input type="text" class="rsvp-input" id="q-name-2" placeholder="Your full name" autocomplete="name">
+                            <div class="rsvp-qn">Step 1</div>
+                            <h3 class="rsvp-q">Find your <em>household</em></h3>
+                            <div class="fr-search-wrap">
+                                <input type="text" class="rsvp-input" id="fr-search" placeholder="Type your name or family…" autocomplete="off">
+                                <div class="fr-results" id="fr-results"></div>
+                                <p class="fr-hint">Can't find your household? <a onclick="frWhatsapp()">Message us on WhatsApp</a></p>
+                            </div>
                         </div>
+                        <!-- STEP 1: members -->
                         <div class="rsvp-step" data-step="1">
-                            <div class="rsvp-qn">Question 2</div>
-                            <h3 class="rsvp-q">Will you be <em>joining us?</em></h3>
-                            <div class="rsvp-choices" id="q-attending-2">
-                                <button type="button" class="rsvp-choice" data-val="yes">Yes, I'll be there! ♡</button>
-                                <button type="button" class="rsvp-choice" data-val="no">Regretfully, no</button>
-                            </div>
+                            <div class="rsvp-qn">Step 2</div>
+                            <div class="fr-family-name" id="fr-family-name">Your Family</div>
+                            <p class="scene-sub" style="margin-top:0;margin-bottom:1.25rem;">Who will be joining us?</p>
+                            <div class="fr-members" id="fr-members"></div>
                         </div>
+                        <!-- STEP 2: note -->
                         <div class="rsvp-step" data-step="2">
-                            <div class="rsvp-qn">Question 3</div>
-                            <h3 class="rsvp-q">Any <em>meal</em> preferences?</h3>
-                            <div class="rsvp-choices" id="q-food-2">
-                                <button type="button" class="rsvp-choice" data-val="no-res">No Restrictions</button>
-                                <button type="button" class="rsvp-choice" data-val="no-raw">No Restrictions (No Raw Fish)</button>
-                                <button type="button" class="rsvp-choice" data-val="no-beef">No Beef</button>
-                                <button type="button" class="rsvp-choice" data-val="vegetarian">Vegetarian / Vegan</button>
-                                <button type="button" class="rsvp-choice" data-val="halal">Halal</button>
-                            </div>
-                        </div>
-                        <div class="rsvp-step" data-step="3">
-                            <div class="rsvp-qn">Last one</div>
+                            <div class="rsvp-qn">Last step</div>
                             <h3 class="rsvp-q">Leave us a <em>note</em></h3>
-                            <input type="email" class="rsvp-input" id="q-email-2" placeholder="Email (optional, for confirmation)" style="margin-bottom:0.85rem;">
-                            <textarea class="rsvp-input" id="q-message-2" placeholder="A sweet message or well-wish (optional)"></textarea>
+                            <input type="email" class="rsvp-input" id="fr-email" placeholder="Email (optional, for confirmation)" style="margin-bottom:0.85rem;">
+                            <textarea class="rsvp-input" id="fr-message" placeholder="A sweet message or well-wish (optional)"></textarea>
                         </div>
                     </div>
                     <div class="rsvp-err" id="rsvp-error-2"></div>
                     <div class="rsvp-nav">
-                        <button type="button" class="rsvp-back" id="rsvp-back-2" onclick="rsvpBack(2)" disabled>← Back</button>
-                        <button type="button" class="rsvp-next" id="rsvp-next-2" onclick="rsvpNext(2)">Continue →</button>
+                        <button type="button" class="rsvp-back" id="rsvp-back-2" onclick="frBack()" disabled>← Back</button>
+                        <button type="button" class="rsvp-next" id="rsvp-next-2" onclick="frNext()">Continue →</button>
                     </div>
                     <div class="rsvp-done" id="rsvp-done-2">
                         <div class="rsvp-done-mark"><i class="bi bi-suit-heart-fill"></i></div>
                         <div class="rsvp-done-title">Thank You!</div>
                         <p class="rsvp-done-msg" id="rsvp-done-msg-2">Your RSVP has been received. We can't wait to celebrate with you ♡</p>
                     </div>
-                    <noscript><button type="submit">Submit RSVP</button></noscript>
                 </form>
             </div>
         </div>
@@ -1364,7 +1379,7 @@ function enterFilm(){
     document.getElementById(containerId).style.display='block';
     runTimer(rsvpDate,suffix,"rsvp"); runTimer(weddingDate,suffix,"wedding");
     startAudio();
-    if(suffix==='2'){ buildMika('2'); loadGuestbook('2'); }
+    if(suffix==='2'){ if(typeof frGo==='function')frGo(0); buildMika('2'); if(typeof loadFamilies==='function')loadFamilies(); loadGuestbook('2'); }
     if(suffix==='1'){ quizInit('1'); buildCast('1'); }
     initFilm(suffix);
     playHeroIntro(suffix);
@@ -1758,31 +1773,139 @@ function toggleAudio(){const a=document.getElementById('bg-audio'),i=document.ge
 function startAudio(){const a=document.getElementById('bg-audio'),i=document.getElementById('player-icon'),t=document.querySelector('.player-toggle');if(!a)return;a.volume=0.4;const p=a.play();if(p!==undefined){p.then(()=>{i.className='bi bi-pause-fill';}).catch(()=>{i.className='bi bi-play-fill';t.classList.add('attention');});}a.addEventListener('timeupdate',()=>{const f=document.querySelector('.player-progress-fill');if(a.duration)f.style.width=((a.currentTime/a.duration)*100)+'%';});document.querySelector('.player-progress').addEventListener('click',e=>{const r=e.currentTarget.getBoundingClientRect();const pct=(e.clientX-r.left)/r.width;if(a.duration)a.currentTime=pct*a.duration;});}
 
 /* ── Immersive RSVP flow ── */
-const rsvpState={2:{step:0,name:'',attending:'',food:'',email:'',message:''}};
-function rsvpSeq(s){const st=rsvpState[s];return st.attending==='no'?[0,1,3]:[0,1,2,3];}
-function buildRail(s){const rail=document.getElementById('rsvp-rail-'+s),seq=rsvpSeq(s);rail.innerHTML='';const pos=seq.indexOf(rsvpState[s].step);seq.forEach((_,i)=>{const sp=document.createElement('span');if(i<pos)sp.classList.add('done');else if(i===pos)sp.classList.add('active');rail.appendChild(sp);});}
-function showStep(s,idx){document.querySelectorAll('#rsvp-steps-'+s+' .rsvp-step').forEach(el=>{el.classList.remove('active','exit');if(+el.dataset.step===idx)el.classList.add('active');});rsvpState[s].step=idx;const seq=rsvpSeq(s),pos=seq.indexOf(idx);document.getElementById('rsvp-back-'+s).disabled=(pos<=0);document.getElementById('rsvp-next-'+s).textContent=(pos===seq.length-1)?'Send RSVP ♡':'Continue →';buildRail(s);document.getElementById('rsvp-error-'+s).textContent='';const inp=document.querySelector('#rsvp-steps-'+s+' .rsvp-step.active .rsvp-input');if(inp)setTimeout(()=>inp.focus(),350);}
-document.addEventListener('click',e=>{const c=e.target.closest('.rsvp-choice');if(!c)return;const g=c.parentElement;g.querySelectorAll('.rsvp-choice').forEach(x=>x.classList.remove('sel'));c.classList.add('sel');if(g.id==='q-attending-2')rsvpState[2].attending=c.dataset.val;if(g.id==='q-food-2')rsvpState[2].food=c.dataset.val;});
-function rsvpNext(s){const st=rsvpState[s],err=document.getElementById('rsvp-error-'+s),seq=rsvpSeq(s),pos=seq.indexOf(st.step);
-    if(st.step===0){const v=document.getElementById('q-name-'+s).value.trim();if(v.length<2){err.textContent='Please enter your name to continue.';return;}st.name=v;}
-    else if(st.step===1){if(!st.attending){err.textContent='Please let us know if you can make it.';return;}}
-    else if(st.step===2){if(!st.food){err.textContent='Please pick a meal preference.';return;}}
-    else if(st.step===3){st.email=document.getElementById('q-email-'+s).value.trim();st.message=document.getElementById('q-message-'+s).value.trim();}
-    if(pos===seq.length-1){submitRsvp(s);return;}
-    const cur=document.querySelector('#rsvp-steps-'+s+' .rsvp-step.active');cur.classList.add('exit');cur.classList.remove('active');
-    setTimeout(()=>showStep(s,seq[pos+1]),250);
+/* ── Family RSVP ── */
+</script>
+<script>
+/* ── Family RSVP (isolated block) ── */
+const FR_WHATSAPP_URL="https://wa.me/6598247043";
+const FR_MEALS=[["no-res","No Restrictions"],["no-raw","No Restrictions (No Raw Fish)"],["no-beef","No Beef"],["vegetarian","Vegetarian / Vegan"],["halal","Halal"]];
+const FR_APPS_SCRIPT="https://script.google.com/macros/s/AKfycbx6HAw22ttkaO6kXzGaW55z393qJv97By2oLRM9L_XTEUmzk293Pw7_eKcMybicQuxj/exec";
+var frState={step:0,family:null,members:[],email:'',message:''};
+var frFamilies=[],frLoaded=false;
+
+function frWhatsapp(){window.open(FR_WHATSAPP_URL,'_blank','noopener');}
+
+function loadFamilies(){
+    if(frLoaded)return;
+    var hasDb=false;try{hasDb=(typeof db!=='undefined'&&!!db);}catch(e){hasDb=false;}
+    if(!hasDb){return;}
+    frLoaded=true;
+    db.collection('families').get().then(snap=>{
+        frFamilies=[];
+        snap.forEach(doc=>{const d=doc.data();frFamilies.push({id:doc.id,familyName:d.familyName||'Family',members:(d.members||[]).map(m=>typeof m==='string'?m:(m.name||'')).filter(Boolean),searchTerms:(d.searchTerms||[]).map(t=>(''+t).toLowerCase())});});
+    }).catch(e=>{console.error('families load failed',e);});
 }
-function rsvpBack(s){const seq=rsvpSeq(s),pos=seq.indexOf(rsvpState[s].step);if(pos>0)showStep(s,seq[pos-1]);}
-function submitRsvp(s){const st=rsvpState[s];document.getElementById('f-name-'+s).value=st.name;document.getElementById('f-email-'+s).value=st.email;document.getElementById('f-attending-'+s).value=st.attending;document.getElementById('f-food-'+s).value=(st.attending==='no')?'':st.food;document.getElementById('f-message-'+s).value=st.message;const f=document.getElementById('rsvp-form-'+s);if(f.requestSubmit)f.requestSubmit();else f.dispatchEvent(new Event('submit',{cancelable:true}));}
-function handleFormSubmit(event,s){event.preventDefault();const form=event.target,nextBtn=document.getElementById('rsvp-next-'+s),backBtn=document.getElementById('rsvp-back-'+s);nextBtn.disabled=true;nextBtn.textContent='Sending...';
-    fetch(form.action,{method:'POST',body:new FormData(form),mode:'no-cors'}).then(()=>{
-        document.getElementById('rsvp-steps-'+s).style.display='none';nextBtn.style.display='none';backBtn.style.display='none';document.getElementById('rsvp-rail-'+s).style.display='none';document.getElementById('rsvp-error-'+s).style.display='none';
-        const st=rsvpState[s],dm=document.getElementById('rsvp-done-msg-'+s);
-        dm.textContent=(st.attending==='no')?"We'll miss you dearly — thank you for letting us know ♡":"Your RSVP has been received. We can't wait to celebrate with you ♡";
-        document.getElementById('rsvp-done-'+s).classList.add('show');launchConfetti(s);
-    }).catch(()=>{document.getElementById('rsvp-error-'+s).textContent='Oops! Something went wrong. Please try again.';nextBtn.disabled=false;nextBtn.textContent='Send RSVP ♡';});
+
+function frSearch(q){
+    const box=document.getElementById('fr-results');if(!box)return;
+    q=q.trim().toLowerCase();
+    if(!q){box.innerHTML='';return;}
+    if(!frFamilies.length){box.innerHTML='<div class="fr-loading">Loading guest list… try again in a moment.</div>';loadFamilies();return;}
+    const hits=frFamilies.filter(f=>f.familyName.toLowerCase().indexOf(q)>-1||f.searchTerms.some(t=>t.indexOf(q)>-1)||f.members.some(m=>m.toLowerCase().indexOf(q)>-1)).slice(0,8);
+    if(!hits.length){box.innerHTML='<div class="fr-loading">No match found. Check your spelling, or message us below.</div>';return;}
+    box.innerHTML='';
+    hits.forEach(f=>{const b=document.createElement('button');b.type='button';b.className='fr-result';b.innerHTML=f.familyName+'<span class="fr-result-sub">'+f.members.join(' · ')+'</span>';b.onclick=()=>frPickFamily(f);box.appendChild(b);});
 }
+
+function frPickFamily(f){
+    frState.family=f;
+    frState.members=f.members.map(name=>({name,attending:'',meal:''}));
+    document.getElementById('fr-family-name').innerHTML='The <em>'+frEsc(f.familyName.replace(/^The\s+/i,'').replace(/\s+Family$/i,''))+'</em> Family';
+    const wrap=document.getElementById('fr-members');wrap.innerHTML='';
+    frState.members.forEach((m,i)=>{
+        const opts=FR_MEALS.map(([v,l])=>'<option value="'+v+'">'+l+'</option>').join('');
+        const el=document.createElement('div');el.className='fr-member';el.dataset.idx=i;
+        el.innerHTML='<div class="fr-member-top"><span class="fr-member-name">'+frEsc(m.name)+'</span>'
+            +'<div class="fr-toggle"><button type="button" class="fr-tg yes" onclick="frSetAttend('+i+',\'yes\')">Coming</button>'
+            +'<button type="button" class="fr-tg no" onclick="frSetAttend('+i+',\'no\')">Can\'t make it</button></div></div>'
+            +'<div class="fr-meal"><label class="fr-meal-label">Meal preference</label><select onchange="frSetMeal('+i+',this.value)"><option value="" disabled selected>Select a meal…</option>'+opts+'</select></div>';
+        wrap.appendChild(el);
+    });
+    frGo(1);
+}
+
+function frSetAttend(i,val){
+    frState.members[i].attending=val;
+    const el=document.querySelector('#fr-members .fr-member[data-idx="'+i+'"]');
+    el.querySelector('.fr-tg.yes').classList.toggle('on',val==='yes');
+    el.querySelector('.fr-tg.no').classList.toggle('on',val==='no');
+    el.classList.toggle('coming',val==='yes');
+    el.classList.toggle('declined',val==='no');
+    if(val==='no'){frState.members[i].meal='';const sel=el.querySelector('select');if(sel)sel.selectedIndex=0;}
+    document.getElementById('rsvp-error-2').textContent='';
+}
+function frSetMeal(i,val){frState.members[i].meal=val;}
+
+function frRail(){
+    const rail=document.getElementById('rsvp-rail-2');rail.innerHTML='';
+    for(let i=0;i<3;i++){const sp=document.createElement('span');if(i<frState.step)sp.classList.add('done');else if(i===frState.step)sp.classList.add('active');rail.appendChild(sp);}
+}
+function frGo(step){
+    document.querySelectorAll('#rsvp-steps-2 .rsvp-step').forEach(el=>{el.classList.remove('active','exit');if(+el.dataset.step===step)el.classList.add('active');});
+    frState.step=step;
+    document.getElementById('rsvp-back-2').disabled=(step<=0);
+    document.getElementById('rsvp-next-2').textContent=(step===2)?'Send RSVP ♡':'Continue →';
+    if(step===0)document.getElementById('rsvp-next-2').style.visibility='hidden';
+    else document.getElementById('rsvp-next-2').style.visibility='visible';
+    frRail();document.getElementById('rsvp-error-2').textContent='';
+}
+function frNext(){
+    const err=document.getElementById('rsvp-error-2');
+    if(frState.step===0){if(!frState.family){err.textContent='Please find and select your household first.';return;}frGo(1);return;}
+    if(frState.step===1){
+        const undecided=frState.members.filter(m=>!m.attending);
+        if(undecided.length){err.textContent='Please mark "Coming" or "Can\'t make it" for everyone.';return;}
+        const noMeal=frState.members.filter(m=>m.attending==='yes'&&!m.meal);
+        if(noMeal.length){err.textContent='Please pick a meal for: '+noMeal.map(m=>m.name).join(', ')+'.';return;}
+        const cur=document.querySelector('#rsvp-steps-2 .rsvp-step.active');cur.classList.add('exit');cur.classList.remove('active');
+        setTimeout(()=>frGo(2),250);return;
+    }
+    if(frState.step===2){
+        frState.email=document.getElementById('fr-email').value.trim();
+        frState.message=document.getElementById('fr-message').value.trim();
+        frSubmit();return;
+    }
+}
+function frBack(){if(frState.step>0)frGo(frState.step-1);}
+
+function frSubmit(){
+    const nextBtn=document.getElementById('rsvp-next-2'),backBtn=document.getElementById('rsvp-back-2'),err=document.getElementById('rsvp-error-2');
+    nextBtn.disabled=true;nextBtn.textContent='Sending…';err.textContent='';
+    const fam=frState.family,mealLabel=v=>{const f=FR_MEALS.find(x=>x[0]===v);return f?f[1]:'';};
+    // 1. Firestore record (one doc per family submission)
+    var _ts=new Date();try{if(typeof firebase!=='undefined'&&firebase.firestore)_ts=firebase.firestore.FieldValue.serverTimestamp();}catch(_e){}
+    const payload={familyId:fam.id,familyName:fam.familyName,email:frState.email,message:frState.message,
+        members:frState.members.map(m=>({name:m.name,attending:m.attending,meal:m.attending==='yes'?m.meal:'',mealLabel:m.attending==='yes'?mealLabel(m.meal):''})),
+        timestamp:_ts};
+    try{ var _hasDb=false;try{_hasDb=(typeof db!=='undefined'&&!!db);}catch(_e){_hasDb=false;} if(_hasDb)db.collection('rsvp_responses').add(payload).catch(e=>console.error('fs rsvp',e)); }catch(e){console.error(e);}
+    // 2. Apps Script — one row per person
+    const posts=frState.members.map(m=>{
+        const fd=new FormData();
+        fd.append('Event_Type','Dinner');
+        fd.append('family',fam.familyName);
+        fd.append('name',m.name);
+        fd.append('attending',m.attending);
+        fd.append('food_preference',m.attending==='yes'?mealLabel(m.meal):'');
+        fd.append('email',frState.email);
+        fd.append('message',frState.message);
+        return fetch(FR_APPS_SCRIPT,{method:'POST',body:fd,mode:'no-cors'});
+    });
+    Promise.allSettled(posts).then(()=>{
+        document.getElementById('rsvp-steps-2').style.display='none';nextBtn.style.display='none';backBtn.style.display='none';
+        document.getElementById('rsvp-rail-2').style.display='none';err.style.display='none';
+        const anyComing=frState.members.some(m=>m.attending==='yes');
+        document.getElementById('rsvp-done-msg-2').textContent=anyComing?"Your family's RSVP has been received. We can't wait to celebrate with you ♡":"Thank you for letting us know — you'll be dearly missed ♡";
+        document.getElementById('rsvp-done-2').classList.add('show');launchConfetti(2);
+    }).catch(()=>{err.textContent='Oops! Something went wrong. Please try again.';nextBtn.disabled=false;nextBtn.textContent='Send RSVP ♡';});
+}
+function frEsc(s){return (s==null?'':''+s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+document.addEventListener('input',e=>{if(e.target&&e.target.id==='fr-search')frSearch(e.target.value);});
+
 function launchConfetti(s){const stage=document.getElementById('rsvp-done-'+s),colors=['#C58B9B','#C9A368','#E8C9CE','#A8B19A'];for(let i=0;i<36;i++){const c=document.createElement('div');c.className='confetti-petal';c.style.left=Math.random()*100+'%';c.style.background=colors[i%colors.length];stage.appendChild(c);const dx=(Math.random()-0.5)*200,dur=1200+Math.random()*1400;c.animate([{transform:'translate(0,0) rotate(0deg)',opacity:1},{transform:`translate(${dx}px,${260+Math.random()*160}px) rotate(${Math.random()*720}deg)`,opacity:0}],{duration:dur,easing:'cubic-bezier(0.22,1,0.36,1)',delay:Math.random()*300,fill:'forwards'});setTimeout(()=>c.remove(),dur+400);}}
+</script>
+<script>
+/* ── Guestbook (Firebase block continues) ── */
 
 /* ── Lightbox + Gallery overlay ── */
 function openLightbox(url,caption){const lb=document.getElementById('lightbox');document.getElementById('lightbox-img').src=url;document.getElementById('lightbox-caption').innerText=caption||'';lb.classList.add('active');}
