@@ -303,17 +303,25 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 .dress-card h3{font-family:var(--serif);font-weight:400;font-size:1.4rem;margin-bottom:0.75rem;color:var(--ink);}
 .dress-card p{font-family:var(--sans);font-size:0.9rem;color:var(--ink-soft);line-height:1.65;}
 
-/* ═══════════ GALLERY: horizontal film ═══════════ */
+/* ═══════════ GALLERY: polaroid scatter ═══════════ */
 #gallery{background:var(--noir);color:var(--bg-veil);}
 .gallery-intro{text-align:center;padding:clamp(6rem,12vh,9rem) 2rem 2rem;}
-.h-film{position:relative;height:100vh;overflow:hidden;display:flex;align-items:center;}
-.h-track{display:flex;gap:2.5rem;padding:0 8vw;will-change:transform;}
-.h-photo{flex:0 0 auto;width:clamp(260px,38vw,440px);aspect-ratio:3/4;border-radius:4px;overflow:hidden;position:relative;box-shadow:0 24px 60px rgba(0,0,0,0.4);}
-.h-photo img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--silk);}
-.h-photo:hover img{transform:scale(1.06);}
-.h-cap{position:absolute;inset:0;display:flex;align-items:flex-end;padding:1.25rem;background:linear-gradient(to top,rgba(0,0,0,0.75),transparent 55%);color:#fff;font-family:var(--sans);font-size:0.8rem;letter-spacing:0.04em;opacity:0;transition:opacity .4s;}
-.h-photo:hover .h-cap{opacity:1;}
-@media(max-width:820px){.h-photo{width:72vw;}}
+.polaroid-field{position:relative;width:100%;min-height:820px;padding:2rem clamp(1rem,5vw,4rem) 6rem;}
+.polaroid{position:absolute;background:#fff;padding:12px 12px 44px;border-radius:2px;cursor:pointer;
+    box-shadow:0 8px 28px rgba(0,0,0,0.45),0 2px 6px rgba(0,0,0,0.2);
+    transform:rotate(var(--rot));
+    transition:transform .35s cubic-bezier(0.34,1.56,0.64,1),box-shadow .35s ease;
+    will-change:transform;z-index:1;}
+.polaroid:hover{transform:rotate(0deg) scale(1.08) !important;box-shadow:0 22px 60px rgba(0,0,0,0.65),0 4px 12px rgba(0,0,0,0.3);z-index:10;}
+.polaroid-img{width:180px;height:180px;overflow:hidden;display:block;}
+.polaroid-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.polaroid-cap{font-family:'Great Vibes',cursive;font-size:1.1rem;color:#333;text-align:center;margin-top:8px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px;}
+@media(max-width:820px){
+    .polaroid-field{min-height:1400px;}
+    .polaroid-img{width:140px;height:140px;}
+    .polaroid-cap{font-size:0.95rem;max-width:140px;}
+    .polaroid{padding:10px 10px 38px;}
+}
 
 /* ═══════════ INSTAGRAM ═══════════ */
 #insta,#insta-1{background:var(--bg-veil);}
@@ -1072,27 +1080,25 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
         </div>
     </section>
 
-    <!-- SCENE: GALLERY (horizontal film) -->
+    <!-- SCENE: GALLERY (polaroid scatter) -->
     <section id="gallery" class="scene">
         <div class="gallery-intro">
             <div class="divider-mark reveal-fade"></div>
             <div class="eyebrow reveal-fade">Moments</div>
             <h2 class="big-title" data-title><span class="title-word"><span>Our</span></span> <span class="title-word"><span><em>Gallery</em></span></span></h2>
-            <p class="scene-sub reveal-fade">Scroll through some of our favourite memories together</p>
+            <p class="scene-sub reveal-fade">Some of our favourite memories together</p>
         </div>
-        <div class="h-film" id="h-film">
-            <div class="h-track" id="h-track">
-                <div class="h-photo"><img src="mini-gallery/yuridye.jpeg" alt="Pink Hair"><div class="h-cap">Yuri Dying Pink Hair</div></div>
-                <div class="h-photo"><img src="mini-gallery/kennydye.jpeg" alt="Purple Hair"><div class="h-cap">Kenny Dying Purple Hair</div></div>
-                <div class="h-photo"><img src="mini-gallery/asakusa.jpeg" alt="Kimono"><div class="h-cap">Kimono rental in Asakusa</div></div>
-                <div class="h-photo"><img src="mini-gallery/balifields.jpeg" alt="Rice Fields"><div class="h-cap">Bali rice fields</div></div>
-                <div class="h-photo"><img src="mini-gallery/twintowers.jpg" alt="Twin Towers"><div class="h-cap">Petronas Twin Towers</div></div>
-                <div class="h-photo"><img src="mini-gallery/petshoot.jpeg" alt="Pet Shoot"><div class="h-cap">Mika Pro Shoot</div></div>
-                <div class="h-photo"><img src="mini-gallery/babymetal.jpg" alt="Babymetal"><div class="h-cap">Babymetal in SG 2024</div></div>
-                <div class="h-photo"><img src="mini-gallery/yoasobi24.jpg" alt="Yoasobi"><div class="h-cap">Yoasobi in SG 2024</div></div>
-                <div class="h-photo"><img src="mini-gallery/xmas.jpg" alt="Xmas"><div class="h-cap">Xmas Homemade Dinner</div></div>
-                <div class="h-photo"><img src="mini-gallery/bkktemple.jpg" alt="Bangkok"><div class="h-cap">Bangkok Photoshoot</div></div>
-            </div>
+        <div class="polaroid-field" id="polaroid-field">
+            <div class="polaroid" style="--rot:-6deg;left:3%;top:20px;"       data-src="mini-gallery/yuridye.jpeg"   data-cap="Yuri Dying Pink Hair">      <div class="polaroid-img"><img src="mini-gallery/yuridye.jpeg"   alt="Pink Hair"     loading="lazy"></div><div class="polaroid-cap">Yuri Dying Pink Hair</div></div>
+            <div class="polaroid" style="--rot:4deg;left:22%;top:140px;"      data-src="mini-gallery/kennydye.jpeg"  data-cap="Kenny Dying Purple Hair">   <div class="polaroid-img"><img src="mini-gallery/kennydye.jpeg"  alt="Purple Hair"   loading="lazy"></div><div class="polaroid-cap">Kenny Dying Purple Hair</div></div>
+            <div class="polaroid" style="--rot:-3deg;left:42%;top:40px;"      data-src="mini-gallery/asakusa.jpeg"   data-cap="Kimono rental in Asakusa">  <div class="polaroid-img"><img src="mini-gallery/asakusa.jpeg"   alt="Kimono"        loading="lazy"></div><div class="polaroid-cap">Kimono rental in Asakusa</div></div>
+            <div class="polaroid" style="--rot:7deg;left:62%;top:100px;"      data-src="mini-gallery/balifields.jpeg" data-cap="Bali rice fields">          <div class="polaroid-img"><img src="mini-gallery/balifields.jpeg" alt="Rice Fields"  loading="lazy"></div><div class="polaroid-cap">Bali rice fields</div></div>
+            <div class="polaroid" style="--rot:-5deg;left:80%;top:30px;"      data-src="mini-gallery/twintowers.jpg" data-cap="Petronas Twin Towers">      <div class="polaroid-img"><img src="mini-gallery/twintowers.jpg" alt="Twin Towers"  loading="lazy"></div><div class="polaroid-cap">Petronas Twin Towers</div></div>
+            <div class="polaroid" style="--rot:3deg;left:8%;top:340px;"       data-src="mini-gallery/petshoot.jpeg"  data-cap="Mika Pro Shoot">            <div class="polaroid-img"><img src="mini-gallery/petshoot.jpeg"  alt="Pet Shoot"    loading="lazy"></div><div class="polaroid-cap">Mika Pro Shoot</div></div>
+            <div class="polaroid" style="--rot:-8deg;left:28%;top:440px;"     data-src="mini-gallery/babymetal.jpg"  data-cap="Babymetal in SG 2024">      <div class="polaroid-img"><img src="mini-gallery/babymetal.jpg"  alt="Babymetal"    loading="lazy"></div><div class="polaroid-cap">Babymetal in SG 2024</div></div>
+            <div class="polaroid" style="--rot:5deg;left:50%;top:360px;"      data-src="mini-gallery/yoasobi24.jpg"  data-cap="Yoasobi in SG 2024">        <div class="polaroid-img"><img src="mini-gallery/yoasobi24.jpg"  alt="Yoasobi"      loading="lazy"></div><div class="polaroid-cap">Yoasobi in SG 2024</div></div>
+            <div class="polaroid" style="--rot:-4deg;left:68%;top:480px;"     data-src="mini-gallery/xmas.jpg"       data-cap="Xmas Homemade Dinner">      <div class="polaroid-img"><img src="mini-gallery/xmas.jpg"       alt="Xmas"         loading="lazy"></div><div class="polaroid-cap">Xmas Homemade Dinner</div></div>
+            <div class="polaroid" style="--rot:6deg;left:84%;top:360px;"      data-src="mini-gallery/bkktemple.jpg"  data-cap="Bangkok Photoshoot">        <div class="polaroid-img"><img src="mini-gallery/bkktemple.jpg"  alt="Bangkok"      loading="lazy"></div><div class="polaroid-cap">Bangkok Photoshoot</div></div>
         </div>
     </section>
 
@@ -1576,11 +1582,36 @@ function initFilmScenes(suffix){
         cards.forEach(card=>{const ph=card.querySelector('.chapter-photo');gsap.fromTo(ph,{scale:1.15},{scale:1,ease:'none',scrollTrigger:{trigger:cfilm,start:'top top',end:()=>'+='+dist(),scrub:1}});});
     }
 
-    const hfilm=root.querySelector('.h-film'),htrack=root.querySelector('.h-track');
-    if(hfilm&&htrack){
-        const d=()=>htrack.scrollWidth-window.innerWidth+(window.innerWidth*0.16);
-        gsap.to(htrack,{x:()=>-d(),ease:'none',scrollTrigger:{trigger:hfilm,start:'top top',end:()=>'+='+d(),scrub:1,pin:true,invalidateOnRefresh:true,anticipatePin:1,refreshPriority:8}});
-        htrack.querySelectorAll('.h-photo').forEach(ph=>ph.addEventListener('click',()=>{const img=ph.querySelector('img'),cap=ph.querySelector('.h-cap');openLightbox(img.src,cap?cap.textContent:'');}));
+    // GALLERY — polaroid scatter drop-in
+    const pfield=root.querySelector('.polaroid-field');
+    if(pfield){
+        const cards=[...pfield.querySelectorAll('.polaroid')];
+        // mobile layout: reposition to 2-col grid (absolute → static flow via CSS override)
+        if(window.innerWidth<=820){
+            const cols=2,gapX=8,gapY=24,padX=16;
+            const cw=(window.innerWidth-padX*2-gapX)/cols;
+            cards.forEach((c,i)=>{
+                const col=i%cols,row=Math.floor(i/cols);
+                c.style.left=(padX+col*(cw+gapX))+'px';
+                c.style.top=(row*(cw+gapY+56))+'px';
+            });
+            pfield.style.minHeight=(Math.ceil(cards.length/cols)*(180+gapY+80))+'px';
+        }
+        // entrance: each card drops in from above with bounce, staggered
+        if(!reduce&&window.gsap){
+            gsap.set(cards,{opacity:0,y:-90,rotation:(i)=>{const r=parseFloat(cards[i].style.getPropertyValue('--rot'))||0;return r+15;}});
+            ScrollTrigger.create({trigger:pfield,start:'top 80%',once:true,onEnter:()=>{
+                gsap.to(cards,{opacity:1,y:0,rotation:(i)=>{return parseFloat(cards[i].style.getPropertyValue('--rot'))||0;},
+                    duration:0.7,
+                    stagger:{each:0.07,onComplete:function(){gsap.set(this.targets()[0],{clearProps:'transform,opacity,y,rotation'});}},
+                    ease:'back.out(1.5)'
+                });
+            }});
+        } else {
+            cards.forEach(c=>{c.style.opacity=1;});
+        }
+        // click → lightbox
+        cards.forEach(c=>c.addEventListener('click',()=>openLightbox(c.dataset.src,c.dataset.cap)));
     }
 
     root.querySelectorAll('.venue-card').forEach(el=>gsap.fromTo(el,{y:40},{y:-40,ease:'none',scrollTrigger:{trigger:el,start:'top bottom',end:'bottom top',scrub:1.2}}));
