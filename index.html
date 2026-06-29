@@ -596,7 +596,7 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
 <!-- ═══════════ LOADER ═══════════ -->
 <div id="loader">
     <div class="loader-inner">
-        <div class="loader-line"><span class="loader-script">Welcome In<span class="amp">~</span></span></div>
+        <div class="loader-line"><span class="loader-script">Welcome<span class="amp"></span></span></div>
     </div>
     <div class="loader-tag">A love story unfolds</div>
     <div class="loader-count" id="loader-count">0</div>
@@ -1324,7 +1324,7 @@ function runLoader(){
     tl.to('.loader-script',{yPercent:0,duration:1.2,ease:'power4.out'},0.2)
       .to(count,{v:100,duration:2,ease:'power1.inOut',onUpdate:()=>{countEl.textContent=Math.round(count.v);}},0.3)
       .to(bar,{width:'100%',duration:2,ease:'power1.inOut'},0.3)
-      .to('.loader-script',{yPercent:-110,duration:0.9,ease:'power3.in'},'+=0.3')
+      .to('.loader-script',{yPercent:-110,duration:0.9,ease:'power3.in'},'+=1.3')
       .to('#loader',{yPercent:-100,duration:1,ease:'expo.inOut',onComplete:finishLoader},'-=0.3');
 }
 function finishLoader(){
