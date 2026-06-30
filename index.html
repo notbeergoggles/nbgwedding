@@ -62,7 +62,7 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 /* ═══════════ CINEMATIC LOADER ═══════════ */
 #loader{position:fixed;inset:0;z-index:10000;background:var(--noir);display:flex;align-items:center;justify-content:center;overflow:hidden;}
 .loader-inner{text-align:center;position:relative;}
-.loader-line{overflow:hidden;}
+.loader-line{overflow-y:hidden;overflow-x:visible;padding:0 0.3em;}
 .loader-script{font-family:var(--script);font-size:clamp(3rem,9vw,6rem);color:var(--bg-veil);line-height:1.1;display:inline-block;}
 .loader-script .amp{color:var(--gold);}
 .loader-count{position:absolute;bottom:8vh;right:8vw;font-family:var(--serif);font-size:clamp(4rem,14vw,9rem);color:rgba(251,248,244,0.08);font-weight:300;line-height:1;}
