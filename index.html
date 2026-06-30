@@ -63,11 +63,13 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 #loader{position:fixed;inset:0;z-index:10000;background:var(--noir);display:flex;align-items:center;justify-content:center;overflow:hidden;}
 .loader-inner{text-align:center;position:relative;}
 .loader-line{overflow:hidden;}
-.loader-script{font-family:var(--script);font-size:clamp(3rem,9vw,6rem);color:var(--bg-veil);line-height:1.1;display:inline-block;transform:translateY(110%);}
+.loader-script{font-family:var(--script);font-size:clamp(3rem,9vw,6rem);color:var(--bg-veil);line-height:1.1;display:inline-block;}
 .loader-script .amp{color:var(--gold);}
 .loader-count{position:absolute;bottom:8vh;right:8vw;font-family:var(--serif);font-size:clamp(4rem,14vw,9rem);color:rgba(251,248,244,0.08);font-weight:300;line-height:1;}
 .loader-tag{position:absolute;bottom:8vh;left:8vw;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.4em;text-transform:uppercase;color:rgba(251,248,244,0.4);}
 .loader-bar{position:absolute;bottom:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--rose),var(--gold));}
+.loader-confetti{position:absolute;inset:-20px -40vw;pointer-events:none;overflow:visible;z-index:2;}
+.loader-confetti i{position:absolute;top:50%;left:50%;width:7px;height:11px;opacity:0;will-change:transform;border-radius:1px;}
 
 /* ═══════════ GATEKEEPER SCENE ═══════════ */
 #gate{position:fixed;inset:0;z-index:9500;background:var(--noir);overflow:hidden;opacity:0;visibility:hidden;}
@@ -596,7 +598,8 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
 <!-- ═══════════ LOADER ═══════════ -->
 <div id="loader">
     <div class="loader-inner">
-        <div class="loader-line"><span class="loader-script">Welcome<span class="amp"></span></span></div>
+        <div class="loader-line"><span class="loader-script" id="loader-script">Welcome<span class="amp"></span></span></div>
+        <div class="loader-confetti" id="loader-confetti"></div>
     </div>
     <div class="loader-tag">A love story unfolds</div>
     <div class="loader-count" id="loader-count">0</div>
@@ -1316,16 +1319,40 @@ function cursorDark(on){const d=document.getElementById('cursor-dot'),r=document
 function runLoader(){
     initCursor();
     cursorDark(true);
+    const scriptEl=document.getElementById('loader-script');
     const tl = window.gsap ? gsap.timeline() : null;
     const count={v:0};
     const countEl=document.getElementById('loader-count');
     const bar=document.getElementById('loader-bar');
-    if(!tl||reduce){ finishLoader(); return; }
-    tl.to('.loader-script',{yPercent:0,duration:1.2,ease:'power4.out'},0.2)
-      .to(count,{v:100,duration:2,ease:'power1.inOut',onUpdate:()=>{countEl.textContent=Math.round(count.v);}},0.3)
-      .to(bar,{width:'100%',duration:2,ease:'power1.inOut'},0.3)
-      .to('.loader-script',{yPercent:-110,duration:0.9,ease:'power3.in'},'+=1.6')
-      .to('#loader',{yPercent:-100,duration:1,ease:'expo.inOut',onComplete:finishLoader},'-=0.3');
+    if(!tl||reduce||!scriptEl){ finishLoader(); return; }
+    let done=false;
+    const safeFinish=()=>{ if(done)return; done=true; finishLoader(); };
+    setTimeout(safeFinish,9000); // hard safety net — never trap a guest on the loader
+    try{
+        gsap.set(scriptEl,{yPercent:110});  // explicit baseline — direct element ref, not a selector string
+        tl.to(scriptEl,{yPercent:0,duration:1.2,ease:'power4.out'},0.2)
+          .to(count,{v:100,duration:2,ease:'power1.inOut',onUpdate:()=>{countEl.textContent=Math.round(count.v);}},0.3)
+          .to(bar,{width:'100%',duration:2,ease:'power1.inOut'},0.3)
+          .call(loaderConfetti,null,'+=0')
+          .to(scriptEl,{yPercent:-110,duration:0.9,ease:'power3.in'},'+=2.5')
+          .to('#loader',{yPercent:-100,duration:1,ease:'expo.inOut',onComplete:safeFinish},'-=0.3');
+    }catch(e){ console.error('loader animation failed',e); safeFinish(); }
+}
+function loaderConfetti(){
+    if(reduce)return;
+    const box=document.getElementById('loader-confetti');if(!box||!window.gsap)return;
+    const colors=['#C9A368','#C58B9B','#E8C9CE','#A8823F','#FBF8F4'];
+    const N=44;
+    for(let k=0;k<N;k++){
+        const c=document.createElement('i');
+        c.style.background=colors[k%colors.length];
+        c.style.borderRadius=Math.random()>0.5?'50%':'1px';
+        box.appendChild(c);
+        const ang=Math.random()*Math.PI*2,dist=60+Math.random()*220;
+        const dx=Math.cos(ang)*dist,dy=Math.sin(ang)*dist*0.6-40-Math.random()*60;
+        gsap.set(c,{x:0,y:0,opacity:1,scale:0.6+Math.random()*0.7,rotation:Math.random()*180});
+        gsap.to(c,{x:dx,y:dy+260,opacity:0,rotation:'+='+(180+Math.random()*360),duration:1.6+Math.random()*1.1,ease:'power2.in',delay:Math.random()*0.15,onComplete:()=>c.remove()});
+    }
 }
 function finishLoader(){
     const l=document.getElementById('loader'); if(l) l.style.display='none';
