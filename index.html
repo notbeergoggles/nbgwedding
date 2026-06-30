@@ -68,8 +68,10 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 .loader-count{position:absolute;bottom:8vh;right:8vw;font-family:var(--serif);font-size:clamp(4rem,14vw,9rem);color:rgba(251,248,244,0.08);font-weight:300;line-height:1;}
 .loader-tag{position:absolute;bottom:8vh;left:8vw;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.4em;text-transform:uppercase;color:rgba(251,248,244,0.4);}
 .loader-bar{position:absolute;bottom:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--rose),var(--gold));}
-.loader-confetti{position:absolute;inset:-20px -40vw;pointer-events:none;overflow:visible;z-index:2;}
-.loader-confetti i{position:absolute;top:50%;left:50%;width:7px;height:11px;opacity:0;will-change:transform;border-radius:1px;}
+.loader-confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:3;}
+.loader-confetti i{position:absolute;top:0;left:0;opacity:0;will-change:transform,opacity;}
+.loader-confetti i.dot{border-radius:50%;}
+.loader-confetti i.ribbon{border-radius:1px;}
 
 /* ═══════════ GATEKEEPER SCENE ═══════════ */
 #gate{position:fixed;inset:0;z-index:9500;background:var(--noir);overflow:hidden;opacity:0;visibility:hidden;}
@@ -597,9 +599,9 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
 
 <!-- ═══════════ LOADER ═══════════ -->
 <div id="loader">
+    <div class="loader-confetti" id="loader-confetti"></div>
     <div class="loader-inner">
         <div class="loader-line"><span class="loader-script" id="loader-script">Welcome<span class="amp"></span></span></div>
-        <div class="loader-confetti" id="loader-confetti"></div>
     </div>
     <div class="loader-tag">A love story unfolds</div>
     <div class="loader-count" id="loader-count">0</div>
@@ -1341,17 +1343,35 @@ function runLoader(){
 function loaderConfetti(){
     if(reduce)return;
     const box=document.getElementById('loader-confetti');if(!box||!window.gsap)return;
-    const colors=['#C9A368','#C58B9B','#E8C9CE','#A8823F','#FBF8F4'];
-    const N=44;
+    const colors=['#C9A368','#C58B9B','#E8C9CE','#A8823F','#FBF8F4','#A8B19A'];
+    const w=window.innerWidth,h=window.innerHeight;
+    const cannons=[{x:w*0.04,dir:1},{x:w*0.96,dir:-1}]; // bottom-left shoots right, bottom-right shoots left
+    const N=85;
     for(let k=0;k<N;k++){
+        const cannon=cannons[k%2];
+        const isRibbon=Math.random()>0.45;
         const c=document.createElement('i');
-        c.style.background=colors[k%colors.length];
-        c.style.borderRadius=Math.random()>0.5?'50%':'1px';
+        c.className=isRibbon?'ribbon':'dot';
+        if(isRibbon){const rw=4+Math.random()*3,rh=9+Math.random()*8;c.style.width=rw+'px';c.style.height=rh+'px';}
+        else{const d=5+Math.random()*5;c.style.width=d+'px';c.style.height=d+'px';}
+        c.style.background=colors[(Math.random()*colors.length)|0];
         box.appendChild(c);
-        const ang=Math.random()*Math.PI*2,dist=60+Math.random()*220;
-        const dx=Math.cos(ang)*dist,dy=Math.sin(ang)*dist*0.6-40-Math.random()*60;
-        gsap.set(c,{x:0,y:0,opacity:1,scale:0.6+Math.random()*0.7,rotation:Math.random()*180});
-        gsap.to(c,{x:dx,y:dy+260,opacity:0,rotation:'+='+(180+Math.random()*360),duration:1.6+Math.random()*1.1,ease:'power2.in',delay:Math.random()*0.15,onComplete:()=>c.remove()});
+
+        // launch angle: 50–82° above horizontal, toward center
+        const ang=(50+Math.random()*32)*(Math.PI/180);
+        const power=h*0.34+Math.random()*h*0.26;
+        const peakX=Math.cos(ang)*power*cannon.dir;
+        const peakY=-Math.sin(ang)*power;
+        const fallDist=h*0.55+Math.random()*h*0.55;
+        const driftX=peakX*0.35*(0.7+Math.random()*0.6);
+        const rotStart=Math.random()*360;
+        const spin=(220+Math.random()*340)*cannon.dir*(Math.random()<0.8?1:-1);
+
+        gsap.set(c,{x:cannon.x,y:h*0.94,opacity:1,rotation:rotStart,scale:0.75+Math.random()*0.5});
+        const piece=gsap.timeline({delay:Math.random()*0.32,onComplete:()=>c.remove()});
+        piece.to(c,{x:cannon.x+peakX,y:h*0.94+peakY,rotation:rotStart+spin*0.5,duration:0.5+Math.random()*0.28,ease:'power2.out'})
+             .to(c,{x:cannon.x+peakX+driftX,y:h*0.94+peakY+fallDist,rotation:rotStart+spin,duration:1.4+Math.random()*0.9,ease:'power1.in'})
+             .to(c,{opacity:0,duration:0.5},'-=0.5');
     }
 }
 function finishLoader(){
