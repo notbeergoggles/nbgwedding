@@ -2023,8 +2023,7 @@ function loadGuestbook(suffix){const c=document.getElementById('gb-messages-'+su
             if(!card)return;
             const likes=d.likes||0,countEl=card.querySelector('.gb-like-count'),btn=card.querySelector('.gb-like'),icon=card.querySelector('.gb-like .bi');
             const liked=gbHasLiked(doc.id);
-            // never show fewer than the like this device just added (guards against stale snapshot race)
-            const shown=Math.max(likes,liked?1:0);
+            const shown=likes;
             if(countEl)countEl.textContent=shown>0?shown:'';
             if(btn&&icon){btn.classList.toggle('liked',liked);icon.className='bi bi-heart'+(liked?'-fill':'');}
         });
@@ -2032,29 +2031,30 @@ function loadGuestbook(suffix){const c=document.getElementById('gb-messages-'+su
     }
     // Otherwise full render
     c.innerHTML='';
-    snap.forEach(doc=>{const d=doc.data(),date=d.timestamp?d.timestamp.toDate():null,likes=d.likes||0,liked=gbHasLiked(doc.id),shown=Math.max(likes,liked?1:0),card=document.createElement('div');card.className='gb-card';card.setAttribute('data-id',doc.id);card.innerHTML=`<div class="gb-card-msg">${gbEsc(d.message||'')}</div><div class="gb-card-foot"><span class="gb-card-name">${gbEsc(d.name||'Anonymous')}</span><div style="display:flex;align-items:center;gap:0.9rem;"><button class="gb-like${liked?' liked':''}" onclick="toggleGbLike('${doc.id}',this)" aria-label="Like this message"><i class="bi bi-heart${liked?'-fill':''}"></i><span class="gb-like-count">${shown>0?shown:''}</span></button><span class="gb-card-time">${gbAgo(date)}</span></div></div>`;c.appendChild(card);});
+    snap.forEach(doc=>{const d=doc.data(),date=d.timestamp?d.timestamp.toDate():null,likes=d.likes||0,liked=gbHasLiked(doc.id),shown=likes,card=document.createElement('div');card.className='gb-card';card.setAttribute('data-id',doc.id);card.innerHTML=`<div class="gb-card-msg">${gbEsc(d.message||'')}</div><div class="gb-card-foot"><span class="gb-card-name">${gbEsc(d.name||'Anonymous')}</span><div style="display:flex;align-items:center;gap:0.9rem;"><button class="gb-like${liked?' liked':''}" onclick="toggleGbLike('${doc.id}',this)" aria-label="Like this message"><i class="bi bi-heart${liked?'-fill':''}"></i><span class="gb-like-count">${shown>0?shown:''}</span></button><span class="gb-card-time">${gbAgo(date)}</span></div></div>`;c.appendChild(card);});
 },e=>{console.error(e);c.innerHTML='<div class="gb-empty">Could not load messages right now.</div>';});}
 function gbHasLiked(id){try{return (JSON.parse(localStorage.getItem('gb_likes')||'[]')).indexOf(id)>-1;}catch(e){return false;}}
 function toggleGbLike(id,btn){
     let liked=[];try{liked=JSON.parse(localStorage.getItem('gb_likes')||'[]');}catch(e){liked=[];}
     const already=liked.indexOf(id)>-1;
-    const countEl=btn.querySelector('.gb-like-count'),icon=btn.querySelector('.bi');
-    let n=parseInt(countEl.textContent||'0',10)||0;
-    // 1. Optimistic UI first (never blocked by DB availability)
+    const icon=btn.querySelector('.bi');
     if(already){
-        liked=liked.filter(x=>x!==id);n=Math.max(0,n-1);
+        liked=liked.filter(x=>x!==id);
         btn.classList.remove('liked');icon.className='bi bi-heart';
     }else{
-        liked.push(id);n=n+1;
+        liked.push(id);
         btn.classList.add('liked');icon.className='bi bi-heart-fill';
         gbHeartBurst(btn);
     }
-    countEl.textContent=n>0?n:'';
     localStorage.setItem('gb_likes',JSON.stringify(liked));
-    // 2. Persist to Firestore (guarded so a DB hiccup never breaks the UI)
-    try{
-        db.collection('guestbook_messages').doc(id).update({likes:firebase.firestore.FieldValue.increment(already?-1:1)}).catch(e=>console.error(e));
-    }catch(e){console.error('like write failed',e);}
+    db.collection('guestbook_messages').doc(id).update({likes:firebase.firestore.FieldValue.increment(already?-1:1)}).catch(e=>{
+        console.error('like write failed',e);
+        let revert=[];try{revert=JSON.parse(localStorage.getItem('gb_likes')||'[]');}catch(err){revert=[];}
+        if(already){if(revert.indexOf(id)===-1)revert.push(id);}else{revert=revert.filter(x=>x!==id);}
+        localStorage.setItem('gb_likes',JSON.stringify(revert));
+        btn.classList.toggle('liked',already);
+        icon.className='bi bi-heart'+(already?'-fill':'');
+    });
 }
 function gbHeartBurst(btn){
     if(reduce||!window.gsap)return;
