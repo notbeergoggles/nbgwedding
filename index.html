@@ -437,7 +437,9 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 .faq-a-inner{padding:0 1.5rem 1.4rem;font-family:var(--sans);font-size:0.92rem;line-height:1.7;color:var(--ink-soft);}
 
 /* ═══════════ RSVP: immersive full-screen world ═══════════ */
-#rsvp{background:var(--noir);color:var(--bg-veil);position:relative;overflow:hidden;}
+#rsvp,#rsvp-1{background:var(--noir);color:var(--bg-veil);position:relative;overflow:hidden;}
+.sr-meal-wrap{max-height:0;overflow:hidden;transition:max-height .4s var(--silk);max-width:380px;margin:0 auto;}
+.sr-meal-wrap.show{max-height:120px;margin-top:1.25rem;}
 .rsvp-aura{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(201,163,104,0.18),transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
 .rsvp-inner{position:relative;z-index:2;max-width:640px;margin:0 auto;}
 .rsvp-countdown{display:flex;justify-content:center;gap:clamp(1rem,4vw,2.5rem);flex-wrap:wrap;margin:2.5rem 0 3rem;}
@@ -635,6 +637,7 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
             <li><a href="#cast-1">Cast</a></li>
             <li><a href="#schedule-1">Schedule</a></li>
             <li><a href="#quiz-1">Quiz</a></li>
+            <li><a href="#rsvp-1">RSVP</a></li>
         </ul>
         <button class="film-burger" aria-label="Menu"><span></span><span></span><span></span></button>
     </nav>
@@ -906,6 +909,82 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
         </div>
     </section>
 
+    <!-- SCENE: RSVP -->
+    <section id="rsvp-1" class="scene scene-pad scene-rsvp">
+        <div class="rsvp-aura"></div>
+        <div class="rsvp-inner">
+            <div class="divider-mark reveal-fade"></div>
+            <div class="eyebrow reveal-fade">We'd be honoured</div>
+            <h2 class="big-title" style="color:var(--bg-veil);overflow:visible;padding:0.1em 0;"><span class="converge-row" style="gap:0.3em;"><span class="converge-word left" style="color:var(--bg-veil);">Will You</span> <span class="converge-word right">Join Us?</span></span></h2>
+            <p class="scene-sub reveal-fade">Kindly respond by 30 June 2026</p>
+            <div class="rsvp-countdown reveal-fade">
+                <div class="rc-unit"><div class="rc-num" id="rsvp-days-1">00</div><div class="rc-label">Days</div></div>
+                <div class="rc-unit"><div class="rc-num" id="rsvp-hours-1">00</div><div class="rc-label">Hours</div></div>
+                <div class="rc-unit"><div class="rc-num" id="rsvp-minutes-1">00</div><div class="rc-label">Minutes</div></div>
+                <div class="rc-unit"><div class="rc-num" id="rsvp-seconds-1">00</div><div class="rc-label">Seconds</div></div>
+            </div>
+            <div class="rsvp-stage" id="rsvp-stage-1">
+                <div class="rsvp-rail" id="rsvp-rail-1"></div>
+                <form id="rsvp-form-1" onsubmit="return false;">
+                    <div class="rsvp-steps" id="rsvp-steps-1">
+                        <!-- STEP 0: name -->
+                        <div class="rsvp-step active" data-step="0">
+                            <div class="rsvp-qn">Step 1</div>
+                            <h3 class="rsvp-q">Who do we have <em>the pleasure</em> of inviting?</h3>
+                            <input type="text" class="rsvp-input" id="sr-name" placeholder="Your full name" style="margin-bottom:0.85rem;" autocomplete="off">
+                            <input type="email" class="rsvp-input" id="sr-email" placeholder="Email (optional, for confirmation)" autocomplete="off">
+                        </div>
+                        <!-- STEP 1: Nov 5 Solemnisation -->
+                        <div class="rsvp-step" data-step="1">
+                            <div class="rsvp-qn">Step 2 · 5 November</div>
+                            <h3 class="rsvp-q">Will you join us for the <em>Solemnisation</em>?</h3>
+                            <div class="rsvp-choices" id="sr-nov5-choices">
+                                <div class="rsvp-choice" onclick="srSetAttend('nov5','yes',this)">Yes, I'll be there ♡</div>
+                                <div class="rsvp-choice" onclick="srSetAttend('nov5','no',this)">Regretfully, no</div>
+                            </div>
+                        </div>
+                        <!-- STEP 2: Nov 7 Dinner -->
+                        <div class="rsvp-step" data-step="2">
+                            <div class="rsvp-qn">Step 3 · 7 November</div>
+                            <h3 class="rsvp-q">And the <em>Dinner Celebration</em>?</h3>
+                            <div class="rsvp-choices" id="sr-nov7-choices">
+                                <div class="rsvp-choice" onclick="srSetAttend('nov7','yes',this)">Yes, count me in ♡</div>
+                                <div class="rsvp-choice" onclick="srSetAttend('nov7','no',this)">Regretfully, no</div>
+                            </div>
+                            <div class="sr-meal-wrap" id="sr-meal-wrap">
+                                <label class="fr-meal-label">Meal preference</label>
+                                <select class="rsvp-input" id="sr-meal" onchange="srSetMeal(this.value)" style="padding:0.65rem 0.9rem;">
+                                    <option value="" disabled selected>Select a meal…</option>
+                                    <option value="no-res">No Restrictions</option>
+                                    <option value="no-raw">No Restrictions (No Raw Fish)</option>
+                                    <option value="no-beef">No Beef</option>
+                                    <option value="vegetarian">Vegetarian / Vegan</option>
+                                    <option value="halal">Halal</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- STEP 3: note -->
+                        <div class="rsvp-step" data-step="3">
+                            <div class="rsvp-qn">Last step</div>
+                            <h3 class="rsvp-q">Leave us a <em>note</em></h3>
+                            <textarea class="rsvp-input" id="sr-message" placeholder="A sweet message or well-wish (optional)"></textarea>
+                        </div>
+                    </div>
+                    <div class="rsvp-err" id="rsvp-error-1"></div>
+                    <div class="rsvp-nav">
+                        <button type="button" class="rsvp-back" id="rsvp-back-1" onclick="srBack()" disabled>← Back</button>
+                        <button type="button" class="rsvp-next" id="rsvp-next-1" onclick="srNext()">Continue →</button>
+                    </div>
+                    <div class="rsvp-done" id="rsvp-done-1">
+                        <div class="rsvp-done-mark"><i class="bi bi-suit-heart-fill"></i></div>
+                        <div class="rsvp-done-title">Thank You!</div>
+                        <p class="rsvp-done-msg" id="rsvp-done-msg-1">Your RSVP has been received. We can't wait to celebrate with you ♡</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
     <!-- SCENE: POST / LIVE GALLERY -->
     <section id="post-1" class="scene scene-pad">
         <div class="divider-mark reveal-fade"></div>
@@ -1113,7 +1192,6 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
             <div class="polaroid" style="--rot:-4deg;left:68%;top:480px;"      data-src="mini-gallery/penangpier.jpeg"  data-cap="Penang Sea View">        <div class="polaroid-img"><img src="mini-gallery/penangpier.jpeg"  alt="Penang Sea View"      loading="lazy"></div><div class="polaroid-cap">Penang Sea View</div></div>
             <div class="polaroid" style="--rot:6deg;left:84%;top:360px;"      data-src="mini-gallery/btimahrailway.jpeg"  data-cap="Bkt Timah Railway">        <div class="polaroid-img"><img src="mini-gallery/btimahrailway.jpeg"  alt="Bkt Timah Railway"      loading="lazy"></div><div class="polaroid-cap">Bukit Timah Railway</div></div>
             <div class="polaroid" style="--rot:-4deg;left:68%;top:480px;"      data-src="mini-gallery/mickeyminnie.jpeg"  data-cap="Mickey Minnie">        <div class="polaroid-img"><img src="mini-gallery/mickeyminnie.jpeg"  alt="Mickey Minnie"      loading="lazy"></div><div class="polaroid-cap">Disneyland Tokyo</div></div>
-            <div class="polaroid" style="--rot:6deg;left:84%;top:360px;"      data-src="mini-gallery/archery.jpeg"  data-cap="JB Archery">        <div class="polaroid-img"><img src="mini-gallery/archery.jpeg"  alt="JB Archery"      loading="lazy"></div><div class="polaroid-cap">Archery, JB</div></div>
         </div>
     </section>
 
@@ -1445,7 +1523,7 @@ function enterFilm(){
     runTimer(rsvpDate,suffix,"rsvp"); runTimer(weddingDate,suffix,"wedding");
     startAudio();
     if(suffix==='2'){ if(typeof frGo==='function')frGo(0); buildMika('2'); if(typeof loadFamilies==='function')loadFamilies(); loadGuestbook('2'); }
-    if(suffix==='1'){ quizInit('1'); buildCast('1'); }
+    if(suffix==='1'){ quizInit('1'); buildCast('1'); if(typeof srGo==='function')srGo(0); }
     initFilm(suffix);
     playHeroIntro(suffix);
 }
@@ -1999,6 +2077,94 @@ function frSubmit(){
     })();
 }
 function frEsc(s){return (s==null?'':''+s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+/* ── Solo RSVP (Nov 5 page — no family lookup, RSVP for both days) ── */
+var srState={step:0,name:'',email:'',message:'',nov5:'',nov7:'',meal:''};
+var srMealLabel=v=>{const f=FR_MEALS.find(x=>x[0]===v);return f?f[1]:'';};
+
+function srSetAttend(day,val,el){
+    srState[day]=val;
+    el.parentElement.querySelectorAll('.rsvp-choice').forEach(c=>c.classList.remove('sel'));
+    el.classList.add('sel');
+    if(day==='nov7'){
+        const wrap=document.getElementById('sr-meal-wrap');
+        if(val==='yes'){ wrap.classList.add('show'); }
+        else { wrap.classList.remove('show'); srState.meal=''; document.getElementById('sr-meal').selectedIndex=0; }
+    }
+    document.getElementById('rsvp-error-1').textContent='';
+}
+function srSetMeal(val){ srState.meal=val; document.getElementById('rsvp-error-1').textContent=''; }
+
+function srRail(){
+    const rail=document.getElementById('rsvp-rail-1');if(!rail)return;rail.innerHTML='';
+    for(let i=0;i<4;i++){const sp=document.createElement('span');if(i<srState.step)sp.classList.add('done');else if(i===srState.step)sp.classList.add('active');rail.appendChild(sp);}
+}
+function srGo(step){
+    document.querySelectorAll('#rsvp-steps-1 .rsvp-step').forEach(el=>{el.classList.remove('active','exit');if(+el.dataset.step===step)el.classList.add('active');});
+    srState.step=step;
+    document.getElementById('rsvp-back-1').disabled=(step<=0);
+    document.getElementById('rsvp-next-1').textContent=(step===3)?'Send RSVP ♡':'Continue →';
+    srRail();document.getElementById('rsvp-error-1').textContent='';
+}
+function srNext(){
+    const err=document.getElementById('rsvp-error-1');
+    if(srState.step===0){
+        srState.name=document.getElementById('sr-name').value.trim();
+        if(!srState.name){err.textContent='Please tell us your name.';return;}
+        srState.email=document.getElementById('sr-email').value.trim();
+        const cur=document.querySelector('#rsvp-steps-1 .rsvp-step.active');cur.classList.add('exit');cur.classList.remove('active');
+        setTimeout(()=>srGo(1),250);return;
+    }
+    if(srState.step===1){
+        if(!srState.nov5){err.textContent="Please let us know if you'll be joining the Solemnisation.";return;}
+        const cur=document.querySelector('#rsvp-steps-1 .rsvp-step.active');cur.classList.add('exit');cur.classList.remove('active');
+        setTimeout(()=>srGo(2),250);return;
+    }
+    if(srState.step===2){
+        if(!srState.nov7){err.textContent="Please let us know if you'll be joining the Dinner.";return;}
+        if(srState.nov7==='yes'&&!srState.meal){err.textContent='Please pick a meal preference.';return;}
+        const cur=document.querySelector('#rsvp-steps-1 .rsvp-step.active');cur.classList.add('exit');cur.classList.remove('active');
+        setTimeout(()=>srGo(3),250);return;
+    }
+    if(srState.step===3){
+        srState.message=document.getElementById('sr-message').value.trim();
+        srSubmit();return;
+    }
+}
+function srBack(){if(srState.step>0)srGo(srState.step-1);}
+
+function srSubmit(){
+    const nextBtn=document.getElementById('rsvp-next-1'),backBtn=document.getElementById('rsvp-back-1'),err=document.getElementById('rsvp-error-1');
+    nextBtn.disabled=true;nextBtn.textContent='Sending…';err.textContent='';
+    // 1. Firestore record (single individual doc — no family lookup)
+    var _ts=new Date();try{if(typeof firebase!=='undefined'&&firebase.firestore)_ts=firebase.firestore.FieldValue.serverTimestamp();}catch(_e){}
+    const payload={type:'individual',name:srState.name,email:srState.email,message:srState.message,
+        nov5:{attending:srState.nov5},
+        nov7:{attending:srState.nov7,meal:srState.nov7==='yes'?srState.meal:'',mealLabel:srState.nov7==='yes'?srMealLabel(srState.meal):''},
+        timestamp:_ts};
+    try{ var _hasDb=false;try{_hasDb=(typeof db!=='undefined'&&!!db);}catch(_e){_hasDb=false;} if(_hasDb)db.collection('rsvp_responses').add(payload).catch(e=>console.error('fs rsvp',e)); }catch(e){console.error(e);}
+    // 2. Apps Script — one row per event, sent SEQUENTIALLY (Sheets can't handle concurrent appendRow reliably)
+    const rows=[
+        (()=>{const fd=new FormData();fd.append('Event_Type','Solemnisation');fd.append('family','');fd.append('name',srState.name);fd.append('attending',srState.nov5);fd.append('food_preference','');fd.append('email',srState.email);fd.append('message',srState.message);return fd;})(),
+        (()=>{const fd=new FormData();fd.append('Event_Type','Dinner');fd.append('family','');fd.append('name',srState.name);fd.append('attending',srState.nov7);fd.append('food_preference',srState.nov7==='yes'?srMealLabel(srState.meal):'');fd.append('email',srState.email);fd.append('message',srState.message);return fd;})()
+    ];
+    const wait=ms=>new Promise(r=>setTimeout(r,ms));
+    (async()=>{
+        try{
+            for(let i=0;i<rows.length;i++){
+                await fetch(FR_APPS_SCRIPT,{method:'POST',body:rows[i],mode:'no-cors'});
+                if(i<rows.length-1)await wait(450);
+            }
+            document.getElementById('rsvp-steps-1').style.display='none';nextBtn.style.display='none';backBtn.style.display='none';
+            document.getElementById('rsvp-rail-1').style.display='none';err.style.display='none';
+            const anyComing=(srState.nov5==='yes'||srState.nov7==='yes');
+            document.getElementById('rsvp-done-msg-1').textContent=anyComing?"Your RSVP has been received. We can't wait to celebrate with you ♡":"Thank you for letting us know — you'll be dearly missed ♡";
+            document.getElementById('rsvp-done-1').classList.add('show');launchConfetti(1);
+        }catch(e){
+            err.textContent='Oops! Something went wrong. Please try again.';nextBtn.disabled=false;nextBtn.textContent='Send RSVP ♡';
+        }
+    })();
+}
 
 document.addEventListener('input',e=>{if(e.target&&e.target.id==='fr-search')frSearch(e.target.value);});
 
