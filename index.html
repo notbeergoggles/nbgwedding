@@ -440,6 +440,18 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 #rsvp,#rsvp-1{background:var(--noir);color:var(--bg-veil);position:relative;overflow:hidden;}
 .sr-meal-wrap{max-height:0;overflow:hidden;transition:max-height .4s var(--silk);max-width:380px;margin:0 auto;}
 .sr-meal-wrap.show{max-height:120px;margin-top:1.25rem;}
+.ind-search-wrap{position:relative;max-width:440px;margin:0 auto;width:100%;}
+.ind-results{margin-top:0.6rem;display:flex;flex-direction:column;gap:0.4rem;max-height:230px;overflow-y:auto;}
+.ind-result{font-family:var(--sans);font-size:0.95rem;color:var(--bg-veil);background:rgba(251,248,244,0.05);border:1px solid rgba(201,163,104,0.22);border-radius:6px;padding:0.85rem 1.1rem;cursor:pointer;text-align:left;transition:all .25s;}
+.ind-result:hover{border-color:var(--rose);background:rgba(251,248,244,0.1);}
+.ind-hint{font-family:var(--sans);font-size:0.8rem;color:rgba(251,248,244,0.45);text-align:center;margin-top:0.9rem;line-height:1.5;}
+.ind-hint a{color:var(--gold);text-decoration:underline;cursor:pointer;}
+.ind-type{display:inline-block;overflow:hidden;white-space:nowrap;vertical-align:top;border-right:2px solid var(--gold);padding-right:2px;}
+.ind-type.done{border-right:none;padding-right:0;}
+@keyframes indTypeCh{from{width:0;}to{width:var(--tw);}}
+.ind-picked{background:rgba(251,248,244,0.05);border:1px solid rgba(201,163,104,0.3);border-radius:8px;padding:1.5rem;margin-top:1rem;text-align:center;max-width:440px;margin-left:auto;margin-right:auto;}
+.ind-picked-name{font-family:var(--serif);font-weight:300;font-size:1.6rem;color:var(--bg-veil);margin-bottom:0.5rem;}
+.ind-swap{font-family:var(--sans);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);cursor:pointer;text-decoration:underline;display:inline-block;}
 .rsvp-aura{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(201,163,104,0.18),transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
 .rsvp-inner{position:relative;z-index:2;max-width:640px;margin:0 auto;}
 .rsvp-countdown{display:flex;justify-content:center;gap:clamp(1rem,4vw,2.5rem);flex-wrap:wrap;margin:2.5rem 0 3rem;}
@@ -927,12 +939,20 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
                 <div class="rsvp-rail" id="rsvp-rail-1"></div>
                 <form id="rsvp-form-1" onsubmit="return false;">
                     <div class="rsvp-steps" id="rsvp-steps-1">
-                        <!-- STEP 0: name -->
+                        <!-- STEP 0: find yourself -->
                         <div class="rsvp-step active" data-step="0">
                             <div class="rsvp-qn">Step 1</div>
-                            <h3 class="rsvp-q">Who do we have <em>the pleasure</em> of inviting?</h3>
-                            <input type="text" class="rsvp-input" id="sr-name" placeholder="Your full name" style="margin-bottom:0.85rem;" autocomplete="off">
-                            <input type="email" class="rsvp-input" id="sr-email" placeholder="Email (optional, for confirmation)" autocomplete="off">
+                            <h3 class="rsvp-q">Find <em>yourself</em> on the guest list</h3>
+                            <div class="ind-search-wrap" id="ind-search-wrap">
+                                <input type="text" class="rsvp-input" id="ind-search" placeholder="Start typing your name…" autocomplete="off">
+                                <div class="ind-results" id="ind-results"></div>
+                                <p class="ind-hint">Can't find your name? <a onclick="frWhatsapp()">Message us on WhatsApp</a></p>
+                            </div>
+                            <div class="ind-picked" id="ind-picked" style="display:none;">
+                                <div class="ind-picked-name" id="ind-picked-name"></div>
+                                <span class="ind-swap" onclick="indSwap()">Not you? Search again</span>
+                                <input type="email" class="rsvp-input" id="sr-email" placeholder="Email (optional, for confirmation)" style="margin-top:1.1rem;">
+                            </div>
                         </div>
                         <!-- STEP 1: Nov 5 Solemnisation -->
                         <div class="rsvp-step" data-step="1">
@@ -1192,7 +1212,6 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
             <div class="polaroid" style="--rot:-4deg;left:68%;top:480px;"      data-src="mini-gallery/penangpier.jpeg"  data-cap="Penang Sea View">        <div class="polaroid-img"><img src="mini-gallery/penangpier.jpeg"  alt="Penang Sea View"      loading="lazy"></div><div class="polaroid-cap">Penang Sea View</div></div>
             <div class="polaroid" style="--rot:6deg;left:84%;top:360px;"      data-src="mini-gallery/btimahrailway.jpeg"  data-cap="Bkt Timah Railway">        <div class="polaroid-img"><img src="mini-gallery/btimahrailway.jpeg"  alt="Bkt Timah Railway"      loading="lazy"></div><div class="polaroid-cap">Bukit Timah Railway</div></div>
             <div class="polaroid" style="--rot:-4deg;left:68%;top:480px;"      data-src="mini-gallery/mickeyminnie.jpeg"  data-cap="Mickey Minnie">        <div class="polaroid-img"><img src="mini-gallery/mickeyminnie.jpeg"  alt="Mickey Minnie"      loading="lazy"></div><div class="polaroid-cap">Disneyland Tokyo</div></div>
-            <div class="polaroid" style="--rot:6deg;left:84%;top:360px;"      data-src="mini-gallery/archery.jpeg"  data-cap="JB Archery">        <div class="polaroid-img"><img src="mini-gallery/archery.jpeg"  alt="JB Archery"      loading="lazy"></div><div class="polaroid-cap">Archery, JB</div></div>
         </div>
     </section>
 
@@ -1524,7 +1543,7 @@ function enterFilm(){
     runTimer(rsvpDate,suffix,"rsvp"); runTimer(weddingDate,suffix,"wedding");
     startAudio();
     if(suffix==='2'){ if(typeof frGo==='function')frGo(0); buildMika('2'); if(typeof loadFamilies==='function')loadFamilies(); loadGuestbook('2'); }
-    if(suffix==='1'){ quizInit('1'); buildCast('1'); if(typeof srGo==='function')srGo(0); }
+    if(suffix==='1'){ quizInit('1'); buildCast('1'); if(typeof srGo==='function')srGo(0); if(typeof loadIndividuals==='function')loadIndividuals(); }
     initFilm(suffix);
     playHeroIntro(suffix);
 }
@@ -2079,9 +2098,60 @@ function frSubmit(){
 }
 function frEsc(s){return (s==null?'':''+s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
-/* ── Solo RSVP (Nov 5 page — no family lookup, RSVP for both days) ── */
-var srState={step:0,name:'',email:'',message:'',nov5:'',nov7:'',meal:''};
+/* ── Solo RSVP (Nov 5 page — individuals lookup, RSVP for both days) ── */
+var srState={step:0,name:'',individualId:'',email:'',message:'',nov5:'',nov7:'',meal:''};
 var srMealLabel=v=>{const f=FR_MEALS.find(x=>x[0]===v);return f?f[1]:'';};
+var indPeople=[],indLoaded=false;
+
+function loadIndividuals(){
+    if(indLoaded)return;
+    var hasDb=false;try{hasDb=(typeof db!=='undefined'&&!!db);}catch(e){hasDb=false;}
+    if(!hasDb){return;}
+    indLoaded=true;
+    db.collection('individuals').get().then(snap=>{
+        indPeople=[];
+        snap.forEach(doc=>{const d=doc.data();indPeople.push({id:doc.id,name:d.name||'Guest',searchTerm:(d.searchTerm||[]).map(t=>(''+t).toLowerCase())});});
+    }).catch(e=>{console.error('individuals load failed',e);});
+}
+
+function indTypeSpan(text){
+    const len=Math.max(1,text.length),dur=Math.max(0.35,Math.min(1.2,len*0.045)).toFixed(2);
+    const span=document.createElement('span');
+    span.className='ind-type';
+    span.style.setProperty('--tw',len+'ch');
+    span.style.animation='indTypeCh '+dur+'s steps('+len+',end) forwards';
+    span.textContent=text;
+    span.addEventListener('animationend',()=>span.classList.add('done'),{once:true});
+    return span;
+}
+
+function indSearch(q){
+    const box=document.getElementById('ind-results');if(!box)return;
+    q=q.trim().toLowerCase();
+    if(!q){box.innerHTML='';return;}
+    if(!indPeople.length){box.innerHTML='<div class="fr-loading">Loading guest list… try again in a moment.</div>';loadIndividuals();return;}
+    const hits=indPeople.filter(p=>p.name.toLowerCase().indexOf(q)>-1||p.searchTerm.some(t=>t.indexOf(q)>-1)).slice(0,8);
+    if(!hits.length){box.innerHTML='<div class="fr-loading">No match found. Check your spelling, or message us below.</div>';return;}
+    box.innerHTML='';
+    hits.forEach(p=>{const b=document.createElement('button');b.type='button';b.className='ind-result';b.appendChild(indTypeSpan(p.name));b.onclick=()=>indPick(p);box.appendChild(b);});
+}
+
+function indPick(p){
+    srState.name=p.name;srState.individualId=p.id;
+    document.getElementById('ind-search-wrap').style.display='none';
+    const picked=document.getElementById('ind-picked'),nameEl=document.getElementById('ind-picked-name');
+    nameEl.innerHTML='';nameEl.appendChild(indTypeSpan(p.name));
+    picked.style.display='block';
+    document.getElementById('rsvp-error-1').textContent='';
+}
+
+function indSwap(){
+    srState.name='';srState.individualId='';
+    document.getElementById('ind-picked').style.display='none';
+    document.getElementById('ind-search-wrap').style.display='block';
+    const s=document.getElementById('ind-search');s.value='';s.focus();
+    document.getElementById('ind-results').innerHTML='';
+}
 
 function srSetAttend(day,val,el){
     srState[day]=val;
@@ -2110,8 +2180,7 @@ function srGo(step){
 function srNext(){
     const err=document.getElementById('rsvp-error-1');
     if(srState.step===0){
-        srState.name=document.getElementById('sr-name').value.trim();
-        if(!srState.name){err.textContent='Please tell us your name.';return;}
+        if(!srState.name){err.textContent='Please find and select your name first.';return;}
         srState.email=document.getElementById('sr-email').value.trim();
         const cur=document.querySelector('#rsvp-steps-1 .rsvp-step.active');cur.classList.add('exit');cur.classList.remove('active');
         setTimeout(()=>srGo(1),250);return;
@@ -2137,9 +2206,9 @@ function srBack(){if(srState.step>0)srGo(srState.step-1);}
 function srSubmit(){
     const nextBtn=document.getElementById('rsvp-next-1'),backBtn=document.getElementById('rsvp-back-1'),err=document.getElementById('rsvp-error-1');
     nextBtn.disabled=true;nextBtn.textContent='Sending…';err.textContent='';
-    // 1. Firestore record (single individual doc — no family lookup)
+    // 1. Firestore record (single individual doc — resolved via individuals lookup)
     var _ts=new Date();try{if(typeof firebase!=='undefined'&&firebase.firestore)_ts=firebase.firestore.FieldValue.serverTimestamp();}catch(_e){}
-    const payload={type:'individual',name:srState.name,email:srState.email,message:srState.message,
+    const payload={type:'individual',individualId:srState.individualId,name:srState.name,email:srState.email,message:srState.message,
         nov5:{attending:srState.nov5},
         nov7:{attending:srState.nov7,meal:srState.nov7==='yes'?srState.meal:'',mealLabel:srState.nov7==='yes'?srMealLabel(srState.meal):''},
         timestamp:_ts};
@@ -2154,7 +2223,7 @@ function srSubmit(){
         try{
             for(let i=0;i<rows.length;i++){
                 await fetch(FR_APPS_SCRIPT,{method:'POST',body:rows[i],mode:'no-cors'});
-                if(i<rows.length-1)await wait(450);
+                if(i<rows.length-1)await wait(450); // let the Sheet settle between appends
             }
             document.getElementById('rsvp-steps-1').style.display='none';nextBtn.style.display='none';backBtn.style.display='none';
             document.getElementById('rsvp-rail-1').style.display='none';err.style.display='none';
@@ -2167,7 +2236,8 @@ function srSubmit(){
     })();
 }
 
-document.addEventListener('input',e=>{if(e.target&&e.target.id==='fr-search')frSearch(e.target.value);});
+document.addEventListener('input',e=>{if(e.target&&e.target.id==='fr-search')frSearch(e.target.value);if(e.target&&e.target.id==='ind-search')indSearch(e.target.value);});
+
 
 function launchConfetti(s){const stage=document.getElementById('rsvp-done-'+s),colors=['#C58B9B','#C9A368','#E8C9CE','#A8B19A'];for(let i=0;i<36;i++){const c=document.createElement('div');c.className='confetti-petal';c.style.left=Math.random()*100+'%';c.style.background=colors[i%colors.length];stage.appendChild(c);const dx=(Math.random()-0.5)*200,dur=1200+Math.random()*1400;c.animate([{transform:'translate(0,0) rotate(0deg)',opacity:1},{transform:`translate(${dx}px,${260+Math.random()*160}px) rotate(${Math.random()*720}deg)`,opacity:0}],{duration:dur,easing:'cubic-bezier(0.22,1,0.36,1)',delay:Math.random()*300,fill:'forwards'});setTimeout(()=>c.remove(),dur+400);}}
 </script>
