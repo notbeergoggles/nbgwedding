@@ -460,9 +460,10 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 .rc-label{font-family:var(--sans);font-size:0.62rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(251,248,244,0.5);margin-top:0.5rem;}
 .rsvp-stage{background:rgba(251,248,244,0.04);border:1px solid rgba(201,163,104,0.2);border-radius:12px;padding:clamp(2rem,5vw,3.5rem);min-height:440px;display:flex;flex-direction:column;backdrop-filter:blur(6px);}
 .rsvp-rail{display:flex;gap:8px;justify-content:center;margin-bottom:2.5rem;}
-.rsvp-rail span{width:30px;height:3px;border-radius:3px;background:rgba(201,163,104,0.2);transition:background .5s;}
+.rsvp-rail span{width:30px;height:3px;border-radius:3px;background:rgba(201,163,104,0.2);transition:background .5s,box-shadow .5s;}
 .rsvp-rail span.done{background:var(--gold);}
-.rsvp-rail span.active{background:var(--rose);}
+.rsvp-rail span.active{background:var(--rose);box-shadow:0 0 8px 1px rgba(197,139,155,0.6);animation:railPulse 1.6s ease-in-out infinite;}
+@keyframes railPulse{0%,100%{opacity:1;}50%{opacity:0.55;}}
 .rsvp-steps{position:relative;flex:1;}
 .rsvp-step{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;opacity:0;pointer-events:none;transform:translateX(40px);transition:opacity .5s var(--silk),transform .5s var(--silk);}
 .rsvp-step.active{position:relative;opacity:1;pointer-events:auto;transform:translateX(0);}
@@ -477,13 +478,18 @@ textarea.rsvp-input{resize:vertical;min-height:110px;text-align:left;}
 .rsvp-choices{display:flex;flex-direction:column;gap:0.85rem;}
 .rsvp-choice{font-family:var(--sans);font-size:1rem;color:var(--bg-veil);background:rgba(251,248,244,0.05);border:1px solid rgba(201,163,104,0.25);border-radius:6px;padding:1.1rem 1.5rem;cursor:pointer;text-align:center;transition:all .3s var(--soft);}
 .rsvp-choice:hover{border-color:var(--rose);background:rgba(251,248,244,0.1);transform:translateY(-2px);}
-.rsvp-choice.sel{background:var(--rose-deep);border-color:var(--rose-deep);color:#fff;}
+.rsvp-choice:active{transform:scale(0.97);}
+.rsvp-choice.sel{background:var(--rose-deep);border-color:var(--rose-deep);color:#fff;animation:choicePop .4s var(--soft);}
+@keyframes choicePop{0%{transform:scale(1);}40%{transform:scale(1.05);}100%{transform:scale(1);}}
+@keyframes rsvpStepIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
 .rsvp-nav{display:flex;justify-content:space-between;align-items:center;margin-top:2rem;gap:1rem;}
 .rsvp-back{font-family:var(--sans);font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(251,248,244,0.5);background:none;border:none;cursor:pointer;transition:color .3s;padding:0.5rem;}
 .rsvp-back:hover{color:var(--bg-veil);}
 .rsvp-back:disabled{opacity:0;pointer-events:none;}
 .rsvp-next{font-family:var(--sans);font-size:0.8rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--noir);background:var(--gold);border:1px solid var(--gold);border-radius:100px;padding:0.85rem 2rem;cursor:pointer;transition:all .4s var(--soft);}
 .rsvp-next:hover{background:var(--bg-veil);border-color:var(--bg-veil);letter-spacing:0.25em;}
+.rsvp-next:active{transform:scale(0.95);}
+.rsvp-back:active{transform:scale(0.93);}
 
 /* ── Family RSVP ── */
 .fr-search-wrap{position:relative;max-width:440px;margin:0 auto;width:100%;}
@@ -502,8 +508,17 @@ textarea.rsvp-input{resize:vertical;min-height:110px;text-align:left;}
 .fr-toggle{display:flex;gap:0.4rem;flex-shrink:0;}
 .fr-tg{font-family:var(--sans);font-size:0.72rem;letter-spacing:0.04em;text-transform:uppercase;color:rgba(251,248,244,0.6);background:rgba(251,248,244,0.06);border:1px solid rgba(201,163,104,0.25);border-radius:100px;padding:0.4rem 0.85rem;cursor:pointer;transition:all .25s;white-space:nowrap;}
 .fr-tg:hover{color:var(--bg-veil);}
-.fr-tg.yes.on{background:var(--sage);border-color:var(--sage);color:var(--noir);}
-.fr-tg.no.on{background:var(--rose-deep);border-color:var(--rose-deep);color:#fff;}
+.fr-tg.yes.on{background:var(--sage);border-color:var(--sage);color:var(--noir);animation:choicePop .4s var(--soft);}
+.fr-tg.no.on{background:var(--rose-deep);border-color:var(--rose-deep);color:#fff;animation:choicePop .4s var(--soft);}
+.fr-tg:active{transform:scale(0.94);}
+.fr-member{transition:border-color .3s,transform .3s;}
+.fr-member.coming{animation:memberSettle .4s var(--soft);}
+@keyframes memberSettle{0%{transform:scale(0.98);}100%{transform:scale(1);}}
+@media(max-width:600px){
+    .fr-member-top{flex-direction:column;align-items:flex-start;gap:0.75rem;}
+    .fr-toggle{width:100%;gap:0.6rem;}
+    .fr-tg{flex:1;text-align:center;padding:0.65rem 0.5rem;font-size:0.68rem;}
+}
 .fr-meal{margin-top:0.85rem;max-height:0;overflow:hidden;transition:max-height .4s var(--silk);}
 .fr-member.coming .fr-meal{max-height:80px;}
 .fr-meal select{width:100%;background:rgba(26,22,20,0.6);border:1px solid rgba(201,163,104,0.3);border-radius:6px;padding:0.65rem 0.9rem;font-family:var(--sans);font-size:0.88rem;color:var(--bg-veil);outline:none;cursor:pointer;}
@@ -2036,6 +2051,7 @@ function frGo(step){
     if(step===0)document.getElementById('rsvp-next-2').style.visibility='hidden';
     else document.getElementById('rsvp-next-2').style.visibility='visible';
     frRail();document.getElementById('rsvp-error-2').textContent='';
+    rsvpStagger(document.querySelector('#rsvp-steps-2 .rsvp-step.active'));
 }
 function frNext(){
     const err=document.getElementById('rsvp-error-2');
@@ -2060,14 +2076,10 @@ function frSubmit(){
     const nextBtn=document.getElementById('rsvp-next-2'),backBtn=document.getElementById('rsvp-back-2'),err=document.getElementById('rsvp-error-2');
     nextBtn.disabled=true;nextBtn.textContent='Sending…';err.textContent='';
     const fam=frState.family,mealLabel=v=>{const f=FR_MEALS.find(x=>x[0]===v);return f?f[1]:'';};
-    // 1. Firestore record (one doc per family submission)
     var _ts=new Date();try{if(typeof firebase!=='undefined'&&firebase.firestore)_ts=firebase.firestore.FieldValue.serverTimestamp();}catch(_e){}
     const payload={familyId:fam.id,familyName:fam.familyName,email:frState.email,message:frState.message,
         members:frState.members.map(m=>({name:m.name,attending:m.attending,meal:m.attending==='yes'?m.meal:'',mealLabel:m.attending==='yes'?mealLabel(m.meal):''})),
         timestamp:_ts};
-    try{ var _hasDb=false;try{_hasDb=(typeof db!=='undefined'&&!!db);}catch(_e){_hasDb=false;} if(_hasDb)db.collection('rsvp_responses').add(payload).catch(e=>console.error('fs rsvp',e)); }catch(e){console.error(e);}
-    // 2. Apps Script — one row per person, sent SEQUENTIALLY
-    // (Google Apps Script Sheets can't handle concurrent appendRow reliably — parallel posts drop rows)
     const rows=frState.members.map(m=>{
         const fd=new FormData();
         fd.append('Event_Type','Dinner');
@@ -2082,9 +2094,11 @@ function frSubmit(){
     const wait=ms=>new Promise(r=>setTimeout(r,ms));
     (async()=>{
         try{
+            var hasDb=false;try{hasDb=(typeof db!=='undefined'&&!!db);}catch(_e){hasDb=false;}
+            if(hasDb)await db.collection('rsvp_responses').add(payload);
             for(let i=0;i<rows.length;i++){
                 await fetch(FR_APPS_SCRIPT,{method:'POST',body:rows[i],mode:'no-cors'});
-                if(i<rows.length-1)await wait(450); // let the Sheet settle between appends
+                if(i<rows.length-1)await wait(300);
             }
             document.getElementById('rsvp-steps-2').style.display='none';nextBtn.style.display='none';backBtn.style.display='none';
             document.getElementById('rsvp-rail-2').style.display='none';err.style.display='none';
@@ -2092,11 +2106,21 @@ function frSubmit(){
             document.getElementById('rsvp-done-msg-2').textContent=anyComing?"Your family's RSVP has been received. We can't wait to celebrate with you ♡":"Thank you for letting us know — you'll be dearly missed ♡";
             document.getElementById('rsvp-done-2').classList.add('show');launchConfetti(2);
         }catch(e){
+            console.error('rsvp submit failed',e);
             err.textContent='Oops! Something went wrong. Please try again.';nextBtn.disabled=false;nextBtn.textContent='Send RSVP ♡';
         }
     })();
 }
 function frEsc(s){return (s==null?'':''+s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function rsvpStagger(stepEl){
+    if(!stepEl)return;
+    const kids=stepEl.querySelectorAll(':scope > *');
+    kids.forEach((k,i)=>{
+        k.style.animation='none';k.offsetHeight;
+        k.style.animation='rsvpStepIn .5s var(--soft) both';
+        k.style.animationDelay=(i*0.07)+'s';
+    });
+}
 
 /* ── Solo RSVP (Nov 5 page — individuals lookup, RSVP for both days) ── */
 var srState={step:0,name:'',individualId:'',email:'',message:'',nov5:'',nov7:'',meal:''};
@@ -2176,6 +2200,7 @@ function srGo(step){
     document.getElementById('rsvp-back-1').disabled=(step<=0);
     document.getElementById('rsvp-next-1').textContent=(step===3)?'Send RSVP ♡':'Continue →';
     srRail();document.getElementById('rsvp-error-1').textContent='';
+    rsvpStagger(document.querySelector('#rsvp-steps-1 .rsvp-step.active'));
 }
 function srNext(){
     const err=document.getElementById('rsvp-error-1');
@@ -2212,7 +2237,6 @@ function srSubmit(){
         nov5:{attending:srState.nov5},
         nov7:{attending:srState.nov7,meal:srState.nov7==='yes'?srState.meal:'',mealLabel:srState.nov7==='yes'?srMealLabel(srState.meal):''},
         timestamp:_ts};
-    try{ var _hasDb=false;try{_hasDb=(typeof db!=='undefined'&&!!db);}catch(_e){_hasDb=false;} if(_hasDb)db.collection('rsvp_responses').add(payload).catch(e=>console.error('fs rsvp',e)); }catch(e){console.error(e);}
     // 2. Apps Script — one row per event, sent SEQUENTIALLY (Sheets can't handle concurrent appendRow reliably)
     const rows=[
         (()=>{const fd=new FormData();fd.append('Event_Type','Solemnisation');fd.append('family','');fd.append('name',srState.name);fd.append('attending',srState.nov5);fd.append('food_preference','');fd.append('email',srState.email);fd.append('message',srState.message);return fd;})(),
@@ -2221,9 +2245,11 @@ function srSubmit(){
     const wait=ms=>new Promise(r=>setTimeout(r,ms));
     (async()=>{
         try{
+            var hasDb=false;try{hasDb=(typeof db!=='undefined'&&!!db);}catch(_e){hasDb=false;}
+            if(hasDb)await db.collection('rsvp_responses').add(payload);
             for(let i=0;i<rows.length;i++){
                 await fetch(FR_APPS_SCRIPT,{method:'POST',body:rows[i],mode:'no-cors'});
-                if(i<rows.length-1)await wait(450); // let the Sheet settle between appends
+                if(i<rows.length-1)await wait(300);
             }
             document.getElementById('rsvp-steps-1').style.display='none';nextBtn.style.display='none';backBtn.style.display='none';
             document.getElementById('rsvp-rail-1').style.display='none';err.style.display='none';
@@ -2231,6 +2257,7 @@ function srSubmit(){
             document.getElementById('rsvp-done-msg-1').textContent=anyComing?"Your RSVP has been received. We can't wait to celebrate with you ♡":"Thank you for letting us know — you'll be dearly missed ♡";
             document.getElementById('rsvp-done-1').classList.add('show');launchConfetti(1);
         }catch(e){
+            console.error('rsvp submit failed',e);
             err.textContent='Oops! Something went wrong. Please try again.';nextBtn.disabled=false;nextBtn.textContent='Send RSVP ♡';
         }
     })();
