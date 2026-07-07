@@ -480,7 +480,7 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 .rsvp-rail span.done{background:var(--gold);}
 .rsvp-rail span.active{background:var(--rose);box-shadow:0 0 8px 1px rgba(197,139,155,0.6);animation:railPulse 1.6s ease-in-out infinite;}
 @keyframes railPulse{0%,100%{opacity:1;}50%{opacity:0.55;}}
-.rsvp-steps{position:relative;flex:1;}
+.rsvp-steps{position:relative;flex:1;min-height:1px;}
 .rsvp-step{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;opacity:0;pointer-events:none;transform:translateX(40px);transition:opacity .5s var(--silk),transform .5s var(--silk);}
 .rsvp-step.active{position:relative;opacity:1;pointer-events:auto;transform:translateX(0);}
 .rsvp-step.exit{opacity:0;transform:translateX(-40px);}
@@ -2140,7 +2140,7 @@ function frRail(){
     for(let i=0;i<3;i++){const sp=document.createElement('span');if(i<frState.step)sp.classList.add('done');else if(i===frState.step)sp.classList.add('active');rail.appendChild(sp);}
 }
 function frGo(step){
-    document.querySelectorAll('#rsvp-steps-2 .rsvp-step').forEach(el=>{el.classList.remove('active','exit');if(+el.dataset.step===step)el.classList.add('active');});
+    document.querySelectorAll('#rsvp-steps-2 .rsvp-step').forEach(el=>{el.classList.remove('active','exit');el.style.visibility='';if(+el.dataset.step===step)el.classList.add('active');});
     frState.step=step;
     document.getElementById('rsvp-back-2').disabled=(step<=0);
     document.getElementById('rsvp-next-2').textContent=(step===2)?'Send RSVP ♡':'Continue →';
@@ -2159,7 +2159,7 @@ function frNext(){
         const noMeal=frState.members.filter(m=>m.attending==='yes'&&!m.meal);
         if(noMeal.length){err.textContent='Please pick a meal for: '+noMeal.map(m=>m.name).join(', ')+'.';return;}
         const cur=document.querySelector('#rsvp-steps-2 .rsvp-step.active');cur.classList.add('exit');cur.classList.remove('active');
-        setTimeout(()=>frGo(2),250);return;
+        setTimeout(()=>{cur.style.visibility='hidden';frGo(2);},250);return;
     }
     if(frState.step===2){
         frState.email=document.getElementById('fr-email').value.trim();
