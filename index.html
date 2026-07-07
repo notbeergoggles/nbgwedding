@@ -2186,8 +2186,8 @@ function gotoDinner(){
     pendingUnlock={containerId:'group-2-content',weddingDate:dateGroup2,rsvpDate:rsvpGroup2,suffix:"2"};
     sessionStorage.setItem('wedding_access',JSON.stringify(pendingUnlock));
     enterFilm();
-    const jump=()=>{try{if(typeof lenis!=='undefined'&&lenis&&lenis.scrollTo){lenis.scrollTo(0,{immediate:true});}}catch(e){}window.scrollTo(0,0);};
-    jump();requestAnimationFrame(jump);setTimeout(jump,60);setTimeout(jump,300);
+    const jump=()=>{try{if(typeof lenis!=='undefined'&&lenis){if(lenis.scrollTo)lenis.scrollTo(0,{immediate:true,force:true});if(typeof lenis.stop==='function'){lenis.stop();lenis.start();}}}catch(e){}window.scrollTo(0,0);try{if(window.ScrollTrigger)ScrollTrigger.refresh();}catch(e){}};
+    jump();requestAnimationFrame(jump);setTimeout(jump,60);setTimeout(jump,300);setTimeout(jump,700);
 }
 
 function frSubmit(){
