@@ -1451,7 +1451,6 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
         <div class="footer-sub">7 November 2026</div>
         <ul class="footer-social">
             <li><a href="https://www.instagram.com/notbeergoggles/" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram"></i></a></li>
-            <li><a href="mailto:example@example.com?subject=Congratulations%20Sayuri%20and%20Kenny"><i class="bi bi-envelope-paper-heart-fill"></i></a></li>
         </ul>
         <div class="footer-copy">© 2024–2026 Sayuri &amp; Kenny's Wedding. Made with love.</div>
     </footer>
@@ -1864,7 +1863,6 @@ function initFilmScenes(suffix){
     const pfield=root.querySelector('.polaroid-field');
     if(pfield){
         const cards=[...pfield.querySelectorAll('.polaroid')];
-        // mobile layout: reposition to 2-col grid (absolute → static flow via CSS override)
         if(window.innerWidth<=820){
             const cols=2,gapX=8,gapY=24,padX=16;
             const cw=(window.innerWidth-padX*2-gapX)/cols;
@@ -1874,6 +1872,16 @@ function initFilmScenes(suffix){
                 c.style.top=(row*(cw+gapY+56))+'px';
             });
             pfield.style.minHeight=(Math.ceil(cards.length/cols)*(180+gapY+80))+'px';
+        } else {
+            const fw=pfield.clientWidth,cols=4,cardW=204,cellH=300;
+            const padX=Math.max(16,(fw-cols*cardW-(cols-1)*24)/2),gapX=24;
+            cards.forEach((c,i)=>{
+                const col=i%cols,row=Math.floor(i/cols);
+                const jitterX=(Math.random()-0.5)*30,jitterY=(Math.random()-0.5)*40;
+                c.style.left=(padX+col*(cardW+gapX)+jitterX)+'px';
+                c.style.top=(40+row*cellH+jitterY)+'px';
+            });
+            pfield.style.minHeight=(Math.ceil(cards.length/cols)*cellH+120)+'px';
         }
         // entrance: each card drops in from above with bounce, staggered
         if(!reduce&&window.gsap){
