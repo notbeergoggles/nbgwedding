@@ -2148,6 +2148,7 @@ function frGo(step){
     else document.getElementById('rsvp-next-2').style.visibility='visible';
     frRail();document.getElementById('rsvp-error-2').textContent='';
     rsvpStagger(document.querySelector('#rsvp-steps-2 .rsvp-step.active'));
+    const st=document.getElementById('rsvp-stage');if(st){const y=st.getBoundingClientRect().top+window.pageYOffset-90;window.scrollTo({top:y,behavior:'smooth'});}
 }
 function frNext(){
     const err=document.getElementById('rsvp-error-2');
