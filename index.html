@@ -442,12 +442,12 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 .sr-meal-wrap{max-height:0;overflow:hidden;transition:max-height .4s var(--silk);max-width:380px;margin:0 auto;}
 .sr-meal-wrap.show{max-height:120px;margin-top:1.25rem;}
 .ind-search-wrap{position:relative;max-width:440px;margin:0 auto;width:100%;}
-.ind-results{margin-top:0.6rem;display:flex;flex-direction:column;gap:0.4rem;max-height:230px;overflow-y:auto;}
-.ind-result{font-family:var(--sans);font-size:0.95rem;color:var(--bg-veil);background:rgba(251,248,244,0.05);border:1px solid rgba(201,163,104,0.22);border-radius:6px;padding:0.85rem 1.1rem;cursor:pointer;text-align:left;transition:all .25s;max-width:100%;overflow:hidden;}
+.ind-results{margin-top:0.6rem;display:flex;flex-direction:column;gap:0.5rem;max-height:320px;overflow-y:auto;padding:4px 6px;}
+.ind-result{font-family:var(--sans);font-size:0.95rem;line-height:1.4;color:var(--bg-veil);background:rgba(251,248,244,0.05);border:1px solid rgba(201,163,104,0.22);border-radius:6px;padding:0.95rem 1.1rem;cursor:pointer;text-align:left;transition:all .25s;max-width:100%;overflow:hidden;flex-shrink:0;min-height:auto;}
 .ind-result:hover{border-color:var(--rose);background:rgba(251,248,244,0.1);}
 .ind-hint{font-family:var(--sans);font-size:0.8rem;color:rgba(251,248,244,0.45);text-align:center;margin-top:0.9rem;line-height:1.5;}
 .ind-hint a{color:var(--gold);text-decoration:underline;cursor:pointer;}
-.ind-type{display:inline-block;overflow:hidden;white-space:nowrap;vertical-align:top;border-right:2px solid var(--gold);padding-right:2px;max-width:100%;}
+.ind-type{display:inline-block;overflow:hidden;white-space:nowrap;vertical-align:baseline;border-right:2px solid var(--gold);padding-right:2px;max-width:100%;line-height:1.4;}
 .ind-type.done{border-right:none;padding-right:0;white-space:normal;word-break:break-word;max-width:100%;width:auto!important;}
 @keyframes indTypeCh{from{width:0;}to{width:var(--tw);}}
 .ind-picked{background:rgba(251,248,244,0.05);border:1px solid rgba(201,163,104,0.3);border-radius:8px;padding:1.5rem;margin-top:1rem;text-align:center;max-width:440px;margin-left:auto;margin-right:auto;box-sizing:border-box;}
