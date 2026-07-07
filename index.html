@@ -1728,7 +1728,7 @@ function maskReveal(selector, opts={}){
 }
 
 function initFilm(suffix){
-    if(sceneReady) return; sceneReady=true;
+    if(sceneReady){ initFilmScenes(suffix); return; } sceneReady=true;
     if(isTouch) document.body.classList.add('touch');
     // Lenis — desktop only; phones use native scroll for smoothness
     if(window.Lenis&&!reduce&&!isTouch){
@@ -2182,6 +2182,7 @@ function frBack(){if(frState.step>0)frGo(frState.step-1);}
 function gotoDinner(){
     document.getElementById('group-1-content').style.display='none';
     try{document.querySelectorAll('.rsvp-sparkle,.rsvp-shard,.ind-spark,.choice-spark').forEach(el=>el.remove());}catch(e){}
+    try{if(window.ScrollTrigger)ScrollTrigger.getAll().forEach(t=>t.kill());}catch(e){}
     window.scrollTo(0,0);
     pendingUnlock={containerId:'group-2-content',weddingDate:dateGroup2,rsvpDate:rsvpGroup2,suffix:"2"};
     sessionStorage.setItem('wedding_access',JSON.stringify(pendingUnlock));
