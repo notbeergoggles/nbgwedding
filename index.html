@@ -390,7 +390,7 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 .quiz-confetti i{position:absolute;top:-12px;width:9px;height:14px;opacity:0;will-change:transform;}
 
 /* ═══════════ MIKA ═══════════ */
-#mika{background:var(--bg);padding:clamp(5rem,10vh,8rem) 0;overflow:hidden;}
+#mika-1{background:var(--bg);padding:clamp(5rem,10vh,8rem) 0;overflow:hidden;}
 .mika-intro{text-align:center;font-family:var(--serif-alt);font-style:italic;font-size:1.1rem;color:var(--ink-soft);margin:1rem auto 2.5rem;}
 .mika-track-wrap{overflow:hidden;}
 .mika-track{display:flex;width:max-content;animation:mikaScroll 45s linear infinite;}
@@ -867,6 +867,17 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
         </div>
     </section>
 
+    <!-- SCENE: MIKA -->
+    <section id="mika-1" class="scene">
+        <div style="text-align:center;padding:0 2rem;">
+            <div class="divider-mark reveal-fade"></div>
+            <div class="eyebrow reveal-fade">Family</div>
+            <h2 class="big-title" data-title><span class="title-word"><span>Our Pup of</span></span> <span class="title-word"><span><em>Honour</em></span></span></h2>
+            <p class="mika-intro reveal-fade">Meet Mika — she may not be bright, but her smile will melt your soul ♡</p>
+        </div>
+        <div class="mika-track-wrap"><div class="mika-track" id="mika-track-1"></div></div>
+    </section>
+
     <!-- SCENE: SCHEDULE (Nov 5 then Nov 7) -->
     <section id="schedule-1" class="scene scene-pad">
         <div class="divider-mark reveal-fade"></div>
@@ -1314,17 +1325,6 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
         </div>
     </section>
 
-    <!-- SCENE: MIKA -->
-    <section id="mika" class="scene">
-        <div style="text-align:center;padding:0 2rem;">
-            <div class="divider-mark reveal-fade"></div>
-            <div class="eyebrow reveal-fade">Family</div>
-            <h2 class="big-title" data-title><span class="title-word"><span>Our Pup of</span></span> <span class="title-word"><span><em>Honour</em></span></span></h2>
-            <p class="mika-intro reveal-fade">Meet Mika — she may not be bright, but her smile will melt your soul ♡</p>
-        </div>
-        <div class="mika-track-wrap"><div class="mika-track" id="mika-track-2"></div></div>
-    </section>
-
     <!-- SCENE: FAQ -->
     <section id="faq" class="scene scene-pad">
         <div class="divider-mark reveal-fade"></div>
@@ -1653,8 +1653,8 @@ function enterFilm(){
     document.getElementById(containerId).style.display='block';
     runTimer(rsvpDate,suffix,"rsvp"); runTimer(weddingDate,suffix,"wedding");
     startAudio();
-    if(suffix==='2'){ if(typeof frGo==='function')frGo(0); buildMika('2'); if(typeof loadFamilies==='function')loadFamilies(); loadGuestbook('2'); }
-    if(suffix==='1'){ quizInit('1'); buildCast('1'); if(typeof srGo==='function')srGo(0); if(typeof loadIndividuals==='function')loadIndividuals(); spawnRsvpSparkles('1'); }
+    if(suffix==='2'){ if(typeof frGo==='function')frGo(0); if(typeof loadFamilies==='function')loadFamilies(); loadGuestbook('2'); }
+    if(suffix==='1'){ quizInit('1'); buildCast('1'); buildMika('1'); if(typeof srGo==='function')srGo(0); if(typeof loadIndividuals==='function')loadIndividuals(); spawnRsvpSparkles('1'); }
     initFilm(suffix);
     playHeroIntro(suffix);
 }
