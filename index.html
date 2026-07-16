@@ -255,7 +255,10 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 .chapter-hint-arrows i{animation:chapterNudge 1.4s ease-in-out infinite;margin-top:-4px;color:var(--gold);}
 .chapter-hint-arrows i:nth-child(2){animation-delay:0.2s;}
 @keyframes chapterNudge{0%,100%{transform:translateY(0);opacity:0.4;}50%{transform:translateY(4px);opacity:1;}}
-@media(max-width:768px){.chapter-hint{right:auto;left:50%;transform:translateX(-50%);bottom:9rem;}.chapter-progress{bottom:7.5rem;}}
+@media(max-width:768px){
+    .chapter-film .chapter-progress{position:fixed;bottom:calc(5.2rem + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);}
+    .chapter-film .chapter-hint{position:fixed;right:auto;left:50%;transform:translateX(-50%);bottom:calc(6.6rem + env(safe-area-inset-bottom,0px));}
+}
 
 /* ═══════════ STORY PHOTOS (parallax triptych) ═══════════ */
 .triptych{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1000px;margin:0 auto;padding:6rem 2rem;}
