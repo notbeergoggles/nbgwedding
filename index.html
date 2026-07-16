@@ -256,7 +256,7 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 .chapter-hint-arrows i{animation:chapterNudge 1.4s ease-in-out infinite;margin-top:-4px;color:var(--gold);}
 .chapter-hint-arrows i:nth-child(2){animation-delay:0.2s;}
 @keyframes chapterNudge{0%,100%{transform:translateY(0);opacity:0.4;}50%{transform:translateY(4px);opacity:1;}}
-@media(max-width:768px){.chapter-hint{bottom:6.5rem;}}
+@media(max-width:768px){.chapter-hint{bottom:8.5rem;}}
 
 /* ═══════════ STORY PHOTOS (parallax triptych) ═══════════ */
 .triptych{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1000px;margin:0 auto;padding:6rem 2rem;}
@@ -1842,11 +1842,15 @@ function initFilmScenes(suffix){
             gsap.set(left,{y:120,opacity:0});
             gsap.set(right,{y:-120,opacity:0});
             gsap.set(cLede,{opacity:0});
-            const tl=gsap.timeline({scrollTrigger:{trigger:cScene,start:'top 70%'}});
-            tl.to(eyebrow,{opacity:1,duration:0.5,ease:'power2.out'})
-              .to(left,{y:0,opacity:1,duration:0.9,ease:'power3.out'},'-=0.3')
-              .to(right,{y:0,opacity:1,duration:0.9,ease:'power3.out'},'<')
-              .to(cLede,{opacity:1,duration:0.6,ease:'power2.out'},'-=0.3');
+            const playConverge=()=>{
+                gsap.to(eyebrow,{opacity:1,duration:0.5,ease:'power2.out'});
+                gsap.to(left,{y:0,opacity:1,duration:0.9,ease:'power3.out',delay:0.2});
+                gsap.to(right,{y:0,opacity:1,duration:0.9,ease:'power3.out',delay:0.2});
+                gsap.to(cLede,{opacity:1,duration:0.6,ease:'power2.out',delay:0.6});
+            };
+            ScrollTrigger.create({trigger:cScene,start:'top 80%',once:true,onEnter:playConverge});
+            // Fallback: if the section is already in view on load/refresh, play immediately
+            ScrollTrigger.create({trigger:cScene,start:'top bottom',end:'bottom top',once:true,onRefresh:self=>{if(self.isActive)playConverge();}});
         } else {
             // DESKTOP: pinned + scrubbed — "Our" ← → "Story" meet center
             const offset=()=>window.innerWidth*0.6;
