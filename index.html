@@ -559,6 +559,8 @@ textarea.rsvp-input{resize:vertical;min-height:110px;text-align:left;}
 @keyframes crossGlow{0%,100%{box-shadow:0 0 0 rgba(201,163,104,0);}50%{box-shadow:0 0 22px rgba(201,163,104,0.55);}}
 .rsvp-cross-note{font-family:var(--sans);font-size:0.72rem;color:rgba(251,248,244,0.5);line-height:1.5;letter-spacing:0.03em;}
 .rsvp-cross-note strong{color:var(--gold);font-weight:600;letter-spacing:0.08em;}
+.rsvp-edit-hint{font-family:var(--sans);font-size:0.8rem;line-height:1.5;color:var(--gold);background:rgba(201,163,104,0.1);border:1px solid rgba(201,163,104,0.3);border-radius:8px;padding:0.7rem 1rem;text-align:center;}
+.rsvp-edit-hint i{margin-right:0.35rem;}
 .confetti-petal{position:absolute;top:-20px;width:12px;height:12px;border-radius:50% 0 50% 0;pointer-events:none;opacity:0;}
 .rsvp-loader{position:fixed;inset:0;z-index:99998;background:rgba(20,16,18,0.92);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .45s var(--soft),visibility .45s;}
 .rsvp-loader.show{opacity:1;visibility:visible;}
@@ -1042,6 +1044,7 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
                             <div class="ind-picked" id="ind-picked" style="display:none;">
                                 <div class="ind-picked-name" id="ind-picked-name"></div>
                                 <span class="ind-swap" onclick="indSwap()">Not you? Search again</span>
+                                <div id="sr-edit-hint" class="rsvp-edit-hint" style="display:none;"><i class="bi bi-pencil-square"></i> We found your previous RSVP — feel free to update it below.</div>
                                 <input type="email" class="rsvp-input" id="sr-email" placeholder="Email (optional, for confirmation)" style="margin-top:1.1rem;">
                             </div>
                         </div>
@@ -1050,8 +1053,8 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
                             <div class="rsvp-qn">Step 2 · 5 November</div>
                             <h3 class="rsvp-q">Will you join us for the <em>Solemnisation</em>?</h3>
                             <div class="rsvp-choices" id="sr-nov5-choices">
-                                <div class="rsvp-choice" onclick="srSetAttend('nov5','yes',this)">Yes, I'll be there ♡</div>
-                                <div class="rsvp-choice" onclick="srSetAttend('nov5','no',this)">Regretfully, no</div>
+                                <div class="rsvp-choice" data-val="yes" onclick="srSetAttend('nov5','yes',this)">Yes, I'll be there ♡</div>
+                                <div class="rsvp-choice" data-val="no" onclick="srSetAttend('nov5','no',this)">Regretfully, no</div>
                             </div>
                         </div>
                         <!-- STEP 2: Nov 7 Dinner -->
@@ -1059,8 +1062,8 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
                             <div class="rsvp-qn">Step 3 · 7 November</div>
                             <h3 class="rsvp-q">And the <em>Dinner Celebration</em>?</h3>
                             <div class="rsvp-choices" id="sr-nov7-choices">
-                                <div class="rsvp-choice" onclick="srSetAttend('nov7','yes',this)">Yes, count me in ♡</div>
-                                <div class="rsvp-choice" onclick="srSetAttend('nov7','no',this)">Regretfully, no</div>
+                                <div class="rsvp-choice" data-val="yes" onclick="srSetAttend('nov7','yes',this)">Yes, count me in ♡</div>
+                                <div class="rsvp-choice" data-val="no" onclick="srSetAttend('nov7','no',this)">Regretfully, no</div>
                             </div>
                             <div class="sr-meal-wrap" id="sr-meal-wrap">
                                 <label class="fr-meal-label">Meal preference</label>
@@ -1396,6 +1399,7 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
                             <div class="rsvp-qn">Step 2</div>
                             <div class="fr-family-name" id="fr-family-name">Your Family</div>
                             <p class="scene-sub" style="margin-top:0;margin-bottom:1.25rem;">Who will be joining us?</p>
+                            <div id="fr-edit-hint" class="rsvp-edit-hint" style="display:none;margin-bottom:1.25rem;"><i class="bi bi-pencil-square"></i> We found your household's previous RSVP — feel free to update it below.</div>
                             <div class="fr-members" id="fr-members"></div>
                         </div>
                         <!-- STEP 2: note -->
@@ -2135,6 +2139,8 @@ function frSearch(q){
 }
 
 function frPickFamily(f){
+    const _h=document.getElementById('fr-edit-hint');if(_h)_h.style.display='none';
+    const _m=document.getElementById('fr-message');if(_m)_m.value='';
     frState.family=f;
     frState.members=f.members.map(name=>({name,attending:'',meal:''}));
     document.getElementById('fr-family-name').innerHTML='The <em>'+frEsc(f.familyName.replace(/^The\s+/i,'').replace(/\s+Family$/i,''))+'</em> Family';
@@ -2148,7 +2154,28 @@ function frPickFamily(f){
             +'<div class="fr-meal"><label class="fr-meal-label">Meal preference</label><select onchange="frSetMeal('+i+',this.value)"><option value="" disabled selected>Select a meal…</option>'+opts+'</select></div>';
         wrap.appendChild(el);
     });
+    frPrefillFamily(f.id);
     frGo(1);
+}
+function frPrefillFamily(familyId){
+    var hasDb=false;try{hasDb=(typeof db!=='undefined'&&!!db);}catch(e){hasDb=false;}
+    if(!hasDb)return;
+    db.collection('rsvp_responses').doc('family_'+familyId).get().then(doc=>{
+        if(!doc.exists)return;
+        const d=doc.data();
+        frState.email=d.email||'';frState.message=d.message||'';
+        const msg=document.getElementById('fr-message');if(msg)msg.value=frState.message;
+        const saved=d.members||[];
+        frState.members.forEach((m,i)=>{
+            const rec=saved.find(x=>x.name===m.name);if(!rec)return;
+            m.attending=rec.attending||'';m.meal=rec.meal||'';
+            const el=document.querySelector('#fr-members .fr-member[data-idx="'+i+'"]');if(!el)return;
+            if(m.attending==='yes'){el.querySelector('.fr-tg.yes').classList.add('on');el.classList.add('coming');}
+            if(m.attending==='no'){el.querySelector('.fr-tg.no').classList.add('on');el.classList.add('declined');}
+            if(m.attending==='yes'&&m.meal){const sel=el.querySelector('select');if(sel)sel.value=m.meal;}
+        });
+        const hint=document.getElementById('fr-edit-hint');if(hint)hint.style.display='block';
+    }).catch(e=>console.error('family prefill failed',e));
 }
 
 function frSetAttend(i,val){
@@ -2214,12 +2241,14 @@ function frSubmit(){
     showRsvpLoader();
     const fam=frState.family,mealLabel=v=>{const f=FR_MEALS.find(x=>x[0]===v);return f?f[1]:'';};
     var _ts=new Date();try{if(typeof firebase!=='undefined'&&firebase.firestore)_ts=firebase.firestore.FieldValue.serverTimestamp();}catch(_e){}
+    const docId='family_'+fam.id;
     const payload={familyId:fam.id,familyName:fam.familyName,email:frState.email,message:frState.message,
         members:frState.members.map(m=>({name:m.name,attending:m.attending,meal:m.attending==='yes'?m.meal:'',mealLabel:m.attending==='yes'?mealLabel(m.meal):''})),
-        timestamp:_ts};
+        updated:_ts};
     const rows=frState.members.map(m=>{
         const fd=new FormData();
         fd.append('Event_Type','Dinner');
+        fd.append('rsvpKey','fam:'+fam.id+'|'+m.name);
         fd.append('family',fam.familyName);
         fd.append('name',m.name);
         fd.append('attending',m.attending);
@@ -2232,7 +2261,7 @@ function frSubmit(){
     (async()=>{
         try{
             var hasDb=false;try{hasDb=(typeof db!=='undefined'&&!!db);}catch(_e){hasDb=false;}
-            if(hasDb)await db.collection('rsvp_responses').add(payload);
+            if(hasDb)await db.collection('rsvp_responses').doc(docId).set(payload,{merge:true});
             for(let i=0;i<rows.length;i++){
                 await fetch(FR_APPS_SCRIPT,{method:'POST',body:rows[i],mode:'no-cors'});
                 if(i<rows.length-1)await wait(300);
@@ -2338,6 +2367,30 @@ function indPick(p){
     // spark burst around the card
     indSparkBurst(picked);
     document.getElementById('rsvp-error-1').textContent='';
+    srPrefill(p.id);
+}
+function srPrefill(individualId){
+    var hasDb=false;try{hasDb=(typeof db!=='undefined'&&!!db);}catch(e){hasDb=false;}
+    if(!hasDb)return;
+    db.collection('rsvp_responses').doc('individual_'+individualId).get().then(doc=>{
+        if(!doc.exists)return;
+        const d=doc.data();
+        srState.email=d.email||'';srState.message=d.message||'';
+        srState.nov5=(d.nov5&&d.nov5.attending)||'';
+        srState.nov7=(d.nov7&&d.nov7.attending)||'';
+        srState.meal=(d.nov7&&d.nov7.meal)||'';
+        const em=document.getElementById('sr-email');if(em)em.value=srState.email;
+        const msg=document.getElementById('sr-message');if(msg)msg.value=srState.message;
+        // reflect nov5 choice
+        document.querySelectorAll('#sr-nov5-choices .rsvp-choice').forEach(c=>{c.classList.toggle('sel',c.dataset.val===srState.nov5);});
+        // reflect nov7 choice + meal
+        document.querySelectorAll('#sr-nov7-choices .rsvp-choice').forEach(c=>{c.classList.toggle('sel',c.dataset.val===srState.nov7);});
+        const mealWrap=document.getElementById('sr-meal-wrap'),mealSel=document.getElementById('sr-meal');
+        if(srState.nov7==='yes'){if(mealWrap)mealWrap.classList.add('show');if(mealSel&&srState.meal)mealSel.value=srState.meal;}
+        else if(mealWrap)mealWrap.classList.remove('show');
+        // show a small "editing" hint
+        const hint=document.getElementById('sr-edit-hint');if(hint)hint.style.display='block';
+    }).catch(e=>console.error('prefill failed',e));
 }
 function indSparkBurst(anchor){
     const stage=document.getElementById('rsvp-stage-1');if(!stage||!window.gsap)return;
@@ -2354,11 +2407,17 @@ function indSparkBurst(anchor){
 }
 
 function indSwap(){
-    srState.name='';srState.individualId='';
+    srState.name='';srState.individualId='';srState.nov5='';srState.nov7='';srState.meal='';srState.email='';srState.message='';
     document.getElementById('ind-picked').style.display='none';
     document.getElementById('ind-search-wrap').style.display='block';
     const s=document.getElementById('ind-search');s.value='';s.focus();
     document.getElementById('ind-results').innerHTML='';
+    const hint=document.getElementById('sr-edit-hint');if(hint)hint.style.display='none';
+    const em=document.getElementById('sr-email');if(em)em.value='';
+    const msg=document.getElementById('sr-message');if(msg)msg.value='';
+    document.querySelectorAll('#sr-nov5-choices .rsvp-choice,#sr-nov7-choices .rsvp-choice').forEach(c=>c.classList.remove('sel'));
+    const mealWrap=document.getElementById('sr-meal-wrap'),mealSel=document.getElementById('sr-meal');
+    if(mealWrap)mealWrap.classList.remove('show');if(mealSel)mealSel.selectedIndex=0;
 }
 
 function srSetAttend(day,val,el){
@@ -2466,20 +2525,21 @@ function srSubmit(){
     showRsvpLoader();
     // 1. Firestore record (single individual doc — resolved via individuals lookup)
     var _ts=new Date();try{if(typeof firebase!=='undefined'&&firebase.firestore)_ts=firebase.firestore.FieldValue.serverTimestamp();}catch(_e){}
+    const docId='individual_'+srState.individualId;
     const payload={type:'individual',individualId:srState.individualId,name:srState.name,email:srState.email,message:srState.message,
         nov5:{attending:srState.nov5},
         nov7:{attending:srState.nov7,meal:srState.nov7==='yes'?srState.meal:'',mealLabel:srState.nov7==='yes'?srMealLabel(srState.meal):''},
-        timestamp:_ts};
+        updated:_ts};
     // 2. Apps Script — one row per event, sent SEQUENTIALLY (Sheets can't handle concurrent appendRow reliably)
     const rows=[
-        (()=>{const fd=new FormData();fd.append('Event_Type','Solemnisation');fd.append('family','');fd.append('name',srState.name);fd.append('attending',srState.nov5);fd.append('food_preference','');fd.append('email',srState.email);fd.append('message',srState.message);return fd;})(),
-        (()=>{const fd=new FormData();fd.append('Event_Type','Dinner');fd.append('family','');fd.append('name',srState.name);fd.append('attending',srState.nov7);fd.append('food_preference',srState.nov7==='yes'?srMealLabel(srState.meal):'');fd.append('email',srState.email);fd.append('message',srState.message);return fd;})()
+        (()=>{const fd=new FormData();fd.append('Event_Type','Solemnisation');fd.append('rsvpKey','ind:'+srState.individualId+'|nov5');fd.append('family','');fd.append('name',srState.name);fd.append('attending',srState.nov5);fd.append('food_preference','');fd.append('email',srState.email);fd.append('message',srState.message);return fd;})(),
+        (()=>{const fd=new FormData();fd.append('Event_Type','Dinner');fd.append('rsvpKey','ind:'+srState.individualId+'|nov7');fd.append('family','');fd.append('name',srState.name);fd.append('attending',srState.nov7);fd.append('food_preference',srState.nov7==='yes'?srMealLabel(srState.meal):'');fd.append('email',srState.email);fd.append('message',srState.message);return fd;})()
     ];
     const wait=ms=>new Promise(r=>setTimeout(r,ms));
     (async()=>{
         try{
             var hasDb=false;try{hasDb=(typeof db!=='undefined'&&!!db);}catch(_e){hasDb=false;}
-            if(hasDb)await db.collection('rsvp_responses').add(payload);
+            if(hasDb)await db.collection('rsvp_responses').doc(docId).set(payload,{merge:true});
             for(let i=0;i<rows.length;i++){
                 await fetch(FR_APPS_SCRIPT,{method:'POST',body:rows[i],mode:'no-cors'});
                 if(i<rows.length-1)await wait(300);
