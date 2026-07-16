@@ -1057,8 +1057,8 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
                                 <label class="fr-meal-label">Meal preference</label>
                                 <select class="rsvp-input" id="sr-meal" onchange="srSetMeal(this.value)" style="padding:0.65rem 0.9rem;">
                                     <option value="" disabled selected>Select a meal…</option>
-                                    <option value="no-res">I Eat Everything</option>
-                                    <option value="no-raw">I Only Eat Cooked Food (no sashimi)</option>
+                                    <option value="no-res">I eat everything</option>
+                                    <option value="no-raw">I only eat cooked food (no sashimi)</option>
                                     <option value="no-beef">No Beef</option>
                                     <option value="vegetarian">Vegetarian / Vegan</option>
                                     <option value="halal">Halal</option>
@@ -2085,7 +2085,7 @@ function startAudio(){const a=document.getElementById('bg-audio'),i=document.get
 <script>
 /* ── Family RSVP (isolated block) ── */
 const FR_WHATSAPP_URL="https://wa.me/6598247043";
-const FR_MEALS=[["no-res","I Eat Everything"],["no-raw","I Only Eat Cooked Food (no sashimi)"],["no-beef","No Beef"],["vegetarian","Vegetarian / Vegan"],["halal","Halal"]];
+const FR_MEALS=[["no-res","I eat everything"],["no-raw","I only eat cooked food (no sashimi)"],["no-beef","No Beef"],["vegetarian","Vegetarian / Vegan"],["halal","Halal"]];
 const FR_APPS_SCRIPT="https://script.google.com/macros/s/AKfycbx6HAw22ttkaO6kXzGaW55z393qJv97By2oLRM9L_XTEUmzk293Pw7_eKcMybicQuxj/exec";
 var frState={step:0,family:null,members:[],email:'',message:''};
 var frFamilies=[],frLoaded=false;
