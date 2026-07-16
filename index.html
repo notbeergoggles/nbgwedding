@@ -59,6 +59,10 @@ img{display:block;max-width:100%;}
 .cursor-dot.dark{background:var(--blush);}
 body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 @media(hover:none){.cursor-dot,.cursor-ring{display:none;}}
+@media(hover:hover) and (pointer:fine){
+    body.custom-cursor,body.custom-cursor *{cursor:none;}
+    body.custom-cursor input[type="text"],body.custom-cursor input[type="email"],body.custom-cursor input[type="password"],body.custom-cursor input[type="search"],body.custom-cursor textarea{cursor:text;}
+}
 
 /* ═══════════ CINEMATIC LOADER ═══════════ */
 #loader{position:fixed;inset:0;z-index:10000;background:var(--noir);display:flex;align-items:center;justify-content:center;overflow:hidden;}
@@ -1516,6 +1520,7 @@ if(isTouch) document.body.classList.add('touch');
 /* ═══════════ CUSTOM CURSOR ═══════════ */
 function initCursor(){
     if(isTouch||reduce) return;
+    document.body.classList.add('custom-cursor');
     const dot=document.getElementById('cursor-dot'), ring=document.getElementById('cursor-ring');
     let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
     window.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(window.gsap)gsap.set(dot,{x:mx,y:my});});
