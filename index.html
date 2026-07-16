@@ -249,13 +249,13 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 .chapter-progress{position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);z-index:5;display:flex;gap:10px;}
 .chapter-progress span{width:32px;height:2px;background:rgba(255,255,255,0.25);border-radius:2px;transition:background .4s;}
 .chapter-progress span.on{background:var(--gold);}
-.chapter-hint{position:absolute;bottom:2.5rem;right:2rem;z-index:5;display:flex;align-items:center;gap:0.6rem;color:rgba(255,255,255,0.85);font-family:var(--sans);font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;transition:opacity .5s var(--soft);pointer-events:none;}
+.chapter-hint{position:absolute;bottom:1.5rem;right:2rem;z-index:6;display:flex;flex-direction:column;align-items:center;gap:0.35rem;color:rgba(255,255,255,0.85);font-family:var(--sans);font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;transition:opacity .5s var(--soft);pointer-events:none;}
 .chapter-hint.hide{opacity:0;}
-.chapter-hint-arrows{display:inline-flex;}
-.chapter-hint-arrows i{animation:chapterNudge 1.4s ease-in-out infinite;margin-left:-4px;color:var(--gold);}
+.chapter-hint-arrows{display:inline-flex;flex-direction:column;line-height:0.6;}
+.chapter-hint-arrows i{animation:chapterNudge 1.4s ease-in-out infinite;margin-top:-4px;color:var(--gold);}
 .chapter-hint-arrows i:nth-child(2){animation-delay:0.2s;}
-@keyframes chapterNudge{0%,100%{transform:translateX(0);opacity:0.4;}50%{transform:translateX(4px);opacity:1;}}
-@media(max-width:768px){.chapter-hint{right:50%;transform:translateX(50%);bottom:4.5rem;}}
+@keyframes chapterNudge{0%,100%{transform:translateY(0);opacity:0.4;}50%{transform:translateY(4px);opacity:1;}}
+@media(max-width:768px){.chapter-hint{right:1.25rem;bottom:1.25rem;}}
 
 /* ═══════════ STORY PHOTOS (parallax triptych) ═══════════ */
 .triptych{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1000px;margin:0 auto;padding:6rem 2rem;}
@@ -1211,7 +1211,7 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
             <div class="chapter-progress" id="chapter-progress"><span class="on"></span><span></span><span></span><span></span><span></span><span></span></div>
             <div class="chapter-hint" id="chapter-hint">
                 <span class="chapter-hint-text">Keep scrolling</span>
-                <span class="chapter-hint-arrows"><i class="bi bi-chevron-right"></i><i class="bi bi-chevron-right"></i></span>
+                <span class="chapter-hint-arrows"><i class="bi bi-chevron-down"></i><i class="bi bi-chevron-down"></i></span>
             </div>
         </div>
     </section>
@@ -1871,7 +1871,7 @@ function initFilmScenes(suffix){
         const dots=cfilm.querySelectorAll('.chapter-progress span');
         const dist=()=>ctrack.scrollWidth-window.innerWidth;
         gsap.to(ctrack,{x:()=>-dist(),ease:'none',scrollTrigger:{trigger:cfilm,start:'top top',end:()=>'+='+dist(),scrub:1,pin:true,invalidateOnRefresh:true,anticipatePin:1,refreshPriority:9,
-            onUpdate:self=>{const idx=Math.round(self.progress*(cards.length-1));dots.forEach((d,i)=>d.classList.toggle('on',i===idx));const hint=document.getElementById('chapter-hint');if(hint)hint.classList.toggle('hide',idx>=cards.length-1);}}});
+            onUpdate:self=>{const idx=Math.round(self.progress*(cards.length-1));dots.forEach((d,i)=>d.classList.toggle('on',i===idx));const hint=document.getElementById('chapter-hint');if(hint)hint.classList.toggle('hide',self.progress>=0.92);}}});
         cards.forEach(card=>{const ph=card.querySelector('.chapter-photo');gsap.fromTo(ph,{scale:1.15},{scale:1,ease:'none',scrollTrigger:{trigger:cfilm,start:'top top',end:()=>'+='+dist(),scrub:1}});});
     }
 
