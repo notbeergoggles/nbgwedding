@@ -1737,7 +1737,7 @@ function initFilm(suffix){
         // native smooth-scroll for anchor links on touch
         document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href');if(id.length>1){const t=document.querySelector(id);if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}}}));
     }
-    if(window.gsap){ gsap.registerPlugin(ScrollTrigger); }
+    if(window.gsap){ gsap.registerPlugin(ScrollTrigger); if(isTouch&&window.ScrollTrigger){ScrollTrigger.config({ignoreMobileResize:true});} }
     initFilmScenes(suffix);
 }
 function initFilmScenes(suffix){
@@ -1969,7 +1969,14 @@ function buildJourney(journey){
         });
     });
 
-    window.addEventListener('resize',()=>{ len=buildPath(); path.style.strokeDasharray=len; if(window.ScrollTrigger)ScrollTrigger.refresh(); });
+    let _lastW=window.innerWidth;
+    window.addEventListener('resize',()=>{
+        len=buildPath(); path.style.strokeDasharray=len;
+        // On touch devices the keyboard opening/closing fires resize with the SAME width —
+        // refreshing ScrollTrigger then causes the page to jump. Only refresh on real width changes.
+        const w=window.innerWidth;
+        if(!isTouch || w!==_lastW){ _lastW=w; if(window.ScrollTrigger)ScrollTrigger.refresh(); }
+    });
 }
 
 function wrapWords(el){
@@ -2050,7 +2057,7 @@ function bindFaqChat(root){
             typing.remove();
             addMsg(fallbackMsg(),'bot');
         }finally{
-            busy=false; sendBtn.disabled=false; input.focus();
+            busy=false; sendBtn.disabled=false; if(!isTouch)input.focus();
         }
     }
     function fallbackMsg(){
