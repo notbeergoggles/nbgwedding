@@ -560,6 +560,15 @@ textarea.rsvp-input{resize:vertical;min-height:110px;text-align:left;}
 .rsvp-cross-note{font-family:var(--sans);font-size:0.72rem;color:rgba(251,248,244,0.5);line-height:1.5;letter-spacing:0.03em;}
 .rsvp-cross-note strong{color:var(--gold);font-weight:600;letter-spacing:0.08em;}
 .confetti-petal{position:absolute;top:-20px;width:12px;height:12px;border-radius:50% 0 50% 0;pointer-events:none;opacity:0;}
+.rsvp-loader{position:fixed;inset:0;z-index:99998;background:rgba(20,16,18,0.92);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .45s var(--soft),visibility .45s;}
+.rsvp-loader.show{opacity:1;visibility:visible;}
+.rsvp-loader-inner{text-align:center;padding:2rem;position:relative;}
+.rsvp-loader-ring{width:90px;height:90px;margin:0 auto;border-radius:50%;border:2px solid rgba(201,163,104,0.18);border-top-color:var(--gold);border-right-color:var(--rose);animation:rsvpSpin 1s linear infinite;}
+@keyframes rsvpSpin{to{transform:rotate(360deg);}}
+.rsvp-loader-icon{position:absolute;top:0;left:50%;width:90px;height:90px;margin-left:-45px;display:flex;align-items:center;justify-content:center;font-size:2.1rem;color:var(--rose);animation:rsvpFloat 2.4s ease-in-out infinite;}
+@keyframes rsvpFloat{0%,100%{transform:translateY(0) rotate(-4deg);}50%{transform:translateY(-8px) rotate(4deg);}}
+.rsvp-loader-caption{font-family:var(--serif);font-weight:300;font-size:1.5rem;color:var(--bg-veil);margin-top:2rem;min-height:1.4em;transition:opacity .35s var(--soft);max-width:340px;line-height:1.35;margin-left:auto;margin-right:auto;}
+.rsvp-loader-sub{font-family:var(--sans);font-size:0.75rem;letter-spacing:0.05em;color:rgba(251,248,244,0.45);margin-top:1rem;}
 
 /* ═══════════ RSVP-1 HIGH IMPACT ═══════════ */
 #rsvp-stage-1{perspective:1600px;}
@@ -2191,6 +2200,7 @@ function gotoDinner(){
 function frSubmit(){
     const nextBtn=document.getElementById('rsvp-next-2'),backBtn=document.getElementById('rsvp-back-2'),err=document.getElementById('rsvp-error-2');
     nextBtn.disabled=true;nextBtn.textContent='Sending…';err.textContent='';
+    showRsvpLoader();
     const fam=frState.family,mealLabel=v=>{const f=FR_MEALS.find(x=>x[0]===v);return f?f[1]:'';};
     var _ts=new Date();try{if(typeof firebase!=='undefined'&&firebase.firestore)_ts=firebase.firestore.FieldValue.serverTimestamp();}catch(_e){}
     const payload={familyId:fam.id,familyName:fam.familyName,email:frState.email,message:frState.message,
@@ -2218,16 +2228,38 @@ function frSubmit(){
             }
             document.getElementById('rsvp-steps-2').style.display='none';nextBtn.style.display='none';backBtn.style.display='none';
             document.getElementById('rsvp-rail-2').style.display='none';err.style.display='none';
+            hideRsvpLoader();
             const anyComing=frState.members.some(m=>m.attending==='yes');
             document.getElementById('rsvp-done-msg-2').textContent=anyComing?"Your family's RSVP has been received. We can't wait to celebrate with you ♡":"Thank you for letting us know — you'll be dearly missed ♡";
             document.getElementById('rsvp-done-2').classList.add('show');launchConfetti(2);
         }catch(e){
             console.error('rsvp submit failed',e);
+            hideRsvpLoader();
             err.textContent='Oops! Something went wrong. Please try again.';nextBtn.disabled=false;nextBtn.textContent='Send RSVP ♡';
         }
     })();
 }
 function frEsc(s){return (s==null?'':''+s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+var RSVP_LOADER_LINES=["Mapping you to our seating chart…","Chilling the champagne…","Polishing the silverware…","Saving you a seat at the table…","Almost there — sealing the envelope…"];
+var _rsvpLoaderTimer=null;
+function showRsvpLoader(){
+    const o=document.getElementById('rsvp-loader'),cap=document.getElementById('rsvp-loader-caption');
+    if(!o)return;
+    let i=0;cap.textContent=RSVP_LOADER_LINES[0];
+    o.classList.add('show');document.body.style.overflow='hidden';
+    clearInterval(_rsvpLoaderTimer);
+    _rsvpLoaderTimer=setInterval(()=>{
+        i=(i+1)%RSVP_LOADER_LINES.length;
+        cap.style.opacity='0';
+        setTimeout(()=>{cap.textContent=RSVP_LOADER_LINES[i];cap.style.opacity='1';},350);
+    },2200);
+}
+function hideRsvpLoader(){
+    const o=document.getElementById('rsvp-loader');
+    clearInterval(_rsvpLoaderTimer);_rsvpLoaderTimer=null;
+    if(o)o.classList.remove('show');
+    document.body.style.overflow='';
+}
 function rsvpStagger(stepEl){
     if(!stepEl)return;
     const kids=stepEl.querySelectorAll(':scope > *');
@@ -2420,6 +2452,7 @@ function srBack(){if(srState.step>0)srFlipTo(srState.step-1);}
 function srSubmit(){
     const nextBtn=document.getElementById('rsvp-next-1'),backBtn=document.getElementById('rsvp-back-1'),err=document.getElementById('rsvp-error-1');
     nextBtn.disabled=true;nextBtn.textContent='Sending…';err.textContent='';
+    showRsvpLoader();
     // 1. Firestore record (single individual doc — resolved via individuals lookup)
     var _ts=new Date();try{if(typeof firebase!=='undefined'&&firebase.firestore)_ts=firebase.firestore.FieldValue.serverTimestamp();}catch(_e){}
     const payload={type:'individual',individualId:srState.individualId,name:srState.name,email:srState.email,message:srState.message,
@@ -2442,12 +2475,14 @@ function srSubmit(){
             }
             document.getElementById('rsvp-steps-1').style.display='none';nextBtn.style.display='none';backBtn.style.display='none';
             document.getElementById('rsvp-rail-1').style.display='none';err.style.display='none';
+            hideRsvpLoader();
             const anyComing=(srState.nov5==='yes'||srState.nov7==='yes');
             document.getElementById('rsvp-done-msg-1').textContent=anyComing?"Your RSVP has been received. We can't wait to celebrate with you ♡":"Thank you for letting us know — you'll be dearly missed ♡";
             document.getElementById('rsvp-done-1').classList.add('show');launchConfetti(1);
             srFinale();
         }catch(e){
             console.error('rsvp submit failed',e);
+            hideRsvpLoader();
             err.textContent='Oops! Something went wrong. Please try again.';nextBtn.disabled=false;nextBtn.textContent='Send RSVP ♡';
         }
     })();
@@ -2684,5 +2719,13 @@ function quizConfetti(suffix){
 
 </script>
 
+<div id="rsvp-loader" class="rsvp-loader">
+    <div class="rsvp-loader-inner">
+        <div class="rsvp-loader-ring"></div>
+        <div class="rsvp-loader-icon"><i class="bi bi-envelope-paper-heart"></i></div>
+        <div class="rsvp-loader-caption" id="rsvp-loader-caption">Mapping you to our seating chart…</div>
+        <div class="rsvp-loader-sub">Please hold on — don't close this page ♡</div>
+    </div>
+</div>
 </body>
 </html>
