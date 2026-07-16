@@ -237,7 +237,7 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 
 /* horizontal chapter film */
 .chapter-film{position:relative;height:100vh;overflow:hidden;}
-.chapter-track{display:flex;height:100%;will-change:transform;}
+.chapter-track{display:flex;height:100%;will-change:transform;position:relative;z-index:1;}
 .chapter-card{flex:0 0 100vw;height:100%;display:flex;align-items:center;justify-content:center;position:relative;}
 .chapter-photo{position:absolute;inset:0;background-size:cover;background-position:center;filter:brightness(0.5) saturate(0.95);}
 .chapter-grade{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(26,22,20,0.6));}
@@ -246,10 +246,10 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 .chapter-era{font-family:var(--sans);font-size:0.72rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
 .chapter-title{font-family:var(--serif);font-weight:400;font-size:clamp(2rem,5vw,3.5rem);margin-bottom:1.25rem;line-height:1.05;}
 .chapter-desc{font-family:var(--serif-alt);font-size:clamp(1.05rem,2.3vw,1.4rem);line-height:1.7;color:rgba(255,255,255,0.85);}
-.chapter-progress{position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);z-index:5;display:flex;gap:10px;}
+.chapter-progress{position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);z-index:10;display:flex;gap:10px;}
 .chapter-progress span{width:32px;height:2px;background:rgba(255,255,255,0.25);border-radius:2px;transition:background .4s;}
 .chapter-progress span.on{background:var(--gold);}
-.chapter-hint{position:absolute;bottom:1.5rem;right:2rem;z-index:6;display:flex;flex-direction:column;align-items:center;gap:0.35rem;color:rgba(255,255,255,0.85);font-family:var(--sans);font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;transition:opacity .5s var(--soft);pointer-events:none;}
+.chapter-hint{position:absolute;bottom:1.5rem;right:2rem;z-index:11;display:flex;flex-direction:column;align-items:center;gap:0.35rem;color:rgba(255,255,255,0.85);font-family:var(--sans);font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;transition:opacity .5s var(--soft);pointer-events:none;}
 .chapter-hint.hide{opacity:0;}
 .chapter-hint-arrows{display:inline-flex;flex-direction:column;line-height:0.6;}
 .chapter-hint-arrows i{animation:chapterNudge 1.4s ease-in-out infinite;margin-top:-4px;color:var(--gold);}
