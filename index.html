@@ -555,6 +555,7 @@ textarea.rsvp-input{resize:vertical;min-height:110px;text-align:left;}
 .fr-meal-label{font-family:var(--sans);font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;display:block;}
 .fr-family-name{font-family:var(--serif);font-weight:300;font-size:clamp(1.5rem,4vw,2.1rem);color:var(--bg-veil);text-align:center;margin-bottom:0.4rem;}
 .fr-family-name em{font-style:italic;color:var(--rose);}
+.fr-family-relation{font-family:var(--sans);font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:0.6rem;opacity:0.85;}
 .fr-loading{font-family:var(--sans);font-size:0.85rem;color:rgba(251,248,244,0.5);text-align:center;padding:1rem;}
 .rsvp-next:disabled{opacity:0.4;pointer-events:none;}
 .rsvp-err{font-family:var(--serif-alt);font-style:italic;font-size:0.9rem;color:var(--rose);text-align:center;margin-top:1rem;min-height:1.3em;}
@@ -1269,7 +1270,7 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
                 <p class="reveal-rise">The tea ceremony is our way of thanking our parents and elders who raised us, shaped us, and sacrificed so that we can be who we are today. It carries our gratitude, love, and respect.</p>
                 <p class="reveal-rise">It is also the moment we welcome each other's families as our own, and express our deepest gratitude to our loved ones, including those who are no longer with us. Having all of you here means everything to us.</p>
             </div>
-            <blockquote class="tea-quote reveal-rise">We've been meaning to say thank you. This is us finally expressing it.</blockquote>
+            <blockquote class="tea-quote reveal-rise">Two families, one cup of tea, and a lifetime of gratitude.</blockquote>
         </div>
     </section>
     <!-- SCENE: VENUE (Irodori only) -->
@@ -1414,6 +1415,7 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
                         <div class="rsvp-step" data-step="1">
                             <div class="rsvp-qn">Step 2</div>
                             <div class="fr-family-name" id="fr-family-name">Your Family</div>
+                            <div class="fr-family-relation" id="fr-family-relation" style="display:none;"></div>
                             <p class="scene-sub" style="margin-top:0;margin-bottom:1.25rem;">Who will be joining us?</p>
                             <div id="fr-edit-hint" class="rsvp-edit-hint" style="display:none;margin-bottom:1.25rem;"><i class="bi bi-pencil-square"></i> We found your household's previous RSVP — feel free to update it below.</div>
                             <div class="fr-members" id="fr-members"></div>
@@ -2168,7 +2170,7 @@ function loadFamilies(){
     frLoaded=true;
     db.collection('families').get().then(snap=>{
         frFamilies=[];
-        snap.forEach(doc=>{const d=doc.data();frFamilies.push({id:doc.id,familyName:d.familyName||'Family',members:(d.members||[]).map(m=>typeof m==='string'?m:(m.name||'')).filter(Boolean),searchTerms:(d.searchTerms||[]).map(t=>(''+t).toLowerCase())});});
+        snap.forEach(doc=>{const d=doc.data();frFamilies.push({id:doc.id,familyName:d.familyName||'Family',relation:d.relation||'',members:(d.members||[]).map(m=>typeof m==='string'?m:(m.name||'')).filter(Boolean),searchTerms:(d.searchTerms||[]).map(t=>(''+t).toLowerCase())});});
     }).catch(e=>{console.error('families load failed',e);});
 }
 
@@ -2189,6 +2191,8 @@ function frPickFamily(f){
     frState.family=f;
     frState.members=f.members.map(name=>({name,attending:'',meal:''}));
     document.getElementById('fr-family-name').innerHTML='The <em>'+frEsc(f.familyName.replace(/^The\s+/i,'').replace(/\s+Family$/i,''))+'</em> Family';
+    const _rel=document.getElementById('fr-family-relation');
+    if(_rel){ if(f.relation){_rel.textContent=f.relation;_rel.style.display='block';} else {_rel.textContent='';_rel.style.display='none';} }
     const wrap=document.getElementById('fr-members');wrap.innerHTML='';
     frState.members.forEach((m,i)=>{
         const opts=FR_MEALS.map(([v,l])=>'<option value="'+v+'">'+l+'</option>').join('');
