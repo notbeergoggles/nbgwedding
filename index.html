@@ -2478,11 +2478,13 @@ function frSubmit(){
         try{
             var hasDb=false;try{hasDb=(typeof db!=='undefined'&&!!db);}catch(_e){hasDb=false;}
             if(hasDb)await db.collection('rsvp_responses').doc(docId).set(payload,{merge:true});
-            // Single batched POST — Apps Script unpacks `rows` and upserts one sheet row per member
+            // Single batched POST — Apps Script unpacks `rows` and upserts one sheet row per member.
+            // Fire-and-forget with keepalive so it completes even if the guest closes the tab; the
+            // no-cors response is opaque/unreadable anyway, so awaiting it only adds perceived lag.
             const fd=new FormData();
             fd.append('batch','1');
             fd.append('rows',JSON.stringify(rowsData));
-            await fetch(FR_APPS_SCRIPT,{method:'POST',body:fd,mode:'no-cors'});
+            try{ fetch(FR_APPS_SCRIPT,{method:'POST',body:fd,mode:'no-cors',keepalive:true}).catch(()=>{}); }catch(_e){}
             document.getElementById('rsvp-steps-2').style.display='none';nextBtn.style.display='none';backBtn.style.display='none';
             document.getElementById('rsvp-rail-2').style.display='none';err.style.display='none';
             hideRsvpLoader();
@@ -2758,15 +2760,12 @@ function srSubmit(){
         (()=>{const fd=new FormData();fd.append('Event_Type','Solemnisation');fd.append('rsvpKey','ind:'+srState.individualId+'|nov5');fd.append('family','');fd.append('name',srState.name);fd.append('attending',srState.nov5);fd.append('food_preference','');fd.append('email',srState.email);fd.append('message',srState.message);return fd;})(),
         (()=>{const fd=new FormData();fd.append('Event_Type','Dinner');fd.append('rsvpKey','ind:'+srState.individualId+'|nov7');fd.append('family','');fd.append('name',srState.name);fd.append('attending',srState.nov7);fd.append('food_preference',srState.nov7==='yes'?srMealLabel(srState.meal):'');fd.append('email',srState.email);fd.append('message',srState.message);return fd;})()
     ];
-    const wait=ms=>new Promise(r=>setTimeout(r,ms));
     (async()=>{
         try{
             var hasDb=false;try{hasDb=(typeof db!=='undefined'&&!!db);}catch(_e){hasDb=false;}
             if(hasDb)await db.collection('rsvp_responses').doc(docId).set(payload,{merge:true});
-            for(let i=0;i<rows.length;i++){
-                await fetch(FR_APPS_SCRIPT,{method:'POST',body:rows[i],mode:'no-cors'});
-                if(i<rows.length-1)await wait(300);
-            }
+            // Fire-and-forget sheet POSTs with keepalive (survive tab close); response is opaque so awaiting only adds lag
+            rows.forEach(fd=>{try{ fetch(FR_APPS_SCRIPT,{method:'POST',body:fd,mode:'no-cors',keepalive:true}).catch(()=>{}); }catch(_e){}});
             document.getElementById('rsvp-steps-1').style.display='none';nextBtn.style.display='none';backBtn.style.display='none';
             document.getElementById('rsvp-rail-1').style.display='none';err.style.display='none';
             hideRsvpLoader();
