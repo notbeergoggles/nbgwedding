@@ -2501,17 +2501,22 @@ function frSubmit(){
 }
 function frEsc(s){return (s==null?'':''+s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 var RSVP_LOADER_LINES=["Mapping you to our seating chart…","Chilling the champagne…","Polishing the silverware…","Saving you a seat at the table…","Almost there — sealing the envelope…"];
+var RSVP_LOADER_LINES_ZH=["正在为你安排座位……","正在冰镇香槟……","正在擦亮餐具……","正在为你留个位子……","就快好了——正在封上请柬……"];
 var _rsvpLoaderTimer=null;
 function showRsvpLoader(){
     const o=document.getElementById('rsvp-loader'),cap=document.getElementById('rsvp-loader-caption');
     if(!o)return;
-    let i=0;cap.textContent=RSVP_LOADER_LINES[0];
+    const zh=(typeof curLang!=='undefined'&&curLang==='zh');
+    const lines=zh?RSVP_LOADER_LINES_ZH:RSVP_LOADER_LINES;
+    const sub=o.querySelector('.rsvp-loader-sub');
+    if(sub)sub.textContent=zh?"请稍候——先别关闭页面 ♡":"Please hold on — don't close this page ♡";
+    let i=0;cap.textContent=lines[0];
     o.classList.add('show');document.body.style.overflow='hidden';
     clearInterval(_rsvpLoaderTimer);
     _rsvpLoaderTimer=setInterval(()=>{
-        i=(i+1)%RSVP_LOADER_LINES.length;
+        i=(i+1)%lines.length;
         cap.style.opacity='0';
-        setTimeout(()=>{cap.textContent=RSVP_LOADER_LINES[i];cap.style.opacity='1';},350);
+        setTimeout(()=>{cap.textContent=lines[i];cap.style.opacity='1';},350);
     },2200);
 }
 function hideRsvpLoader(){
