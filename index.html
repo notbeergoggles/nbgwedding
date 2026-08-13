@@ -2100,7 +2100,7 @@ var ZH_TEXT={
     "We'd be honoured":"敬请赏光","Kindly respond by 31 July 2026":"请于 2026年7月31日 前回复",
     "Step 1":"第一步","Step 2":"第二步","Last step":"最后一步","Who will be joining us?":"谁会一同出席？",
     "Coming":"出席","Can't make it":"无法出席","Meal preference":"用餐偏好",
-    "← Back":"← 返回","Continue →":"继续 →","Send RSVP ♡":"提交回复 ♡",
+    "← Back":"← 返回","Continue →":"继续 →","Send RSVP ♡":"发送 ♡",
     "Thank You!":"谢谢你！",
     "Your RSVP has been received. We can't wait to celebrate with you ♡":"我们已收到你的回复。期待与你一同庆祝 ♡",
     "Your family's RSVP has been received. We can't wait to celebrate with you ♡":"我们已收到你家庭的回复。期待与你一同庆祝 ♡",
@@ -2420,6 +2420,7 @@ function frGo(step){
     if(step===0)document.getElementById('rsvp-next-2').style.visibility='hidden';
     else document.getElementById('rsvp-next-2').style.visibility='visible';
     frRail();document.getElementById('rsvp-error-2').textContent='';
+    if(typeof curLang!=='undefined'&&curLang==='zh'&&typeof applyG2Lang==='function')applyG2Lang();
     rsvpStagger(document.querySelector('#rsvp-steps-2 .rsvp-step.active'));
     const st=document.getElementById('rsvp-stage');if(st){if(typeof lenis!=='undefined'&&lenis&&lenis.scrollTo){lenis.scrollTo(st,{offset:-90});}else{const y=st.getBoundingClientRect().top+window.pageYOffset-90;window.scrollTo({top:y,behavior:'smooth'});}}
 }
