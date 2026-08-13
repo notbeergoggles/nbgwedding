@@ -149,6 +149,9 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 }
 .hero-grade{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(26,22,20,0.35),transparent 30%,rgba(26,22,20,0.15) 60%,rgba(26,22,20,0.75) 100%);z-index:1;}
 .hero-stage{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;padding:0 1.5rem;}
+.hero-rsvp-btn{margin-top:2rem;font-family:var(--sans);font-size:0.75rem;letter-spacing:0.28em;text-transform:uppercase;color:#fff;background:transparent;border:1px solid rgba(255,255,255,0.6);border-radius:100px;padding:0.9rem 2.4rem;text-decoration:none;transition:all .45s var(--silk);opacity:0;animation:heroBtnIn 1s var(--silk) 1.6s forwards;}
+.hero-rsvp-btn:hover{background:#fff;color:var(--ink);border-color:#fff;letter-spacing:0.32em;}
+@keyframes heroBtnIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
 .hero-eyebrow{font-family:var(--sans);font-size:0.78rem;letter-spacing:0.5em;text-transform:uppercase;color:rgba(255,255,255,0.85);margin-bottom:1.5rem;overflow:hidden;padding:0.2em 0;}
 .hero-eyebrow span{display:inline-block;transform:translateY(120%);}
 .hero-title{font-family:var(--script);font-size:clamp(4rem,15vw,11rem);line-height:1.15;text-shadow:0 10px 60px rgba(0,0,0,0.4);}
@@ -794,6 +797,7 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
             <div class="hero-eyebrow"><span>We're getting married</span></div>
             <h1 class="hero-title"><span class="hw"><span>Sayuri</span></span> <span class="hw amp"><span>&amp;</span></span> <span class="hw"><span>Kenny</span></span></h1>
             <div class="hero-meta"><span>5 November 2026 · Artyzen</span></div>
+            <a href="#rsvp-1" class="hero-rsvp-btn">RSVP</a>
         </div>
         <div class="hero-scrollcue"><span>Begin our story</span><span class="line"></span></div>
     </section>
@@ -1170,6 +1174,7 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
             <div class="hero-eyebrow" id="hero-eyebrow"><span>We're getting married</span></div>
             <h1 class="hero-title" id="hero-title"><span class="hw"><span>Sayuri</span></span> <span class="hw amp"><span>&amp;</span></span> <span class="hw"><span>Kenny</span></span></h1>
             <div class="hero-meta" id="hero-meta"><span>7 November 2026 · Artyzen, Irodori</span></div>
+            <a href="#rsvp" class="hero-rsvp-btn" id="hero-rsvp-btn">RSVP</a>
         </div>
         <div class="hero-scrollcue" id="hero-cue"><span>Begin our story</span><span class="line"></span></div>
     </section>
@@ -1286,7 +1291,7 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
                 <p class="reveal-rise">The tea ceremony is our way of thanking our parents and elders who raised us, shaped us, and sacrificed so that we can be who we are today. It carries our gratitude, love, and respect.</p>
                 <p class="reveal-rise">It is also the moment we welcome each other's families as our own, and express our deepest gratitude to our loved ones, including those who are no longer with us. Having all of you here means everything to us.</p>
             </div>
-            <blockquote class="tea-quote reveal-rise">Two families, one cup of tea, and a lifetime of gratitude.</blockquote>
+            <blockquote class="tea-quote reveal-rise">Some traditions you keep because they still mean something.</blockquote>
         </div>
     </section>
     <!-- SCENE: VENUE (Irodori only) -->
@@ -1307,17 +1312,6 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
                 <div class="venue-addr">Four Points by Sheraton Riverview<br>382 Havelock Road, #03-01, Singapore 169629</div>
                 <div class="venue-map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8081099692827!2d103.83409177598186!3d1.2893657986983824!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da199d81277121%3A0xb3cd0e873acadec6!2sIrodori%20Restaurant!5e0!3m2!1sen!2ssg!4v1776748272084!5m2!1sen!2ssg" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
             </div>
-        </div>
-    </section>
-
-    <!-- SCENE: DRESS -->
-    <section id="dress" class="scene scene-pad">
-        <div class="divider-mark reveal-fade"></div>
-        <div class="eyebrow reveal-fade">What to wear</div>
-        <h2 class="big-title" data-title><span class="title-word"><span>Dress</span></span> <span class="title-word"><span><em>Code</em></span></span></h2>
-        <div class="dress-grid">
-            <div class="dress-card reveal-rise"><div class="dress-icon">👔</div><h3>Formal Attire</h3><p>Smart formal is encouraged — suits and ties for the gentlemen, cocktail dresses, midi dresses, or formal gowns for the ladies. When in doubt: if you'd wear it to a wedding, you're on the right track!</p></div>
-            <div class="dress-card reveal-rise"><div class="dress-icon">👠</div><h3>Shoes</h3><p>The event is held indoors at a hotel restaurant, so wear whatever makes you look and feel great. Heels, dress shoes, or smart flats all work perfectly.</p></div>
         </div>
     </section>
 
@@ -2084,6 +2078,10 @@ var ZH_TEXT={
     "Send Off":"送别","Wave us goodbye as we begin our new life together ♡":"挥手道别，我们即将携手开启崭新的生活 ♡",
     // tea
     "A cherished tradition":"一份珍贵的传统",
+    "Of all the wedding traditions we chose to forgo, this is one we decided to keep.":"在所有我们选择省略的婚礼传统中，这是我们决定保留的一个。",
+    "The tea ceremony is our way of thanking our parents and elders who raised us, shaped us, and sacrificed so that we can be who we are today. It carries our gratitude, love, and respect.":"敬茶仪式是我们向父母与长辈表达感恩的方式——是他们养育我们、塑造我们，为我们付出，才成就了今天的我们。这一杯茶，承载着我们的感激、爱与敬意。",
+    "It is also the moment we welcome each other's families as our own, and express our deepest gratitude to our loved ones, including those who are no longer with us. Having all of you here means everything to us.":"这也是我们把彼此的家人视作至亲、迎入家门的时刻，向我们深爱的人致以最深的谢意——包括那些已经不在身边的人。有你们在场，对我们意义非凡。",
+    "Some traditions you keep because they still mean something.":"两个家庭，一杯清茶，一生的感恩。",
     // venue
     "Where to find us":"相聚之处","Tea Ceremony · Relatives":"敬茶仪式 · 亲友","Dinner Reception":"晚宴",
     // dress
@@ -2136,7 +2134,7 @@ function applyG2Lang(){
     const root=document.getElementById('group-2-content');if(!root)return;
     if(curLang==='zh'){
         // 1. plain text-match (skip elements with child elements to stay safe)
-        root.querySelectorAll('.eyebrow,.scene-sub,.chapter-era,.chapter-title,.chapter-desc,.cp-title,.cp-desc,.venue-label,.faq-chip,.faq-bubble,.faq-chat-intro,.dress-card h3,.dress-card p,.film-nav-links a,.rsvp-qn,.rsvp-back,.rsvp-next,.rsvp-done-title,.rsvp-done-msg,.fr-tg,.fr-meal-label,.ind-swap,.gb-submit,.btn-pill,.post-card h3,.post-card p,.mika-intro,.rsvp-edit-hint').forEach(el=>{
+        root.querySelectorAll('.eyebrow,.scene-sub,.converge-lede,.tea-lede,.tea-body p,.tea-quote,.chapter-era,.chapter-title,.chapter-desc,.cp-title,.cp-desc,.venue-label,.faq-chip,.faq-bubble,.faq-chat-intro,.dress-card h3,.dress-card p,.film-nav-links a,.rsvp-qn,.rsvp-back,.rsvp-next,.rsvp-done-title,.rsvp-done-msg,.fr-tg,.fr-meal-label,.ind-swap,.gb-submit,.btn-pill,.post-card h3,.post-card p,.mika-intro,.rsvp-edit-hint').forEach(el=>{
             if(el.children.length>0 && !el.querySelector('i'))return; // has markup (except icon-only) → skip
             const t=el.textContent.trim();
             if(ZH_TEXT[t]!==undefined){_stash(el,'Txt',el.textContent);el.textContent=ZH_TEXT[t];}
@@ -2164,6 +2162,7 @@ function applyG2Lang(){
             const sp=document.querySelector('#'+id+' span');if(sp){_stash(sp,'Txt',sp.textContent);sp.textContent=ZH_TEXT[en];}
         });
         const cue=document.querySelector('#hero-cue span');if(cue){_stash(cue,'Txt',cue.textContent);cue.textContent=ZH_TEXT["Begin our story"];}
+        const hb=document.getElementById('hero-rsvp-btn');if(hb){_stash(hb,'Txt',hb.textContent);hb.textContent='出席回复';}
         // 6. placeholders
         root.querySelectorAll('[placeholder]').forEach(el=>{const p=el.getAttribute('placeholder');if(ZH_PH[p]!==undefined){_stash(el,'Ph',p);el.setAttribute('placeholder',ZH_PH[p]);}});
         // 7. select options (meal dropdowns) — match by text
