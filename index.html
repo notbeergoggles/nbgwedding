@@ -1190,7 +1190,9 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
             <div class="know-list">
                 <div class="know-item">
                     <h3 class="know-q">What should I wear?</h3>
-                    <img class="know-dress-img" src="dresscode-nov5.jpg" alt="Dress code & colour palette" loading="lazy">
+                    <p class="know-a" id="know-dress-desc">[Dress code description goes here — replace this text.]</p>
+                    <img class="know-dress-img" src="dresscode-5nov-1.png" alt="Dress code & colour palette (1)" loading="lazy">
+                    <img class="know-dress-img" src="dresscode-5nov-2.png" alt="Dress code & colour palette (2)" loading="lazy" style="margin-top:1rem;">
                 </div>
 
                 <div class="know-item">
@@ -1587,7 +1589,7 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
 <div id="lightbox" onclick="this.classList.remove('active')"><span class="lightbox-close">&times;</span><img src="" alt="" id="lightbox-img"><div id="lightbox-caption"></div></div>
 <div id="thank-you-modal"><div class="ty-card"><i class="bi bi-balloon-heart"></i><h2>Thank You!</h2><p>Your RSVP has been received. We can't wait to celebrate with you!</p><button onclick="document.getElementById('thank-you-modal').style.display='none'" class="btn-pill">Close</button></div></div>
 <div id="music-player" class="music-player">
-    <audio id="bg-audio" src="oor.mp3" preload="auto"></audio>
+    <audio id="bg-audio" preload="auto"></audio>
     <div class="player-art"><i class="bi bi-music-note-beamed"></i></div>
     <div class="player-info"><div class="player-title">Wherever You Are</div><div class="player-artist">One Ok Rock</div><div class="player-progress"><div class="player-progress-fill"></div></div></div>
     <button class="player-toggle" onclick="toggleAudio()" aria-label="Play/Pause"><i class="bi bi-play-fill" id="player-icon"></i></button>
@@ -1799,7 +1801,7 @@ function enterFilm(){
     cursorDark(false);
     document.getElementById(containerId).style.display='block';
     runTimer(rsvpDate,suffix,"rsvp"); runTimer(weddingDate,suffix,"wedding");
-    startAudio();
+    startAudio(suffix);
     if(suffix==='2'){ if(typeof frGo==='function')frGo(0); if(typeof loadFamilies==='function')loadFamilies(); loadGuestbook('2'); if(typeof initI18nDetect==='function')setTimeout(initI18nDetect,400); }
     if(suffix==='1'){ quizInit('1'); buildCast('1'); buildMika('1'); if(typeof srGo==='function')srGo(0); if(typeof loadIndividuals==='function')loadIndividuals(); spawnRsvpSparkles('1'); }
     initFilm(suffix);
@@ -2396,18 +2398,17 @@ function buildMika(suffix){
 }
 
 /* ── Audio ── */
-var PLAYLIST=[{src:'oor.mp3',title:'Wherever You Are',artist:'One Ok Rock'},{src:'watchme.mp3',title:'Watch Me!',artist:'YOASOBI'}];
-var trackIndex=0;
-function setTrackLabel(){const t=document.querySelector('.player-title'),ar=document.querySelector('.player-artist');if(t)t.textContent=PLAYLIST[trackIndex].title;if(ar)ar.textContent=PLAYLIST[trackIndex].artist;}
+var TRACKS={'1':{src:'watchme.mp3',title:'Watch Me!',artist:'YOASOBI'},'2':{src:'oor.mp3',title:'Wherever You Are',artist:'One Ok Rock'}};
+function setTrackLabel(track){const t=document.querySelector('.player-title'),ar=document.querySelector('.player-artist');if(t)t.textContent=track.title;if(ar)ar.textContent=track.artist;}
 function toggleAudio(){const a=document.getElementById('bg-audio'),i=document.getElementById('player-icon'),t=document.querySelector('.player-toggle');if(a.paused){a.play();i.className='bi bi-pause-fill';t.classList.remove('attention');}else{a.pause();i.className='bi bi-play-fill';}}
-function startAudio(){
+function startAudio(suffix){
     const a=document.getElementById('bg-audio'),i=document.getElementById('player-icon'),t=document.querySelector('.player-toggle');if(!a)return;
-    a.volume=0.4;
-    setTrackLabel();
+    const track=TRACKS[suffix]||TRACKS['2'];
+    a.volume=0.4; a.loop=true;
+    if(a.getAttribute('src')!==track.src){a.setAttribute('src',track.src);a.load();}
+    setTrackLabel(track);
     if(a.dataset.wired!=='1'){
         a.dataset.wired='1';
-        // advance through the playlist, looping back to the top
-        a.addEventListener('ended',()=>{trackIndex=(trackIndex+1)%PLAYLIST.length;a.src=PLAYLIST[trackIndex].src;setTrackLabel();a.currentTime=0;a.play().catch(()=>{});});
         a.addEventListener('timeupdate',()=>{const f=document.querySelector('.player-progress-fill');if(a.duration)f.style.width=((a.currentTime/a.duration)*100)+'%';});
         document.querySelector('.player-progress').addEventListener('click',e=>{const r=e.currentTarget.getBoundingClientRect();const pct=(e.clientX-r.left)/r.width;if(a.duration)a.currentTime=pct*a.duration;});
     }
