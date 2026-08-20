@@ -588,6 +588,17 @@ textarea.rsvp-input{resize:vertical;min-height:110px;text-align:left;}
 @keyframes crossGlow{0%,100%{box-shadow:0 0 0 rgba(201,163,104,0);}50%{box-shadow:0 0 22px rgba(201,163,104,0.55);}}
 .rsvp-cross-note{font-family:var(--sans);font-size:0.72rem;color:rgba(251,248,244,0.5);line-height:1.5;letter-spacing:0.03em;}
 .rsvp-cross-note strong{color:var(--gold);font-weight:600;letter-spacing:0.08em;}
+.rsvp-know-pill{margin-top:0.4rem;}
+.know-inner{max-width:720px;margin:0 auto;text-align:center;position:relative;z-index:1;}
+.know-list{display:flex;flex-direction:column;gap:2.5rem;margin-top:3rem;text-align:left;}
+.know-item{border-bottom:1px solid rgba(201,163,104,0.18);padding-bottom:2.5rem;}
+.know-item:last-of-type{border-bottom:none;padding-bottom:0;}
+.know-q{font-family:var(--serif);font-weight:300;font-size:clamp(1.4rem,3.4vw,1.9rem);color:var(--bg-veil);margin-bottom:1rem;}
+.know-a{font-family:var(--serif-alt);font-size:clamp(1.02rem,2.2vw,1.18rem);line-height:1.85;color:rgba(251,248,244,0.82);}
+.know-dress-img{width:100%;border-radius:10px;border:1px solid rgba(201,163,104,0.25);box-shadow:0 12px 40px rgba(0,0,0,0.3);display:block;}
+.know-item-link{text-align:center;}
+.know-schedule-link{display:inline-flex;align-items:center;gap:0.55rem;font-family:var(--sans);font-size:0.8rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);text-decoration:none;border:1px solid rgba(201,163,104,0.5);border-radius:100px;padding:0.85rem 1.9rem;transition:all .4s var(--soft);}
+.know-schedule-link:hover{background:var(--gold);color:var(--noir);border-color:var(--gold);gap:0.9rem;}
 .rsvp-edit-hint{font-family:var(--sans);font-size:0.8rem;line-height:1.5;color:var(--gold);background:rgba(201,163,104,0.1);border:1px solid rgba(201,163,104,0.3);border-radius:8px;padding:0.7rem 1rem;text-align:center;}
 .rsvp-edit-hint i{margin-right:0.35rem;}
 .confetti-petal{position:absolute;top:-20px;width:12px;height:12px;border-radius:50% 0 50% 0;pointer-events:none;opacity:0;}
@@ -823,6 +834,75 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
         </div>
     </section>
 
+    <!-- SCENE: SCHEDULE (Nov 5 then Nov 7) -->
+    <section id="schedule-1" class="scene scene-pad">
+        <div class="divider-mark reveal-fade"></div>
+        <div class="eyebrow reveal-fade">5 November · Solemnisation</div>
+        <h2 class="big-title" data-title><span class="title-word"><span>Solemnisation</span></span> <span class="title-word"><span><em>Schedule</em></span></span></h2>
+        <div class="journey">
+            <svg class="journey-wave" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path class="journey-path" d=""></path></svg>
+            <div class="checkpoints">
+                <div class="checkpoint align-left">
+                    <div class="cp-icon"><i class="bi bi-cup-straw"></i></div>
+                    <div class="cp-time">4:00 PM</div>
+                    <div class="cp-title">Guests Arrival</div>
+                    <div class="cp-desc">Yo grab a drink and snack, we'll come rizz you up soon frfr no cap</div>
+                </div>
+                <div class="checkpoint align-right">
+                    <div class="cp-icon"><i class="bi bi-person-check"></i></div>
+                    <div class="cp-time">4:45 PM</div>
+                    <div class="cp-title">Take a Seat</div>
+                    <div class="cp-desc">Everyone lock in!</div>
+                </div>
+                <div class="checkpoint align-left">
+                    <div class="cp-icon"><i class="bi bi-suit-heart"></i></div>
+                    <div class="cp-time">5:00 PM</div>
+                    <div class="cp-title">Solemnisation</div>
+                    <div class="cp-desc">The main event! We're saying our vows and officially wife-ing and husband-ing 👀</div>
+                </div>
+                <div class="checkpoint align-right">
+                    <div class="cp-icon"><i class="bi bi-cup-hot"></i></div>
+                    <div class="cp-time">6:00 PM</div>
+                    <div class="cp-title">Nom Nom</div>
+                    <div class="cp-desc">Grab your plate, we've got something up our sleeves 😏</div>
+                </div>
+                <div class="checkpoint align-left">
+                    <div class="cp-icon"><i class="bi bi-camera"></i></div>
+                    <div class="cp-time">7:00 PM</div>
+                    <div class="cp-title">Foto and Fun</div>
+                    <div class="cp-desc">Photo ops popping, games slapping, and we're making reels — bring the energy!</div>
+                </div>
+                <div class="checkpoint align-right">
+                    <div class="cp-icon"><i class="bi bi-controller"></i></div>
+                    <div class="cp-time">8:00 PM</div>
+                    <div class="cp-title">Party Gamers</div>
+                    <div class="cp-desc">Alright party games — drama incoming, chaos is skibidi GYATT fr fr</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider-mark reveal-fade" style="margin-top:5rem;"></div>
+        <div class="eyebrow reveal-fade">7 November · Dinner</div>
+        <h2 class="big-title" data-title><span class="title-word"><span>Dinner</span></span> <span class="title-word"><span><em>Schedule</em></span></span></h2>
+        <div class="journey">
+            <svg class="journey-wave" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path class="journey-path" d=""></path></svg>
+            <div class="checkpoints">
+                <div class="checkpoint align-left">
+                    <div class="cp-icon"><i class="bi bi-cup-straw"></i></div>
+                    <div class="cp-time">6:00 PM</div>
+                    <div class="cp-title">Reception</div>
+                    <div class="cp-desc">Reception and dinner — let's celebrate with good food and great company!</div>
+                </div>
+                <div class="checkpoint align-right">
+                    <div class="cp-icon"><i class="bi bi-suit-heart"></i></div>
+                    <div class="cp-time">10:00 PM</div>
+                    <div class="cp-title">Send Off</div>
+                    <div class="cp-desc">Wave us goodbye as we begin our new life together ♡</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- SCENE: MEET THE CAST -->
     <section id="cast-1" class="scene scene-pad">
         <div class="divider-mark reveal-fade"></div>
@@ -917,75 +997,6 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
             <p class="mika-intro reveal-fade">Meet Mika — she may not be bright, but her smile will melt your soul ♡</p>
         </div>
         <div class="mika-track-wrap"><div class="mika-track" id="mika-track-1"></div></div>
-    </section>
-
-    <!-- SCENE: SCHEDULE (Nov 5 then Nov 7) -->
-    <section id="schedule-1" class="scene scene-pad">
-        <div class="divider-mark reveal-fade"></div>
-        <div class="eyebrow reveal-fade">5 November · Solemnisation</div>
-        <h2 class="big-title" data-title><span class="title-word"><span>Solemnisation</span></span> <span class="title-word"><span><em>Schedule</em></span></span></h2>
-        <div class="journey">
-            <svg class="journey-wave" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path class="journey-path" d=""></path></svg>
-            <div class="checkpoints">
-                <div class="checkpoint align-left">
-                    <div class="cp-icon"><i class="bi bi-cup-straw"></i></div>
-                    <div class="cp-time">4:00 PM</div>
-                    <div class="cp-title">Guests Arrival</div>
-                    <div class="cp-desc">Yo grab a drink and snack, we'll come rizz you up soon frfr no cap</div>
-                </div>
-                <div class="checkpoint align-right">
-                    <div class="cp-icon"><i class="bi bi-person-check"></i></div>
-                    <div class="cp-time">4:45 PM</div>
-                    <div class="cp-title">Take a Seat</div>
-                    <div class="cp-desc">Everyone lock in!</div>
-                </div>
-                <div class="checkpoint align-left">
-                    <div class="cp-icon"><i class="bi bi-suit-heart"></i></div>
-                    <div class="cp-time">5:00 PM</div>
-                    <div class="cp-title">Solemnisation</div>
-                    <div class="cp-desc">The main event! We're saying our vows and officially wife-ing and husband-ing 👀</div>
-                </div>
-                <div class="checkpoint align-right">
-                    <div class="cp-icon"><i class="bi bi-cup-hot"></i></div>
-                    <div class="cp-time">6:00 PM</div>
-                    <div class="cp-title">Nom Nom</div>
-                    <div class="cp-desc">Grab your plate, we've got something up our sleeves 😏</div>
-                </div>
-                <div class="checkpoint align-left">
-                    <div class="cp-icon"><i class="bi bi-camera"></i></div>
-                    <div class="cp-time">7:00 PM</div>
-                    <div class="cp-title">Foto and Fun</div>
-                    <div class="cp-desc">Photo ops popping, games slapping, and we're making reels — bring the energy!</div>
-                </div>
-                <div class="checkpoint align-right">
-                    <div class="cp-icon"><i class="bi bi-controller"></i></div>
-                    <div class="cp-time">8:00 PM</div>
-                    <div class="cp-title">Party Gamers</div>
-                    <div class="cp-desc">Alright party games — drama incoming, chaos is skibidi GYATT fr fr</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="divider-mark reveal-fade" style="margin-top:5rem;"></div>
-        <div class="eyebrow reveal-fade">7 November · Dinner</div>
-        <h2 class="big-title" data-title><span class="title-word"><span>Dinner</span></span> <span class="title-word"><span><em>Schedule</em></span></span></h2>
-        <div class="journey">
-            <svg class="journey-wave" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path class="journey-path" d=""></path></svg>
-            <div class="checkpoints">
-                <div class="checkpoint align-left">
-                    <div class="cp-icon"><i class="bi bi-cup-straw"></i></div>
-                    <div class="cp-time">6:00 PM</div>
-                    <div class="cp-title">Reception</div>
-                    <div class="cp-desc">Reception and dinner — let's celebrate with good food and great company!</div>
-                </div>
-                <div class="checkpoint align-right">
-                    <div class="cp-icon"><i class="bi bi-suit-heart"></i></div>
-                    <div class="cp-time">10:00 PM</div>
-                    <div class="cp-title">Send Off</div>
-                    <div class="cp-desc">Wave us goodbye as we begin our new life together ♡</div>
-                </div>
-            </div>
-        </div>
     </section>
 
     <!-- SCENE: INSTAGRAM -->
@@ -1128,9 +1139,45 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
                         <div class="rsvp-cross" id="rsvp-cross-1">
                             <button type="button" class="rsvp-cross-pill" onclick="gotoDinner()">Explore the 7 Nov Dinner page <i class="bi bi-arrow-right"></i></button>
                             <p class="rsvp-cross-note">You're invited to both days. Passcode: <strong>nbgdinner2026</strong></p>
+                            <button type="button" class="rsvp-cross-pill rsvp-know-pill" onclick="revealKnowSection()">Everything You Need to Know <i class="bi bi-arrow-right"></i></button>
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCENE: EVERYTHING YOU NEED TO KNOW (revealed after RSVP) -->
+    <section id="know-1" class="scene scene-pad scene-rsvp" style="display:none;">
+        <div class="know-inner">
+            <div class="divider-mark reveal-fade"></div>
+            <div class="eyebrow reveal-fade" style="color:var(--gold);">Everything you need to know</div>
+            <h2 class="big-title" data-title style="color:var(--bg-veil);"><span class="title-word"><span>Before the</span></span> <span class="title-word"><span><em>Big Day</em></span></span></h2>
+
+            <div class="know-list">
+                <div class="know-item">
+                    <h3 class="know-q">What should I wear?</h3>
+                    <img class="know-dress-img" src="dresscode-nov5.jpg" alt="Dress code & colour palette" loading="lazy">
+                </div>
+
+                <div class="know-item">
+                    <h3 class="know-q">Should I bring an ang pao?</h3>
+                    <p class="know-a">Save the ang pao for 7 November — no need to bring one for the solemnisation ♡</p>
+                </div>
+
+                <div class="know-item">
+                    <h3 class="know-q">How will the night end?</h3>
+                    <p class="know-a">However you want it to! We officially grant you permission to pull a classic Irish goodbye — please feel free to slip out quietly whenever you're ready to head home. No formal goodbyes needed; just keep enjoying yourselves until then!</p>
+                </div>
+
+                <div class="know-item">
+                    <h3 class="know-q">Why a Thursday?</h3>
+                    <p class="know-a">Why a Thursday? It's the day we first got together, and we wanted our wedding to fall on the very same day as our anniversary, so the two will always be one.</p>
+                </div>
+
+                <div class="know-item know-item-link">
+                    <a href="#schedule-1" class="know-schedule-link" onclick="knowScheduleJump(event)">Revisit the schedule <i class="bi bi-arrow-right"></i></a>
+                </div>
             </div>
         </div>
     </section>
@@ -2442,6 +2489,23 @@ function frNext(){
     }
 }
 function frBack(){if(frState.step>0)frGo(frState.step-1);}
+function revealKnowSection(){
+    const sec=document.getElementById('know-1');if(!sec)return;
+    sec.style.display='';
+    // ensure its animated children are visible (their ScrollTriggers were measured while hidden)
+    sec.querySelectorAll('.reveal-fade,.reveal-rise').forEach(el=>{el.style.opacity=1;el.style.transform='none';});
+    sec.querySelectorAll('.title-word>span').forEach(s=>{s.style.transform='none';s.style.opacity=1;});
+    try{if(window.ScrollTrigger)ScrollTrigger.refresh();}catch(e){}
+    const jump=()=>{try{if(typeof lenis!=='undefined'&&lenis&&lenis.scrollTo){lenis.scrollTo(sec,{offset:-70});return;}}catch(e){}const y=sec.getBoundingClientRect().top+window.pageYOffset-70;window.scrollTo({top:y,behavior:'smooth'});};
+    requestAnimationFrame(()=>requestAnimationFrame(jump));
+    setTimeout(jump,180);
+}
+function knowScheduleJump(e){
+    if(e)e.preventDefault();
+    const sec=document.getElementById('schedule-1');if(!sec)return;
+    try{if(typeof lenis!=='undefined'&&lenis&&lenis.scrollTo){lenis.scrollTo(sec,{offset:-70});return;}}catch(err){}
+    const y=sec.getBoundingClientRect().top+window.pageYOffset-70;window.scrollTo({top:y,behavior:'smooth'});
+}
 function gotoDinner(){
     document.getElementById('group-1-content').style.display='none';
     try{document.querySelectorAll('.rsvp-sparkle,.rsvp-shard,.ind-spark,.choice-spark').forEach(el=>el.remove());}catch(e){}
@@ -3025,7 +3089,7 @@ function quizConfetti(suffix){
     <div class="lang-popup-body">看起来你可能更习惯中文——是否将本页切换为中文显示？</div>
     <div class="lang-popup-actions">
         <button class="lang-popup-yes" onclick="acceptLangPopup()">切换到中文</button>
-        <button class="lang-popup-no" onclick="dismissLangPopup()">保持英文</button>
+        <button class="lang-popup-no" onclick="dismissLangPopup()">Keep in English</button>
     </div>
 </div>
 </body>
