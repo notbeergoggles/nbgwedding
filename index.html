@@ -596,6 +596,11 @@ textarea.rsvp-input{resize:vertical;min-height:110px;text-align:left;}
 .know-q{font-family:var(--serif);font-weight:300;font-size:clamp(1.4rem,3.4vw,1.9rem);color:var(--bg-veil);margin-bottom:1rem;}
 .know-a{font-family:var(--serif-alt);font-size:clamp(1.02rem,2.2vw,1.18rem);line-height:1.85;color:rgba(251,248,244,0.82);}
 .know-dress-img{width:100%;border-radius:10px;border:1px solid rgba(201,163,104,0.25);box-shadow:0 12px 40px rgba(0,0,0,0.3);display:block;}
+.know-dress-intro{margin-bottom:1.75rem;}
+.know-dress-heading{font-family:var(--serif);font-weight:400;font-size:clamp(1.25rem,3vw,1.55rem);color:var(--gold);text-align:center;margin-bottom:1.25rem;letter-spacing:0.02em;}
+.know-dress-intro p{font-family:var(--serif-alt);font-size:clamp(1.02rem,2.2vw,1.18rem);line-height:1.9;color:rgba(251,248,244,0.82);margin-bottom:1rem;}
+.know-dress-intro p:last-child{margin-bottom:0;}
+.know-dress-intro em{font-style:italic;color:var(--rose);}
 .know-item-link{text-align:center;}
 .know-schedule-link{display:inline-flex;align-items:center;gap:0.55rem;font-family:var(--sans);font-size:0.8rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);text-decoration:none;border:1px solid rgba(201,163,104,0.5);border-radius:100px;padding:0.85rem 1.9rem;transition:all .4s var(--soft);}
 .know-schedule-link:hover{background:var(--gold);color:var(--noir);border-color:var(--gold);gap:0.9rem;}
@@ -1224,9 +1229,18 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
             <div class="know-list">
                 <div class="know-item">
                     <h3 class="know-q">What should I wear?</h3>
-                    <p class="know-a" id="know-dress-desc">🌠 Attire &amp; Colour Guide 🌿<br>We'd love for our esteemed guests to follow our formal dress code and Twilight Botanicals colour palette.<br>Please refer to the guide below when choosing your outfit. Feel free to choose a shade that suits you!<br>We look forward to seeing you dressed to the nines on our wedding day!<br>Thank you for helping us make our our garden celebration as beautiful as we imagine it to be 🌿🌠</p>
+                    <div class="know-dress-intro" id="know-dress-desc">
+                        <div class="know-dress-heading">🌠 Attire &amp; Colour Guide 🌿</div>
+                        <p>We'd love for our esteemed guests to follow our formal dress code and <em>Twilight Botanicals</em> colour palette. Please refer to the guide below when choosing your outfit — feel free to pick a shade that suits you!</p>
+                        <p>We look forward to seeing you dressed to the nines on our wedding day. Thank you for helping us make our garden celebration as beautiful as we imagine it to be 🌿🌠</p>
+                    </div>
                     <img class="know-dress-img" src="dresscode-5nov-1.jpg" alt="Dress code & colour palette (1)" loading="lazy">
                     <img class="know-dress-img" src="dresscode-5nov-2.jpg" alt="Dress code & colour palette (2)" loading="lazy" style="margin-top:1rem;">
+                </div>
+
+                <div class="know-item">
+                    <h3 class="know-q">What if I'm late?</h3>
+                    <p class="know-a">Then enjoy the hallway, superstar. The doors shut sharp and they stay shut — waltz in late and you'll be doing your own solo ceremony out in the corridor, admiring the wallpaper until we're done. We love you dearly, but not enough to hold up our own wedding for your terrible time management. Set three alarms. Be early. We mean it ♡</p>
                 </div>
 
                 <div class="know-item">
