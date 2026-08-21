@@ -1998,20 +1998,9 @@ function initFilmScenes(suffix){
         const eyebrow=cScene.querySelector('.converge-eyebrow');
         const cLede=cScene.querySelector('.converge-lede');
         if(isTouch){
-            // MOBILE: unpinned — "Our" slides up from bottom, "Story" slides down from top, as section enters view
-            gsap.set(eyebrow,{opacity:0});
-            gsap.set(left,{y:120,opacity:0});
-            gsap.set(right,{y:-120,opacity:0});
-            gsap.set(cLede,{opacity:0});
-            const playConverge=()=>{
-                gsap.to(eyebrow,{opacity:1,duration:0.5,ease:'power2.out'});
-                gsap.to(left,{y:0,opacity:1,duration:0.9,ease:'power3.out',delay:0.2});
-                gsap.to(right,{y:0,opacity:1,duration:0.9,ease:'power3.out',delay:0.2});
-                gsap.to(cLede,{opacity:1,duration:0.6,ease:'power2.out',delay:0.6});
-            };
-            ScrollTrigger.create({trigger:cScene,start:'top 80%',once:true,onEnter:playConverge});
-            // Fallback: if the section is already in view on load/refresh, play immediately
-            ScrollTrigger.create({trigger:cScene,start:'top bottom',end:'bottom top',once:true,onRefresh:self=>{if(self.isActive)playConverge();}});
+            // MOBILE: no animation — title/lede simply appear (site is heavy; avoids stuck half-rendered titles)
+            gsap.set([eyebrow,left,right,cLede],{clearProps:'all'});
+            [eyebrow,left,right,cLede].forEach(el=>{if(el){el.style.opacity=1;el.style.transform='none';}});
         } else {
             // DESKTOP: pinned + scrubbed — "Our" ← → "Story" meet center
             const offset=()=>window.innerWidth*0.6;
