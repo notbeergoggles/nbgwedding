@@ -548,6 +548,11 @@ textarea.rsvp-input{resize:vertical;min-height:110px;text-align:left;}
 .fr-member.coming{border-color:rgba(168,177,154,0.5);}
 .fr-member.declined{opacity:0.6;}
 .fr-member-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.fr-member-id-top{margin-bottom:0.9rem;}
+.fr-event-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.55rem 0;}
+.fr-event-row + .fr-event-row{border-top:1px solid rgba(201,163,104,0.12);}
+.fr-event-label{font-family:var(--sans);font-size:0.82rem;letter-spacing:0.02em;color:var(--bg-veil);}
+.fr-event-label em{font-style:normal;color:rgba(251,248,244,0.5);font-size:0.72rem;}
 .fr-member-name{font-family:var(--serif);font-size:1.2rem;color:var(--bg-veil);}
 .fr-toggle{display:flex;gap:0.4rem;flex-shrink:0;}
 .fr-tg{font-family:var(--sans);font-size:0.72rem;letter-spacing:0.04em;text-transform:uppercase;color:rgba(251,248,244,0.6);background:rgba(251,248,244,0.06);border:1px solid rgba(201,163,104,0.25);border-radius:100px;padding:0.4rem 0.85rem;cursor:pointer;transition:all .25s;white-space:nowrap;}
@@ -560,7 +565,8 @@ textarea.rsvp-input{resize:vertical;min-height:110px;text-align:left;}
 @keyframes memberSettle{0%{transform:scale(0.98);}100%{transform:scale(1);}}
 @media(max-width:600px){
     .fr-member-top{flex-direction:column;align-items:stretch;gap:0.75rem;}
-    .fr-toggle{width:100%;flex-direction:column;gap:0.5rem;}
+    .fr-event-row{flex-direction:column;align-items:stretch;gap:0.5rem;}
+    .fr-toggle{width:100%;flex-direction:row;gap:0.5rem;}
     .fr-tg{width:100%;text-align:center;padding:0.7rem 0.5rem;font-size:0.78rem;white-space:normal;}
 }
 .fr-meal{margin-top:0.85rem;max-height:0;overflow:hidden;transition:max-height .4s var(--silk);}
@@ -572,6 +578,9 @@ textarea.rsvp-input{resize:vertical;min-height:110px;text-align:left;}
 .fr-family-name em{font-style:italic;color:var(--rose);}
 .fr-member-id{display:flex;flex-direction:column;gap:0.15rem;min-width:0;}
 .fr-member-relation{font-family:var(--sans);font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);opacity:0.8;line-height:1.3;}
+.fr-tea-note{display:flex;gap:0.6rem;align-items:flex-start;text-align:left;background:rgba(201,163,104,0.1);border:1px solid rgba(201,163,104,0.3);border-radius:8px;padding:0.85rem 1rem;margin-bottom:1.25rem;font-family:var(--sans);font-size:0.8rem;line-height:1.6;color:rgba(251,248,244,0.82);}
+.fr-tea-note i{color:var(--gold);font-size:1rem;flex-shrink:0;margin-top:0.1rem;}
+.fr-tea-note strong{color:var(--gold);}
 .fr-loading{font-family:var(--sans);font-size:0.85rem;color:rgba(251,248,244,0.5);text-align:center;padding:1rem;}
 .rsvp-next:disabled{opacity:0.4;pointer-events:none;}
 .rsvp-err{font-family:var(--serif-alt);font-style:italic;font-size:0.9rem;color:var(--rose);text-align:center;margin-top:1rem;min-height:1.3em;}
@@ -1255,7 +1264,7 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
 
                 <div class="know-item">
                     <h3 class="know-q">How will the night end?</h3>
-                    <p class="know-a">However you want it to! We officially grant you permission to pull a classic <em>Irish goodbye</em> — please feel free to slip out quietly whenever you're ready to head home. No formal goodbyes needed; just keep enjoying yourselves until then!</p>
+                    <p class="know-a">However you want it to! We officially grant you permission to pull a classic <b>Irish goodbye</b> — please feel free to slip out quietly whenever you're ready to head home. No formal goodbyes needed; just keep enjoying yourselves until then!</p>
                 </div>
 
                 <div class="know-item">
@@ -1562,6 +1571,7 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
                             <div class="fr-family-name" id="fr-family-name">Your Family</div>
                             <p class="scene-sub" style="margin-top:0;margin-bottom:1.25rem;">Who will be joining us?</p>
                             <div id="fr-edit-hint" class="rsvp-edit-hint" style="display:none;margin-bottom:1.25rem;"><i class="bi bi-pencil-square"></i> We found your household's previous RSVP — feel free to update it below.</div>
+                            <div class="fr-tea-note"><i class="bi bi-cup-hot"></i> <span>The tea ceremony runs from <strong>8:30–11:00am</strong>. Please keep this window free — but you won't all start at 8:30. Guests are split into rotating groups of 30, and we'll send each group's exact time closer to the day. ♡</span></div>
                             <div class="fr-members" id="fr-members"></div>
                         </div>
                         <!-- STEP 2: note -->
@@ -2237,6 +2247,8 @@ var ZH_TEXT={
     "We'd be honoured":"敬请赏光","Kindly respond by 7 September 2026":"请于 2026年9月7日 前回复",
     "Step 1":"第一步","Step 2":"第二步","Last step":"最后一步","Who will be joining us?":"谁会一同出席？",
     "Coming":"出席","Can't make it":"无法出席","Meal preference":"用餐偏好",
+    "Tea Ceremony (morning)":"敬茶仪式（上午）","Dinner (evening)":"晚宴（傍晚）",
+    "TEA_NOTE":"敬茶仪式于上午 8:30 至 11:00 举行。请预留这段时间——但无需所有人 8:30 到场。宾客将分为每组 30 人轮流进行，我们会在临近婚期时通知你所在组别的确切时间。♡",
     "← Back":"← 返回","Continue →":"继续 →","Send RSVP ♡":"发送 ♡",
     "Thank You!":"谢谢你！",
     "Your RSVP has been received. We can't wait to celebrate with you ♡":"我们已收到你的回复。期待与你一同庆祝 ♡",
@@ -2294,6 +2306,14 @@ function applyG2Lang(){
         if(rR){_stash(rR,'Txt',rR.textContent);rR.textContent=ZH_CONVERGE.rsvp[1];}
         // 4. rsvp-q (has em)
         root.querySelectorAll('.rsvp-q').forEach((q,i)=>{if(ZH_RSVPQ[i]!==undefined){_stash(q,'Html',q.innerHTML);q.innerHTML=ZH_RSVPQ[i];}});
+        // 4b. event labels (Tea/Dinner, contain <em>) + tea note
+        root.querySelectorAll('.fr-event-label').forEach(el=>{
+            const key=el.textContent.replace(/\s+/g,' ').trim();
+            const map={'Tea Ceremony (morning)':'敬茶仪式 <em>（上午）</em>','Dinner (evening)':'晚宴 <em>（傍晚）</em>'};
+            if(map[key]!==undefined){_stash(el,'Html',el.innerHTML);el.innerHTML=map[key];}
+        });
+        const teaNote=root.querySelector('.fr-tea-note span');
+        if(teaNote){_stash(teaNote,'Html',teaNote.innerHTML);teaNote.textContent=ZH_TEXT['TEA_NOTE'];}
         // 5. hero spans
         [['hero-eyebrow',"We're getting married"],['hero-meta',"7 November 2026 · Artyzen, Irodori"]].forEach(([id,en])=>{
             const sp=document.querySelector('#'+id+' span');if(sp){_stash(sp,'Txt',sp.textContent);sp.textContent=ZH_TEXT[en];}
@@ -2509,16 +2529,20 @@ function frPickFamily(f){
     const _h=document.getElementById('fr-edit-hint');if(_h)_h.style.display='none';
     const _m=document.getElementById('fr-message');if(_m)_m.value='';
     frState.family=f;
-    frState.members=f.members.map(mm=>({name:mm.name,relation:mm.relation||'',attending:'',meal:''}));
+    frState.members=f.members.map(mm=>({name:mm.name,relation:mm.relation||'',tea:'',attending:'',meal:''}));
     document.getElementById('fr-family-name').innerHTML='The <em>'+frEsc(f.familyName.replace(/^The\s+/i,'').replace(/\s+Family$/i,''))+'</em> Family';
     const wrap=document.getElementById('fr-members');wrap.innerHTML='';
     frState.members.forEach((m,i)=>{
         const opts=FR_MEALS.map(([v,l])=>'<option value="'+v+'">'+l+'</option>').join('');
         const el=document.createElement('div');el.className='fr-member';el.dataset.idx=i;
-        el.innerHTML='<div class="fr-member-top"><div class="fr-member-id"><span class="fr-member-name">'+frEsc(m.name)+'</span>'
+        el.innerHTML='<div class="fr-member-id fr-member-id-top"><span class="fr-member-name">'+frEsc(m.name)+'</span>'
             +(m.relation?'<span class="fr-member-relation">'+frEsc(m.relation)+'</span>':'')+'</div>'
-            +'<div class="fr-toggle"><button type="button" class="fr-tg yes" onclick="frSetAttend('+i+',\'yes\')">Coming</button>'
-            +'<button type="button" class="fr-tg no" onclick="frSetAttend('+i+',\'no\')">Can\'t make it</button></div></div>'
+            +'<div class="fr-event-row"><span class="fr-event-label">Tea Ceremony <em>(morning)</em></span>'
+            +'<div class="fr-toggle"><button type="button" class="fr-tg yes fr-tea-yes" onclick="frSetTea('+i+',\'yes\')">Coming</button>'
+            +'<button type="button" class="fr-tg no fr-tea-no" onclick="frSetTea('+i+',\'no\')">Can\'t make it</button></div></div>'
+            +'<div class="fr-event-row"><span class="fr-event-label">Dinner <em>(evening)</em></span>'
+            +'<div class="fr-toggle"><button type="button" class="fr-tg yes fr-din-yes" onclick="frSetAttend('+i+',\'yes\')">Coming</button>'
+            +'<button type="button" class="fr-tg no fr-din-no" onclick="frSetAttend('+i+',\'no\')">Can\'t make it</button></div></div>'
             +'<div class="fr-meal"><label class="fr-meal-label">Meal preference</label><select onchange="frSetMeal('+i+',this.value)"><option value="" disabled selected>Select a meal…</option>'+opts+'</select></div>';
         wrap.appendChild(el);
     });
@@ -2537,21 +2561,30 @@ function frPrefillFamily(familyId){
         const saved=d.members||[];
         frState.members.forEach((m,i)=>{
             const rec=saved.find(x=>x.name===m.name);if(!rec)return;
-            m.attending=rec.attending||'';m.meal=rec.meal||'';
+            m.tea=rec.tea||'';m.attending=rec.attending||'';m.meal=rec.meal||'';
             const el=document.querySelector('#fr-members .fr-member[data-idx="'+i+'"]');if(!el)return;
-            if(m.attending==='yes'){el.querySelector('.fr-tg.yes').classList.add('on');el.classList.add('coming');}
-            if(m.attending==='no'){el.querySelector('.fr-tg.no').classList.add('on');el.classList.add('declined');}
+            if(m.tea==='yes')el.querySelector('.fr-tea-yes').classList.add('on');
+            if(m.tea==='no')el.querySelector('.fr-tea-no').classList.add('on');
+            if(m.attending==='yes'){el.querySelector('.fr-din-yes').classList.add('on');el.classList.add('coming');}
+            if(m.attending==='no'){el.querySelector('.fr-din-no').classList.add('on');el.classList.add('declined');}
             if(m.attending==='yes'&&m.meal){const sel=el.querySelector('select');if(sel)sel.value=m.meal;}
         });
         const hint=document.getElementById('fr-edit-hint');if(hint)hint.style.display='block';
     }).catch(e=>console.error('family prefill failed',e));
 }
 
+function frSetTea(i,val){
+    frState.members[i].tea=val;
+    const el=document.querySelector('#fr-members .fr-member[data-idx="'+i+'"]');
+    el.querySelector('.fr-tea-yes').classList.toggle('on',val==='yes');
+    el.querySelector('.fr-tea-no').classList.toggle('on',val==='no');
+    document.getElementById('rsvp-error-2').textContent='';
+}
 function frSetAttend(i,val){
     frState.members[i].attending=val;
     const el=document.querySelector('#fr-members .fr-member[data-idx="'+i+'"]');
-    el.querySelector('.fr-tg.yes').classList.toggle('on',val==='yes');
-    el.querySelector('.fr-tg.no').classList.toggle('on',val==='no');
+    el.querySelector('.fr-din-yes').classList.toggle('on',val==='yes');
+    el.querySelector('.fr-din-no').classList.toggle('on',val==='no');
     el.classList.toggle('coming',val==='yes');
     el.classList.toggle('declined',val==='no');
     if(val==='no'){frState.members[i].meal='';const sel=el.querySelector('select');if(sel)sel.selectedIndex=0;}
@@ -2579,8 +2612,10 @@ function frNext(){
     const err=document.getElementById('rsvp-error-2');
     if(frState.step===0){if(!frState.family){err.textContent='Please find and select your household first.';return;}frGo(1);return;}
     if(frState.step===1){
+        const noTea=frState.members.filter(m=>!m.tea);
+        if(noTea.length){err.textContent='Please answer the Tea Ceremony question for everyone.';return;}
         const undecided=frState.members.filter(m=>!m.attending);
-        if(undecided.length){err.textContent='Please mark "Coming" or "Can\'t make it" for everyone.';return;}
+        if(undecided.length){err.textContent='Please answer the Dinner question for everyone.';return;}
         const noMeal=frState.members.filter(m=>m.attending==='yes'&&!m.meal);
         if(noMeal.length){err.textContent='Please pick a meal for: '+noMeal.map(m=>m.name).join(', ')+'.';return;}
         const cur=document.querySelector('#rsvp-steps-2 .rsvp-step.active');cur.classList.add('exit');cur.classList.remove('active');
@@ -2630,13 +2665,14 @@ function frSubmit(){
     var _ts=new Date();try{if(typeof firebase!=='undefined'&&firebase.firestore)_ts=firebase.firestore.FieldValue.serverTimestamp();}catch(_e){}
     const docId='family_'+fam.id;
     const payload={familyId:fam.id,familyName:fam.familyName,email:frState.email,message:frState.message,
-        members:frState.members.map(m=>({name:m.name,attending:m.attending,meal:m.attending==='yes'?m.meal:'',mealLabel:m.attending==='yes'?mealLabel(m.meal):''})),
+        members:frState.members.map(m=>({name:m.name,tea:m.tea,attending:m.attending,meal:m.attending==='yes'?m.meal:'',mealLabel:m.attending==='yes'?mealLabel(m.meal):''})),
         updated:_ts};
     const rowsData=frState.members.map(m=>({
         Event_Type:'Dinner',
         rsvpKey:'fam:'+fam.id+'|'+m.name,
         family:fam.familyName,
         name:m.name,
+        tea:m.tea,
         attending:m.attending,
         food_preference:m.attending==='yes'?mealLabel(m.meal):'',
         email:frState.email,
