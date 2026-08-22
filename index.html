@@ -1380,7 +1380,7 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
             </div>
             <div class="chapter-progress" id="chapter-progress"><span class="on"></span><span></span><span></span><span></span><span></span><span></span></div>
             <div class="chapter-hint" id="chapter-hint">
-                <span class="chapter-hint-text">Keep scrolling</span>
+                <span class="chapter-hint-text">Keep scrolling downwards</span>
                 <span class="chapter-hint-arrows"><i class="bi bi-chevron-down"></i><i class="bi bi-chevron-down"></i></span>
             </div>
         </div>
@@ -2238,6 +2238,7 @@ var ZH_TEXT={
     "Tea Ceremony (morning)":"敬茶仪式（上午）","Dinner (evening)":"晚宴（傍晚）",
     "TEA_NOTE":"敬茶仪式于上午 8:30 至 11:00 举行。请预留这段时间——但无需所有人 8:30 到场。宾客将分为每组 30 人轮流进行，我们会在临近婚期时通知你所在组别的确切时间。♡",
     "← Back":"← 返回","Continue →":"继续 →","Send RSVP ♡":"发送 ♡",
+    "Keep scrolling downwards":"继续向下滑动",
     "Thank You!":"谢谢你！",
     "Your RSVP has been received. We can't wait to celebrate with you ♡":"我们已收到你的回复。期待与你一同庆祝 ♡",
     "Your family's RSVP has been received. We can't wait to celebrate with you ♡":"我们已收到你家庭的回复。期待与你一同庆祝 ♡",
@@ -2271,7 +2272,7 @@ function applyG2Lang(){
     const root=document.getElementById('group-2-content');if(!root)return;
     if(curLang==='zh'){
         // 1. plain text-match (skip elements with child elements to stay safe)
-        root.querySelectorAll('.eyebrow,.scene-sub,.converge-lede,.tea-lede,.tea-body p,.tea-quote,.chapter-era,.chapter-title,.chapter-desc,.cp-title,.cp-desc,.venue-label,.faq-chip,.faq-bubble,.faq-chat-intro,.dress-card h3,.dress-card p,.film-nav-links a,.rsvp-qn,.rsvp-back,.rsvp-next,.rsvp-done-title,.rsvp-done-msg,.fr-tg,.fr-meal-label,.ind-swap,.gb-submit,.btn-pill,.post-card h3,.post-card p,.mika-intro,.rsvp-edit-hint').forEach(el=>{
+        root.querySelectorAll('.eyebrow,.scene-sub,.converge-lede,.tea-lede,.tea-body p,.tea-quote,.chapter-era,.chapter-title,.chapter-desc,.chapter-hint-text,.cp-title,.cp-desc,.venue-label,.faq-chip,.faq-bubble,.faq-chat-intro,.dress-card h3,.dress-card p,.film-nav-links a,.rsvp-qn,.rsvp-back,.rsvp-next,.rsvp-done-title,.rsvp-done-msg,.fr-tg,.fr-meal-label,.ind-swap,.gb-submit,.btn-pill,.post-card h3,.post-card p,.mika-intro,.rsvp-edit-hint').forEach(el=>{
             if(el.children.length>0 && !el.querySelector('i'))return; // has markup (except icon-only) → skip
             const t=el.textContent.trim();
             if(ZH_TEXT[t]!==undefined){_stash(el,'Txt',el.textContent);el.textContent=ZH_TEXT[t];}
