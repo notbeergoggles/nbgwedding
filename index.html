@@ -797,6 +797,7 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
             <li><a href="#gallery-1">Gallery</a></li>
             <li><a href="#quiz-1">Quiz</a></li>
             <li><a href="#rsvp-1">RSVP</a></li>
+            <li><a href="#know-1">Info</a></li>
         </ul>
         <button class="film-burger" aria-label="Menu"><span></span><span></span><span></span></button>
     </nav>
@@ -1229,7 +1230,7 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
     </section>
 
     <!-- SCENE: EVERYTHING YOU NEED TO KNOW (revealed after RSVP) -->
-    <section id="know-1" class="scene scene-pad scene-rsvp" style="display:none;">
+    <section id="know-1" class="scene scene-pad scene-rsvp">
         <div class="know-inner">
             <div class="divider-mark reveal-fade"></div>
             <div class="eyebrow reveal-fade" style="color:var(--gold);">Everything you need to know</div>
@@ -2619,14 +2620,8 @@ function frNext(){
 function frBack(){if(frState.step>0)frGo(frState.step-1);}
 function revealKnowSection(){
     const sec=document.getElementById('know-1');if(!sec)return;
-    sec.style.display='';
-    // ensure its animated children are visible (their ScrollTriggers were measured while hidden)
-    sec.querySelectorAll('.reveal-fade,.reveal-rise').forEach(el=>{el.style.opacity=1;el.style.transform='none';});
-    sec.querySelectorAll('.title-word>span').forEach(s=>{s.style.transform='none';s.style.opacity=1;});
-    try{if(window.ScrollTrigger)ScrollTrigger.refresh();}catch(e){}
-    const jump=()=>{try{if(typeof lenis!=='undefined'&&lenis&&lenis.scrollTo){lenis.scrollTo(sec,{offset:-70});return;}}catch(e){}const y=sec.getBoundingClientRect().top+window.pageYOffset-70;window.scrollTo({top:y,behavior:'smooth'});};
-    requestAnimationFrame(()=>requestAnimationFrame(jump));
-    setTimeout(jump,180);
+    try{if(typeof lenis!=='undefined'&&lenis&&lenis.scrollTo){lenis.scrollTo(sec,{offset:-70});return;}}catch(e){}
+    const y=sec.getBoundingClientRect().top+window.pageYOffset-70;window.scrollTo({top:y,behavior:'smooth'});
 }
 function knowScheduleJump(e){
     if(e)e.preventDefault();
