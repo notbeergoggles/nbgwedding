@@ -269,8 +269,7 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 .chapter-progress.show{opacity:1;}
 .chapter-progress span{width:32px;height:2px;background:rgba(255,255,255,0.25);border-radius:2px;transition:background .4s;}
 .chapter-progress span.on{background:var(--gold);}
-.chapter-hint{position:absolute;bottom:7.6rem;left:50%;right:auto;transform:translateX(-50%);z-index:701;display:flex;flex-direction:column;align-items:center;gap:0.35rem;color:rgba(255,255,255,0.85);font-family:var(--sans);font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;transition:opacity .5s var(--soft);pointer-events:none;text-align:center;}
-.chapter-hint-text{text-align:center;text-indent:0.25em;}
+.chapter-hint{position:absolute;bottom:7.6rem;left:50%;right:auto;transform:translateX(-50%);z-index:701;display:flex;flex-direction:column;align-items:center;gap:0.35rem;color:rgba(255,255,255,0.85);font-family:var(--sans);font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;transition:opacity .5s var(--soft);pointer-events:none;}
 .chapter-hint.hide{opacity:0;}
 .chapter-hint-arrows{display:inline-flex;flex-direction:column;line-height:0.6;}
 .chapter-hint-arrows i{animation:chapterNudge 1.4s ease-in-out infinite;margin-top:-4px;color:var(--gold);}
@@ -598,7 +597,7 @@ textarea.rsvp-input{resize:vertical;min-height:110px;text-align:left;}
 @keyframes crossGlow{0%,100%{box-shadow:0 0 0 rgba(201,163,104,0);}50%{box-shadow:0 0 22px rgba(201,163,104,0.55);}}
 .rsvp-cross-note{font-family:var(--sans);font-size:0.72rem;color:rgba(251,248,244,0.5);line-height:1.5;letter-spacing:0.03em;}
 .rsvp-cross-note strong{color:var(--gold);font-weight:600;letter-spacing:0.08em;}
-.rsvp-know-pill{margin-top:0;}
+.rsvp-know-pill{margin-top:0.4rem;}
 .know-inner{max-width:720px;margin:0 auto;text-align:center;position:relative;z-index:1;}
 .know-list{display:flex;flex-direction:column;gap:2.5rem;margin-top:3rem;text-align:left;}
 .know-item{border-bottom:1px solid rgba(201,163,104,0.18);padding-bottom:2.5rem;}
@@ -798,7 +797,6 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
             <li><a href="#gallery-1">Gallery</a></li>
             <li><a href="#quiz-1">Quiz</a></li>
             <li><a href="#rsvp-1">RSVP</a></li>
-            <li><a href="#know-1">FAQ</a></li>
         </ul>
         <button class="film-burger" aria-label="Menu"><span></span><span></span><span></span></button>
     </nav>
@@ -1220,6 +1218,8 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
                         <div class="rsvp-done-title">Thank You!</div>
                         <p class="rsvp-done-msg" id="rsvp-done-msg-1">Your RSVP has been received. We can't wait to celebrate with you ♡</p>
                         <div class="rsvp-cross" id="rsvp-cross-1">
+                            <button type="button" class="rsvp-cross-pill" onclick="gotoDinner()">Explore the 7 Nov Dinner page <i class="bi bi-arrow-right"></i></button>
+                            <p class="rsvp-cross-note">You're invited to both days. Passcode: <strong>nbgdinner2026</strong></p>
                             <button type="button" class="rsvp-cross-pill rsvp-know-pill" onclick="revealKnowSection()">Everything You Need to Know <i class="bi bi-arrow-right"></i></button>
                         </div>
                     </div>
@@ -1229,7 +1229,7 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
     </section>
 
     <!-- SCENE: EVERYTHING YOU NEED TO KNOW (revealed after RSVP) -->
-    <section id="know-1" class="scene scene-pad scene-rsvp">
+    <section id="know-1" class="scene scene-pad scene-rsvp" style="display:none;">
         <div class="know-inner">
             <div class="divider-mark reveal-fade"></div>
             <div class="eyebrow reveal-fade" style="color:var(--gold);">Everything you need to know</div>
@@ -1381,7 +1381,7 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
             </div>
             <div class="chapter-progress" id="chapter-progress"><span class="on"></span><span></span><span></span><span></span><span></span><span></span></div>
             <div class="chapter-hint" id="chapter-hint">
-                <span class="chapter-hint-text">Keep scrolling downwards</span>
+                <span class="chapter-hint-text">Keep scrolling</span>
                 <span class="chapter-hint-arrows"><i class="bi bi-chevron-down"></i><i class="bi bi-chevron-down"></i></span>
             </div>
         </div>
@@ -1544,7 +1544,7 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
             <div class="divider-mark reveal-fade"></div>
             <div class="eyebrow reveal-fade" id="rsvp-eyebrow">We'd be honoured</div>
             <h2 class="big-title" style="color:var(--bg-veil);overflow:visible;padding:0.1em 0;"><span class="converge-row" style="gap:0.3em;"><span class="converge-word left" id="rsvp-cv-left" style="color:var(--bg-veil);">Will You</span> <span class="converge-word right" id="rsvp-cv-right">Join Us?</span></span></h2>
-            <p class="scene-sub reveal-fade">Kindly respond by 7 September 2026</p>
+            <p class="scene-sub reveal-fade">Kindly respond by 30 September 2026</p>
             <div class="rsvp-countdown reveal-fade">
                 <div class="rc-unit"><div class="rc-num" id="rsvp-days-2">00</div><div class="rc-label">Days</div></div>
                 <div class="rc-unit"><div class="rc-num" id="rsvp-hours-2">00</div><div class="rc-label">Hours</div></div>
@@ -1571,7 +1571,7 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
                             <div class="fr-family-name" id="fr-family-name">Your Family</div>
                             <p class="scene-sub" style="margin-top:0;margin-bottom:1.25rem;">Who will be joining us?</p>
                             <div id="fr-edit-hint" class="rsvp-edit-hint" style="display:none;margin-bottom:1.25rem;"><i class="bi bi-pencil-square"></i> We found your household's previous RSVP — feel free to update it below.</div>
-                            <div class="fr-tea-note"><i class="bi bi-cup-hot"></i> <span>The tea ceremony runs from <strong>8:30–11:30am</strong> and is only for FAMILY. Please keep this window free — but you won't all start at 8:30. Guests are split into rotating groups of 30, and we'll send each group's exact time closer to the day. ♡</span></div>
+                            <div class="fr-tea-note"><i class="bi bi-cup-hot"></i> <span>The tea ceremony runs from <strong>8:30–11:30am</strong>. Please keep this window free — but you won't all start at 8:30. Guests are split into rotating groups of 30, and we'll send each group's exact time closer to the day. ♡</span></div>
                             <div class="fr-members" id="fr-members"></div>
                         </div>
                         <!-- STEP 2: note -->
@@ -1667,7 +1667,7 @@ footer{background:var(--noir);color:var(--bg-veil);text-align:center;padding:4re
 const dateGroup1=new Date("2026-11-05T15:00:00").getTime();
 const rsvpGroup1=new Date("2026-09-05T23:59:59").getTime();
 const dateGroup2=new Date("2026-11-07T18:30:00").getTime();
-const rsvpGroup2=new Date("2026-09-07T23:59:59").getTime();
+const rsvpGroup2=new Date("2026-09-30T23:59:59").getTime();
 let pendingUnlock=null, lenis=null, sceneReady=false;
 const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isTouch=matchMedia('(hover: none)').matches;
@@ -2233,13 +2233,12 @@ var ZH_TEXT={
     "Hi there! 👋 Ask me anything about the wedding — timings, parking, dress code, photos, you name it.":"你好！👋 关于婚礼的任何问题都可以问我——时间、停车、着装、拍照，样样都行。",
     "What time should I arrive?":"我该几点到？","Where can I park?":"哪里可以停车？","Is there a wedding hashtag?":"有婚礼专属标签吗？","What time does it end?":"活动几点结束？",
     // rsvp
-    "We'd be honoured":"敬请赏光","Kindly respond by 7 September 2026":"请于 2026年9月7日 前回复",
+    "We'd be honoured":"敬请赏光","Kindly respond by 30 September 2026":"请于 2026年9月30日 前回复",
     "Step 1":"第一步","Step 2":"第二步","Last step":"最后一步","Who will be joining us?":"谁会一同出席？",
     "Coming":"出席","Can't make it":"无法出席","Meal preference":"用餐偏好",
     "Tea Ceremony (morning)":"敬茶仪式（上午）","Dinner (evening)":"晚宴（傍晚）",
     "TEA_NOTE":"敬茶仪式于上午 8:30 至 11:00 举行。请预留这段时间——但无需所有人 8:30 到场。宾客将分为每组 30 人轮流进行，我们会在临近婚期时通知你所在组别的确切时间。♡",
     "← Back":"← 返回","Continue →":"继续 →","Send RSVP ♡":"发送 ♡",
-    "Keep scrolling downwards":"继续向下滑动",
     "Thank You!":"谢谢你！",
     "Your RSVP has been received. We can't wait to celebrate with you ♡":"我们已收到你的回复。期待与你一同庆祝 ♡",
     "Your family's RSVP has been received. We can't wait to celebrate with you ♡":"我们已收到你家庭的回复。期待与你一同庆祝 ♡",
@@ -2273,7 +2272,7 @@ function applyG2Lang(){
     const root=document.getElementById('group-2-content');if(!root)return;
     if(curLang==='zh'){
         // 1. plain text-match (skip elements with child elements to stay safe)
-        root.querySelectorAll('.eyebrow,.scene-sub,.converge-lede,.tea-lede,.tea-body p,.tea-quote,.chapter-era,.chapter-title,.chapter-desc,.chapter-hint-text,.cp-title,.cp-desc,.venue-label,.faq-chip,.faq-bubble,.faq-chat-intro,.dress-card h3,.dress-card p,.film-nav-links a,.rsvp-qn,.rsvp-back,.rsvp-next,.rsvp-done-title,.rsvp-done-msg,.fr-tg,.fr-meal-label,.ind-swap,.gb-submit,.btn-pill,.post-card h3,.post-card p,.mika-intro,.rsvp-edit-hint').forEach(el=>{
+        root.querySelectorAll('.eyebrow,.scene-sub,.converge-lede,.tea-lede,.tea-body p,.tea-quote,.chapter-era,.chapter-title,.chapter-desc,.cp-title,.cp-desc,.venue-label,.faq-chip,.faq-bubble,.faq-chat-intro,.dress-card h3,.dress-card p,.film-nav-links a,.rsvp-qn,.rsvp-back,.rsvp-next,.rsvp-done-title,.rsvp-done-msg,.fr-tg,.fr-meal-label,.ind-swap,.gb-submit,.btn-pill,.post-card h3,.post-card p,.mika-intro,.rsvp-edit-hint').forEach(el=>{
             if(el.children.length>0 && !el.querySelector('i'))return; // has markup (except icon-only) → skip
             const t=el.textContent.trim();
             if(ZH_TEXT[t]!==undefined){_stash(el,'Txt',el.textContent);el.textContent=ZH_TEXT[t];}
@@ -2620,8 +2619,14 @@ function frNext(){
 function frBack(){if(frState.step>0)frGo(frState.step-1);}
 function revealKnowSection(){
     const sec=document.getElementById('know-1');if(!sec)return;
-    try{if(typeof lenis!=='undefined'&&lenis&&lenis.scrollTo){lenis.scrollTo(sec,{offset:-70});return;}}catch(e){}
-    const y=sec.getBoundingClientRect().top+window.pageYOffset-70;window.scrollTo({top:y,behavior:'smooth'});
+    sec.style.display='';
+    // ensure its animated children are visible (their ScrollTriggers were measured while hidden)
+    sec.querySelectorAll('.reveal-fade,.reveal-rise').forEach(el=>{el.style.opacity=1;el.style.transform='none';});
+    sec.querySelectorAll('.title-word>span').forEach(s=>{s.style.transform='none';s.style.opacity=1;});
+    try{if(window.ScrollTrigger)ScrollTrigger.refresh();}catch(e){}
+    const jump=()=>{try{if(typeof lenis!=='undefined'&&lenis&&lenis.scrollTo){lenis.scrollTo(sec,{offset:-70});return;}}catch(e){}const y=sec.getBoundingClientRect().top+window.pageYOffset-70;window.scrollTo({top:y,behavior:'smooth'});};
+    requestAnimationFrame(()=>requestAnimationFrame(jump));
+    setTimeout(jump,180);
 }
 function knowScheduleJump(e){
     if(e)e.preventDefault();
