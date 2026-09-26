@@ -2661,10 +2661,12 @@ function showKnowModal(){
     if(!modal||!body||!src)return;
     if(!_knowModalBuilt){ body.appendChild(src.cloneNode(true)); _knowModalBuilt=true; }
     modal.classList.add('show');document.body.style.overflow='hidden';
+    try{if(typeof lenis!=='undefined'&&lenis)lenis.stop();}catch(e){}
 }
 function closeKnowModal(){
     const modal=document.getElementById('know-modal');if(!modal)return;
     modal.classList.remove('show');document.body.style.overflow='';
+    try{if(typeof lenis!=='undefined'&&lenis)lenis.start();}catch(e){}
 }
 document.addEventListener('click',e=>{if(e.target&&e.target.id==='know-modal')closeKnowModal();});
 function gotoDinner(){
