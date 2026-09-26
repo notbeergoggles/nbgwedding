@@ -62,6 +62,9 @@ body.touch .cursor-dot,body.touch .cursor-ring{display:none;}
 @media(hover:hover) and (pointer:fine){
     body.custom-cursor,body.custom-cursor *{cursor:none;}
     body.custom-cursor input[type="text"],body.custom-cursor input[type="email"],body.custom-cursor input[type="password"],body.custom-cursor input[type="search"],body.custom-cursor textarea{cursor:text;}
+    body.custom-cursor .know-modal,body.custom-cursor .know-modal *{cursor:auto!important;}
+    body.custom-cursor .know-modal a,body.custom-cursor .know-modal button{cursor:pointer!important;}
+    body.know-modal-open .cursor-dot,body.know-modal-open .cursor-ring{display:none!important;}
 }
 
 /* ═══════════ CINEMATIC LOADER ═══════════ */
@@ -2660,15 +2663,16 @@ function showKnowModal(){
     const src=document.querySelector('#know-1 .know-list');
     if(!modal||!body||!src)return;
     if(!_knowModalBuilt){ body.appendChild(src.cloneNode(true)); _knowModalBuilt=true; }
-    modal.classList.add('show');document.body.style.overflow='hidden';
+    modal.classList.add('show');document.body.style.overflow='hidden';document.body.classList.add('know-modal-open');
     try{if(typeof lenis!=='undefined'&&lenis)lenis.stop();}catch(e){}
 }
 function closeKnowModal(){
     const modal=document.getElementById('know-modal');if(!modal)return;
-    modal.classList.remove('show');document.body.style.overflow='';
+    modal.classList.remove('show');document.body.style.overflow='';document.body.classList.remove('know-modal-open');
     try{if(typeof lenis!=='undefined'&&lenis)lenis.start();}catch(e){}
 }
 document.addEventListener('click',e=>{if(e.target&&e.target.id==='know-modal')closeKnowModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){const m=document.getElementById('know-modal');if(m&&m.classList.contains('show'))closeKnowModal();}});
 function gotoDinner(){
     document.getElementById('group-1-content').style.display='none';
     try{document.querySelectorAll('.rsvp-sparkle,.rsvp-shard,.ind-spark,.choice-spark').forEach(el=>el.remove());}catch(e){}
