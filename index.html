@@ -1933,7 +1933,19 @@ function playHeroIntro(suffix){
 }
 
 /* ═══════════ AUTO-UNLOCK ═══════════ */
+var photoDeepLink=false;
 window.addEventListener('DOMContentLoaded',()=>{
+    // Passcode-free deep link to the photo upload gallery (for table QR codes): ?photos=1 or ?photos=2
+    const params=new URLSearchParams(location.search);
+    const pg=(params.get('photos')||params.get('gallery')||'').trim();
+    if(pg==='1'||pg==='2'){
+        photoDeepLink=true;
+        document.getElementById('loader').style.display='none';
+        document.getElementById('gate').style.display='none';
+        document.body.classList.remove('locked');
+        setTimeout(()=>{if(typeof toggleGallery==='function')toggleGallery(pg,true);},120);
+        return;
+    }
     const saved=sessionStorage.getItem('wedding_access');
     if(saved){
         pendingUnlock=JSON.parse(saved);
@@ -3023,7 +3035,7 @@ function launchConfetti(s){const stage=document.getElementById('rsvp-done-'+s),c
 
 /* ── Lightbox + Gallery overlay ── */
 function openLightbox(url,caption){const lb=document.getElementById('lightbox');document.getElementById('lightbox-img').src=url;document.getElementById('lightbox-caption').innerText=caption||'';lb.classList.add('active');}
-function toggleGallery(suffix,show){const g=document.getElementById('gallery-view-'+suffix);if(!g)return;if(show){g.style.display='block';setTimeout(()=>{g.classList.add('active');document.body.style.overflow='hidden';if(lenis)lenis.stop();},10);loadGallery(suffix);}else{g.classList.remove('active');document.body.style.overflow='';if(lenis)lenis.start();setTimeout(()=>{g.style.display='none';},500);}}
+function toggleGallery(suffix,show){const g=document.getElementById('gallery-view-'+suffix);if(!g)return;if(show){g.style.display='block';setTimeout(()=>{g.classList.add('active');document.body.style.overflow='hidden';if(lenis)lenis.stop();},10);loadGallery(suffix);}else{g.classList.remove('active');document.body.style.overflow='';if(lenis)lenis.start();setTimeout(()=>{g.style.display='none';if(photoDeepLink){document.body.classList.add('locked');document.getElementById('gate').style.display='';if(typeof showGate==='function')showGate();}},500);}}
 function loadGallery(suffix){db.collection("gallery_photos").where("groupId","==",String(suffix)).orderBy("timestamp","desc").onSnapshot(snap=>{const grid=document.getElementById('photo-grid-'+suffix);grid.innerHTML='';snap.forEach(doc=>{const d=doc.data(),item=document.createElement('div');item.className='photo-item';item.innerHTML=`<img src="${d.url}" loading="lazy" onclick="openLightbox('${d.url}','Shared by ${(d.guestName||'Anonymous').replace(/'/g,'')}')"><div style="color:var(--gold);font-size:0.68rem;margin-top:5px;text-align:center;">Shared by ${d.guestName||'Anonymous'}</div>`;grid.appendChild(item);});});}
 async function uploadImage(input,suffix){const files=input.files;if(!files.length)return;const name=prompt("Enter your name so we know who shared these! 😊")||"Anonymous";const sc=document.getElementById('upload-status-'+suffix),pb=document.getElementById('progress-bar-'+suffix),stx=document.getElementById('status-text-'+suffix);for(let file of files){sc.style.display='block';stx.innerText=`Uploading: ${file.name}`;const ref=storage.ref(`gallery/group-${suffix}/${Date.now()}-${file.name}`),task=ref.put(file);task.on('state_changed',sn=>{pb.value=(sn.bytesTransferred/sn.totalBytes)*100;},e=>{alert("Upload failed!");sc.style.display='none';},()=>{task.snapshot.ref.getDownloadURL().then(url=>{db.collection("gallery_photos").add({url,groupId:suffix,guestName:name,timestamp:firebase.firestore.FieldValue.serverTimestamp()});setTimeout(()=>{sc.style.display='none';pb.value=0;},1000);});});}}
 
